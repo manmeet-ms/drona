@@ -1,3 +1,5 @@
+"use client";
+import { AppHeader } from "@/src/components/Headers";
 import {
   Card,
   CardContent,
@@ -5,24 +7,31 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card"
-import prisma from '@/src/lib/prisma';
+} from "@/src/components/ui/card";
+import { useSession } from "next-auth/react";
 
-export default async function TeacherDashboardPage() {
-    const pingCount = await prisma.ping.count();
-    const latest = await prisma.ping.findMany({ orderBy: { id: 'desc' }, take: 10 });
+
+export default   function DashboardPage() {
+    
+  const session =useSession();
+console.log("getServerSession",session);
+
+  if (session.status === "loading") return <p>Loading...</p>;
+  if (session.status === "unauthenticated") return <p>Access Denied</p>;
 
     return (
         <>
             {' '}
+<AppHeader/>
             <div style={{ padding: 24 }}>
 
           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-Drona</h1>
+Welcome to Drona</h1>
+
 <Card>
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+    <CardTitle>Welcome {session?.data?.user?.name}</CardTitle>
+    <CardDescription>Your as registered as  {session?.data?.user?.role.toLowerCase()}</CardDescription>
   </CardHeader>
   <CardContent>
     <p>Card Content</p>
@@ -31,7 +40,7 @@ Drona</h1>
     <p>Card Footer</p>
   </CardFooter>
 </Card>
-                <p>Ping count: {pingCount}</p>
+
                 <h2>Latest pings</h2>
                 <pre></pre>
             </div>

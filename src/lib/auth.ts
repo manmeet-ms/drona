@@ -29,7 +29,16 @@ export const authOptions: NextAuthOptions = {
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email },
                     // Ensure you select the hashedPassword for comparison
-                    select: { id: true, email: true, fullname: true, password: true, role: true },
+                    select: { 
+                        id: true, 
+                        email: true, 
+                        fullname: true, 
+                        password: true, 
+                        role: true,
+                        username: true,     // Added
+                        isVerified: true,   // Added
+                        createdAt: true     // Added
+                    },
                 });
 
                 if (!user || !user.password) {
@@ -41,12 +50,14 @@ export const authOptions: NextAuthOptions = {
 
                 if (isMatch) {
                     // 2c. Successful login: Return the user object
-                    // (Note: Do NOT return the hashedPassword here!)
                     return {
                         id: user.id,
                         email: user.email,
                         name: user.fullname,
-                        role: user.role, // Attach the role here for use in callbacks
+                        role: user.role, 
+                        username: user.username,     
+                        isVerified: user.isVerified ?? false, 
+                        createdAt: user.createdAt    
                     };
                 } else {
                     return null; // Password mismatch
@@ -58,11 +69,17 @@ export const authOptions: NextAuthOptions = {
 
     // 3. Callbacks: Inject the custom `role` into the session object
     callbacks: {
+        async redirect({ url, baseUrl }) {
+            return baseUrl
+        },
         // This runs when a JWT is created (on login)
         jwt: async ({ token, user }) => {
             if (user) {
                 // Attach the user's role to the JWT token
                 token.role = user.role;
+                token.username = user.username;     
+                token.isVerified = user.isVerified; 
+                token.createdAt = user.createdAt;   
             }
             return token;
         },
@@ -71,9 +88,12 @@ export const authOptions: NextAuthOptions = {
             if (session.user) {
                 // Attach the role from the token to the session object for client-side access
                 session.user.role = token.role as string;
+                session.user.username = token.username as string;
+                session.user.isVerified = token.isVerified as boolean;
+                session.user.createdAt = token.createdAt as Date;
             }
             return session;
-        },
+        },  
     },
 
     // 4. Session Configuration
@@ -84,8 +104,11 @@ export const authOptions: NextAuthOptions = {
 
     // 5. Pages (Optional but recommended to use custom pages)
     pages: {
-        signIn: '/login', // Redirects unauthenticated users to your custom login page
-        // error: '/auth/error',
+        signIn: '/auth/login', // Redirects unauthenticated users to your custom login page
+        signOut: '/auth/logout', // Redirects authenticated users to your custom logout page
+        verifyRequest: 'auth/verify',
+        newUser: '/auth/register',
+        error: '/auth/error',
     },
 
     // 6. Secret

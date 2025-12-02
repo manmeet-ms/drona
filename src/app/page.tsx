@@ -1,10 +1,15 @@
 "use client"
+import { Button } from '@/src/components/ui/button';
 import { useState, useEffect } from 'react'
 import { subscribeUser, unsubscribeUser, sendNotification } from './actions'
 
 import Image from "next/image";
 import Link from 'next/link';
 import { AppHeader } from '@/src/components/Headers';
+import { useSession } from 'next-auth/react';
+import { json } from 'zod';
+import LogoutButton from '../components/LogoutButton';
+import { usePathname } from 'next/navigation';
  
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -136,12 +141,17 @@ function InstallPrompt() {
  
  
 export default function Home() {
+const   session=useSession()  
+const   pathname=usePathname()  
   
   return (
     <>
     
     <AppHeader/>
-     
+    {JSON.stringify(session)}
+    {JSON.stringify(pathname)}
+
+                 
     </>
   );
 }

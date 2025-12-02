@@ -1,21 +1,13 @@
-import AuthProvider from '@/src/providers/AuthProvider';
 import './globals.css';
-import { ThemeProvider } from "@/src/components/theme-provider"
+import { Providers } from './provider';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className='px-6 py-4'>
-         <AuthProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className='px-4 py-2' >
+         <Providers>
 
-         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-            >
             {children}
-          </ThemeProvider>
-              </AuthProvider>
+         </Providers>
              
       </body>
     </html>

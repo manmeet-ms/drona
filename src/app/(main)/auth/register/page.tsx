@@ -25,10 +25,13 @@ export default function RegistrationPage() {
     });
 
     const onSubmit = async (data: RegisterInput) => {
+        console.log(data.email);
+        
         try {
             const response = await axios.post('/api/auth/register', data);
             console.log("User created successfully:", response.data);
-            router.push(`/auth/verify?email=${encodeURIComponent(data.email)}`);
+            // router.push(`/auth/verify?email=${encodeURIComponent(data.email)}`);
+            router.push(`/auth/login`);
         } catch (error: any) {
             console.error("Registration failed:", error);
             alert(error?.response?.data?.message || error?.message || "Registration failed due to server error.");
@@ -71,7 +74,7 @@ export default function RegistrationPage() {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="PARENT">Parent</SelectItem>
-                                    <SelectItem value="TEACHER">Teacher</SelectItem>
+                                       <SelectItem value="TEACHER">Teacher</SelectItem>
                                 </SelectContent>
                             </Select>
                             {errors.role && <p className="text-red-500 text-sm">{errors.role.message}</p>}

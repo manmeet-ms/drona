@@ -2,20 +2,29 @@ import { DefaultSession, DefaultUser } from "next-auth";
 import { JWT, DefaultJWT } from "next-auth/jwt";
 
 declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      role: string;
-    } & DefaultSession["user"];
-  }
+    interface Session {
+        user: {
+            id: string;
+            role: string;
+            username: string;
+            isVerified: boolean;
+            createdAt: Date;
+        } & DefaultSession["user"];
+    }
 
-  interface User extends DefaultUser {
-    role: string;
-  }
+    interface User extends DefaultUser {
+        role: string;
+        username: string;
+        isVerified: boolean;
+        createdAt: Date;
+    }
 }
 
 declare module "next-auth/jwt" {
-  interface JWT extends DefaultJWT {
-    role: string;
-  }
+    interface JWT extends DefaultJWT {
+        role: string;
+        username: string;
+        isVerified: boolean;
+        createdAt: Date;
+    }
 }
