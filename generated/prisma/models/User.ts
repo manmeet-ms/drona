@@ -33,6 +33,7 @@ export type UserMinAggregateOutputType = {
   role: $Enums.UserRole | null
   phoneNumber: string | null
   isVerified: boolean | null
+  verificationDocument: string | null
   verficationToken: string | null
   verficationTokenExpiry: Date | null
   passwordResetToken: string | null
@@ -50,6 +51,7 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.UserRole | null
   phoneNumber: string | null
   isVerified: boolean | null
+  verificationDocument: string | null
   verficationToken: string | null
   verficationTokenExpiry: Date | null
   passwordResetToken: string | null
@@ -67,6 +69,7 @@ export type UserCountAggregateOutputType = {
   role: number
   phoneNumber: number
   isVerified: number
+  verificationDocument: number
   verficationToken: number
   verficationTokenExpiry: number
   passwordResetToken: number
@@ -86,6 +89,7 @@ export type UserMinAggregateInputType = {
   role?: true
   phoneNumber?: true
   isVerified?: true
+  verificationDocument?: true
   verficationToken?: true
   verficationTokenExpiry?: true
   passwordResetToken?: true
@@ -103,6 +107,7 @@ export type UserMaxAggregateInputType = {
   role?: true
   phoneNumber?: true
   isVerified?: true
+  verificationDocument?: true
   verficationToken?: true
   verficationTokenExpiry?: true
   passwordResetToken?: true
@@ -120,6 +125,7 @@ export type UserCountAggregateInputType = {
   role?: true
   phoneNumber?: true
   isVerified?: true
+  verificationDocument?: true
   verficationToken?: true
   verficationTokenExpiry?: true
   passwordResetToken?: true
@@ -210,6 +216,7 @@ export type UserGroupByOutputType = {
   role: $Enums.UserRole
   phoneNumber: string | null
   isVerified: boolean | null
+  verificationDocument: string | null
   verficationToken: string | null
   verficationTokenExpiry: Date | null
   passwordResetToken: string | null
@@ -248,6 +255,7 @@ export type UserWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null
   isVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  verificationDocument?: Prisma.StringNullableFilter<"User"> | string | null
   verficationToken?: Prisma.StringNullableFilter<"User"> | string | null
   verficationTokenExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -256,6 +264,8 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
+  tutorProfile?: Prisma.XOR<Prisma.TutorProfileNullableScalarRelationFilter, Prisma.TutorProfileWhereInput> | null
+  students?: Prisma.StudentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -267,6 +277,7 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationDocument?: Prisma.SortOrderInput | Prisma.SortOrder
   verficationToken?: Prisma.SortOrderInput | Prisma.SortOrder
   verficationTokenExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -275,6 +286,8 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   sessions?: Prisma.SessionOrderByRelationAggregateInput
+  tutorProfile?: Prisma.TutorProfileOrderByWithRelationInput
+  students?: Prisma.StudentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -289,6 +302,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   fullname?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  verificationDocument?: Prisma.StringNullableFilter<"User"> | string | null
   verficationToken?: Prisma.StringNullableFilter<"User"> | string | null
   verficationTokenExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -297,6 +311,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
+  tutorProfile?: Prisma.XOR<Prisma.TutorProfileNullableScalarRelationFilter, Prisma.TutorProfileWhereInput> | null
+  students?: Prisma.StudentListRelationFilter
 }, "id" | "username" | "email" | "phoneNumber">
 
 export type UserOrderByWithAggregationInput = {
@@ -308,6 +324,7 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationDocument?: Prisma.SortOrderInput | Prisma.SortOrder
   verficationToken?: Prisma.SortOrderInput | Prisma.SortOrder
   verficationTokenExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -331,6 +348,7 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isVerified?: Prisma.BoolNullableWithAggregatesFilter<"User"> | boolean | null
+  verificationDocument?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   verficationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   verficationTokenExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   passwordResetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -348,6 +366,7 @@ export type UserCreateInput = {
   role?: $Enums.UserRole
   phoneNumber?: string | null
   isVerified?: boolean | null
+  verificationDocument?: string | null
   verficationToken?: string | null
   verficationTokenExpiry?: Date | string | null
   passwordResetToken?: string | null
@@ -356,6 +375,8 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileCreateNestedOneWithoutUserInput
+  students?: Prisma.StudentCreateNestedManyWithoutParentInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -367,6 +388,7 @@ export type UserUncheckedCreateInput = {
   role?: $Enums.UserRole
   phoneNumber?: string | null
   isVerified?: boolean | null
+  verificationDocument?: string | null
   verficationToken?: string | null
   verficationTokenExpiry?: Date | string | null
   passwordResetToken?: string | null
@@ -375,6 +397,8 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileUncheckedCreateNestedOneWithoutUserInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type UserUpdateInput = {
@@ -386,6 +410,7 @@ export type UserUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -394,6 +419,8 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUpdateOneWithoutUserNestedInput
+  students?: Prisma.StudentUpdateManyWithoutParentNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -405,6 +432,7 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -413,6 +441,8 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUncheckedUpdateOneWithoutUserNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutParentNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -424,6 +454,7 @@ export type UserCreateManyInput = {
   role?: $Enums.UserRole
   phoneNumber?: string | null
   isVerified?: boolean | null
+  verificationDocument?: string | null
   verficationToken?: string | null
   verficationTokenExpiry?: Date | string | null
   passwordResetToken?: string | null
@@ -441,6 +472,7 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -458,6 +490,7 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -480,6 +513,7 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationDocument?: Prisma.SortOrder
   verficationToken?: Prisma.SortOrder
   verficationTokenExpiry?: Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrder
@@ -497,6 +531,7 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationDocument?: Prisma.SortOrder
   verficationToken?: Prisma.SortOrder
   verficationTokenExpiry?: Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrder
@@ -514,6 +549,7 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  verificationDocument?: Prisma.SortOrder
   verficationToken?: Prisma.SortOrder
   verficationTokenExpiry?: Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrder
@@ -558,6 +594,34 @@ export type NullableBoolFieldUpdateOperationsInput = {
   set?: boolean | null
 }
 
+export type UserCreateNestedOneWithoutTutorProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTutorProfileInput, Prisma.UserUncheckedCreateWithoutTutorProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTutorProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutTutorProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTutorProfileInput, Prisma.UserUncheckedCreateWithoutTutorProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTutorProfileInput
+  upsert?: Prisma.UserUpsertWithoutTutorProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTutorProfileInput, Prisma.UserUpdateWithoutTutorProfileInput>, Prisma.UserUncheckedUpdateWithoutTutorProfileInput>
+}
+
+export type UserCreateNestedOneWithoutStudentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudentsInput, Prisma.UserUncheckedCreateWithoutStudentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStudentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStudentsInput, Prisma.UserUncheckedCreateWithoutStudentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentsInput
+  upsert?: Prisma.UserUpsertWithoutStudentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudentsInput, Prisma.UserUpdateWithoutStudentsInput>, Prisma.UserUncheckedUpdateWithoutStudentsInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   username: string
@@ -567,6 +631,7 @@ export type UserCreateWithoutAccountsInput = {
   role?: $Enums.UserRole
   phoneNumber?: string | null
   isVerified?: boolean | null
+  verificationDocument?: string | null
   verficationToken?: string | null
   verficationTokenExpiry?: Date | string | null
   passwordResetToken?: string | null
@@ -574,6 +639,8 @@ export type UserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileCreateNestedOneWithoutUserInput
+  students?: Prisma.StudentCreateNestedManyWithoutParentInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -585,6 +652,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   role?: $Enums.UserRole
   phoneNumber?: string | null
   isVerified?: boolean | null
+  verificationDocument?: string | null
   verficationToken?: string | null
   verficationTokenExpiry?: Date | string | null
   passwordResetToken?: string | null
@@ -592,6 +660,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileUncheckedCreateNestedOneWithoutUserInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -619,6 +689,7 @@ export type UserUpdateWithoutAccountsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -626,6 +697,8 @@ export type UserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUpdateOneWithoutUserNestedInput
+  students?: Prisma.StudentUpdateManyWithoutParentNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -637,6 +710,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -644,6 +718,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUncheckedUpdateOneWithoutUserNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutParentNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -655,6 +731,7 @@ export type UserCreateWithoutSessionsInput = {
   role?: $Enums.UserRole
   phoneNumber?: string | null
   isVerified?: boolean | null
+  verificationDocument?: string | null
   verficationToken?: string | null
   verficationTokenExpiry?: Date | string | null
   passwordResetToken?: string | null
@@ -662,6 +739,8 @@ export type UserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileCreateNestedOneWithoutUserInput
+  students?: Prisma.StudentCreateNestedManyWithoutParentInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -673,6 +752,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   role?: $Enums.UserRole
   phoneNumber?: string | null
   isVerified?: boolean | null
+  verificationDocument?: string | null
   verficationToken?: string | null
   verficationTokenExpiry?: Date | string | null
   passwordResetToken?: string | null
@@ -680,6 +760,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileUncheckedCreateNestedOneWithoutUserInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -707,6 +789,7 @@ export type UserUpdateWithoutSessionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -714,6 +797,8 @@ export type UserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUpdateOneWithoutUserNestedInput
+  students?: Prisma.StudentUpdateManyWithoutParentNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -725,6 +810,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -732,6 +818,208 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUncheckedUpdateOneWithoutUserNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutParentNestedInput
+}
+
+export type UserCreateWithoutTutorProfileInput = {
+  id?: string
+  username: string
+  email?: string | null
+  password?: string | null
+  fullname: string
+  role?: $Enums.UserRole
+  phoneNumber?: string | null
+  isVerified?: boolean | null
+  verificationDocument?: string | null
+  verficationToken?: string | null
+  verficationTokenExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  passwordResetTokenExpiry?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  students?: Prisma.StudentCreateNestedManyWithoutParentInput
+}
+
+export type UserUncheckedCreateWithoutTutorProfileInput = {
+  id?: string
+  username: string
+  email?: string | null
+  password?: string | null
+  fullname: string
+  role?: $Enums.UserRole
+  phoneNumber?: string | null
+  isVerified?: boolean | null
+  verificationDocument?: string | null
+  verficationToken?: string | null
+  verficationTokenExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  passwordResetTokenExpiry?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  students?: Prisma.StudentUncheckedCreateNestedManyWithoutParentInput
+}
+
+export type UserCreateOrConnectWithoutTutorProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTutorProfileInput, Prisma.UserUncheckedCreateWithoutTutorProfileInput>
+}
+
+export type UserUpsertWithoutTutorProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTutorProfileInput, Prisma.UserUncheckedUpdateWithoutTutorProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTutorProfileInput, Prisma.UserUncheckedCreateWithoutTutorProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTutorProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTutorProfileInput, Prisma.UserUncheckedUpdateWithoutTutorProfileInput>
+}
+
+export type UserUpdateWithoutTutorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullname?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  students?: Prisma.StudentUpdateManyWithoutParentNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTutorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullname?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  students?: Prisma.StudentUncheckedUpdateManyWithoutParentNestedInput
+}
+
+export type UserCreateWithoutStudentsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  password?: string | null
+  fullname: string
+  role?: $Enums.UserRole
+  phoneNumber?: string | null
+  isVerified?: boolean | null
+  verificationDocument?: string | null
+  verficationToken?: string | null
+  verficationTokenExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  passwordResetTokenExpiry?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutStudentsInput = {
+  id?: string
+  username: string
+  email?: string | null
+  password?: string | null
+  fullname: string
+  role?: $Enums.UserRole
+  phoneNumber?: string | null
+  isVerified?: boolean | null
+  verificationDocument?: string | null
+  verficationToken?: string | null
+  verficationTokenExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  passwordResetTokenExpiry?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  tutorProfile?: Prisma.TutorProfileUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutStudentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudentsInput, Prisma.UserUncheckedCreateWithoutStudentsInput>
+}
+
+export type UserUpsertWithoutStudentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStudentsInput, Prisma.UserUncheckedUpdateWithoutStudentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStudentsInput, Prisma.UserUncheckedCreateWithoutStudentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStudentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStudentsInput, Prisma.UserUncheckedUpdateWithoutStudentsInput>
+}
+
+export type UserUpdateWithoutStudentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullname?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStudentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fullname?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  verificationDocument?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verficationTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  tutorProfile?: Prisma.TutorProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -742,11 +1030,13 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
 export type UserCountOutputType = {
   accounts: number
   sessions: number
+  students: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  students?: boolean | UserCountOutputTypeCountStudentsArgs
 }
 
 /**
@@ -773,6 +1063,13 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.SessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudentWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -783,6 +1080,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   phoneNumber?: boolean
   isVerified?: boolean
+  verificationDocument?: boolean
   verficationToken?: boolean
   verficationTokenExpiry?: boolean
   passwordResetToken?: boolean
@@ -791,6 +1089,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  tutorProfile?: boolean | Prisma.User$tutorProfileArgs<ExtArgs>
+  students?: boolean | Prisma.User$studentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -803,6 +1103,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   phoneNumber?: boolean
   isVerified?: boolean
+  verificationDocument?: boolean
   verficationToken?: boolean
   verficationTokenExpiry?: boolean
   passwordResetToken?: boolean
@@ -820,6 +1121,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   phoneNumber?: boolean
   isVerified?: boolean
+  verificationDocument?: boolean
   verficationToken?: boolean
   verficationTokenExpiry?: boolean
   passwordResetToken?: boolean
@@ -837,6 +1139,7 @@ export type UserSelectScalar = {
   role?: boolean
   phoneNumber?: boolean
   isVerified?: boolean
+  verificationDocument?: boolean
   verficationToken?: boolean
   verficationTokenExpiry?: boolean
   passwordResetToken?: boolean
@@ -845,10 +1148,12 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "password" | "fullname" | "role" | "phoneNumber" | "isVerified" | "verficationToken" | "verficationTokenExpiry" | "passwordResetToken" | "passwordResetTokenExpiry" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "password" | "fullname" | "role" | "phoneNumber" | "isVerified" | "verificationDocument" | "verficationToken" | "verficationTokenExpiry" | "passwordResetToken" | "passwordResetTokenExpiry" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  tutorProfile?: boolean | Prisma.User$tutorProfileArgs<ExtArgs>
+  students?: boolean | Prisma.User$studentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -859,6 +1164,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     accounts: Prisma.$AccountPayload<ExtArgs>[]
     sessions: Prisma.$SessionPayload<ExtArgs>[]
+    tutorProfile: Prisma.$TutorProfilePayload<ExtArgs> | null
+    students: Prisma.$StudentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -869,6 +1176,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.UserRole
     phoneNumber: string | null
     isVerified: boolean | null
+    verificationDocument: string | null
     verficationToken: string | null
     verficationTokenExpiry: Date | null
     passwordResetToken: string | null
@@ -1271,6 +1579,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tutorProfile<T extends Prisma.User$tutorProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tutorProfileArgs<ExtArgs>>): Prisma.Prisma__TutorProfileClient<runtime.Types.Result.GetResult<Prisma.$TutorProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  students<T extends Prisma.User$studentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1308,6 +1618,7 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly phoneNumber: Prisma.FieldRef<"User", 'String'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly verificationDocument: Prisma.FieldRef<"User", 'String'>
   readonly verficationToken: Prisma.FieldRef<"User", 'String'>
   readonly verficationTokenExpiry: Prisma.FieldRef<"User", 'DateTime'>
   readonly passwordResetToken: Prisma.FieldRef<"User", 'String'>
@@ -1747,6 +2058,49 @@ export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * User.tutorProfile
+ */
+export type User$tutorProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TutorProfile
+   */
+  select?: Prisma.TutorProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TutorProfile
+   */
+  omit?: Prisma.TutorProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TutorProfileInclude<ExtArgs> | null
+  where?: Prisma.TutorProfileWhereInput
+}
+
+/**
+ * User.students
+ */
+export type User$studentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Student
+   */
+  select?: Prisma.StudentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Student
+   */
+  omit?: Prisma.StudentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentInclude<ExtArgs> | null
+  where?: Prisma.StudentWhereInput
+  orderBy?: Prisma.StudentOrderByWithRelationInput | Prisma.StudentOrderByWithRelationInput[]
+  cursor?: Prisma.StudentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudentScalarFieldEnum | Prisma.StudentScalarFieldEnum[]
 }
 
 /**

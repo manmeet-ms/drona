@@ -17,7 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/src/components/ui/tooltip";
-import { AppHeader } from "@/src/components/Headers";
+import { LandingHeader } from "@/src/components/Headers";
 
 const plans = [
   {
@@ -169,7 +169,7 @@ const PricingPage = () => {
   const [billing, setBilling] = useState<"monthly" | "annually">("monthly");
   return (
     <TooltipProvider delayDuration={150}>
-        <AppHeader/>
+        <LandingHeader/>
       <section className="py-4">
         <div className="container mb-8 lg:mb-0">
           <div className="grid grid-cols-2 gap-y-12 md:gap-y-16">

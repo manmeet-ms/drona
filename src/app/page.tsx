@@ -5,7 +5,7 @@ import { subscribeUser, unsubscribeUser, sendNotification } from './actions'
 
 import Image from "next/image";
 import Link from 'next/link';
-import { AppHeader } from '@/src/components/Headers';
+import { LandingHeader } from '@/src/components/Headers';
 import { useSession } from 'next-auth/react';
 import { json } from 'zod';
 import LogoutButton from '../components/LogoutButton';
@@ -147,7 +147,7 @@ const   pathname=usePathname()
   return (
     <>
     
-    <AppHeader/>
+    <LandingHeader/>
     {JSON.stringify(session)}
     {JSON.stringify(pathname)}
 

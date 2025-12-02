@@ -31,7 +31,7 @@ import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export const AppHeader = () => {
+export const LandingHeader = () => {
   const features = [
     {
       title: "Find Tutors",
@@ -45,7 +45,7 @@ export const AppHeader = () => {
     },
     {
       title: "Secure Messaging",
-      description: "Direct, encrypted communication between parents and teachers.",
+      description: "Direct, encrypted communication between parents and tutors.",
       href: "/dashboard/messages",
     },
     {
@@ -99,18 +99,14 @@ export const AppHeader = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/about">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink href="/about" className={navigationMenuTriggerStyle()}>
                     About Us
                   </NavigationMenuLink>
-                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/pricing">
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink href="/pricing" className={navigationMenuTriggerStyle()}>
                     Pricing
                   </NavigationMenuLink>
-                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
@@ -215,6 +211,5 @@ export const AppHeader = () => {
     </section>
   );
 };
-
 
 

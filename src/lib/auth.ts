@@ -12,44 +12,71 @@ export const authOptions: NextAuthOptions = {
     // 2. Providers: Define the authentication methods
     providers: [
         CredentialsProvider({
+            id: 'credentials',
             name: 'Credentials',
-            // Define the fields expected for login
             credentials: {
                 email: { label: 'Email', type: 'email' },
                 password: { label: 'Password', type: 'password' },
+                // Add student login fields
+                studentId: { label: 'Student ID', type: 'text' },
+                isStudent: { label: 'Is Student', type: 'text' }
             },
 
-            // This is the core login function where you check the password hash
             async authorize(credentials, req) {
+                // Scenario A: Student Direct Login
+                if (credentials?.isStudent === 'true' && credentials.studentId && credentials.password) {
+                    const student = await prisma.student.findUnique({
+                        where: { studentId: credentials.studentId },
+                        include: { parent: true }
+                    });
+
+                    if (!student) return null;
+
+                    // In a real app, you should hash student passwords too. 
+                    // For MVP, if stored as plain text (as per plan), compare directly.
+                    // If hashed, use bcrypt.compare(credentials.password, student.password)
+                    if (student.password !== credentials.password) return null;
+
+                    return {
+                        id: student.id,
+                        name: student.name,
+                        email: null, // Students might not have email
+                        role: 'STUDENT',
+                        username: student.studentId,
+                        isVerified: true,
+                        createdAt: new Date(),
+                        // Custom field to indicate this is a student session
+                        isStudentSession: true,
+                        parentId: student.parentId
+                    };
+                }
+
+                // Scenario B: Parent/Tutor Login
                 if (!credentials?.email || !credentials?.password) {
                     return null;
                 }
 
-                // 2a. Find the user in PostgreSQL
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email },
-                    // Ensure you select the hashedPassword for comparison
                     select: { 
                         id: true, 
                         email: true, 
                         fullname: true, 
                         password: true, 
                         role: true,
-                        username: true,     // Added
-                        isVerified: true,   // Added
-                        createdAt: true     // Added
+                        username: true,     
+                        isVerified: true,   
+                        createdAt: true     
                     },
                 });
 
                 if (!user || !user.password) {
-                    return null; // User not found or no password set
+                    return null; 
                 }
 
-                // 2b. Compare the provided password with the stored hash
                 const isMatch = await bcrypt.compare(credentials.password, user.password);
 
                 if (isMatch) {
-                    // 2c. Successful login: Return the user object
                     return {
                         id: user.id,
                         email: user.email,
@@ -57,40 +84,54 @@ export const authOptions: NextAuthOptions = {
                         role: user.role, 
                         username: user.username,     
                         isVerified: user.isVerified ?? false, 
-                        createdAt: user.createdAt    
+                        createdAt: user.createdAt,
+                        isStudentSession: false
                     };
                 } else {
-                    return null; // Password mismatch
+                    return null; 
                 }
             },
         }),
-        // You would add GoogleProvider, etc., here if needed later
     ],
 
-    // 3. Callbacks: Inject the custom `role` into the session object
+    // 3. Callbacks
     callbacks: {
         async redirect({ url, baseUrl }) {
             return baseUrl
         },
-        // This runs when a JWT is created (on login)
-        jwt: async ({ token, user }) => {
+        async jwt({ token, user, trigger, session }) {
+            // Initial sign in
             if (user) {
-                // Attach the user's role to the JWT token
                 token.role = user.role;
                 token.username = user.username;     
                 token.isVerified = user.isVerified; 
-                token.createdAt = user.createdAt;   
+                token.createdAt = user.createdAt;
+                token.isStudentSession = user.isStudentSession;
+                token.parentId = user.parentId;
             }
+
+            // Handle Profile Switching (Update session via client-side update())
+            if (trigger === "update" && session?.activeStudentId) {
+                token.activeStudentId = session.activeStudentId;
+            }
+            if (trigger === "update" && session?.activeStudentId === null) {
+                delete token.activeStudentId;
+            }
+
             return token;
         },
-        // This runs when a session is created (on useSession())
-        session: async ({ session, token }) => {
+        async session({ session, token }) {
             if (session.user) {
-                // Attach the role from the token to the session object for client-side access
+                session.user.id = token.sub as string; // Ensure ID is passed
                 session.user.role = token.role as string;
                 session.user.username = token.username as string;
                 session.user.isVerified = token.isVerified as boolean;
                 session.user.createdAt = token.createdAt as Date;
+                
+                // Custom fields
+                session.user.isStudentSession = token.isStudentSession as boolean;
+                session.user.parentId = token.parentId as string | undefined;
+                session.user.activeStudentId = token.activeStudentId as string | undefined;
             }
             return session;
         },  
@@ -98,19 +139,19 @@ export const authOptions: NextAuthOptions = {
 
     // 4. Session Configuration
     session: {
-        strategy: 'jwt', // Use JWT for session management
+        strategy: 'jwt', 
         maxAge: 30 * 24 * 60 * 60, // 30 days
     },
 
-    // 5. Pages (Optional but recommended to use custom pages)
+    // 5. Pages
     pages: {
-        signIn: '/auth/login', // Redirects unauthenticated users to your custom login page
-        signOut: '/auth/logout', // Redirects authenticated users to your custom logout page
+        signIn: '/auth/login', 
+        signOut: '/auth/logout', 
         verifyRequest: 'auth/verify',
         newUser: '/auth/register',
         error: '/auth/error',
     },
 
     // 6. Secret
-    secret: process.env.NEXTAUTH_SECRET, // Requires the secret key in .env
+    secret: process.env.NEXTAUTH_SECRET, 
 };

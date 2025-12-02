@@ -1,7 +1,8 @@
 
 
-export const AppFooter = () => {
+
+export const LandingFooter = () => {
   return (
-    <div>AppFooter</div>
+    <div>LandingFooter</div>
   )
 }

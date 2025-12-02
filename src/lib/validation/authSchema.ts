@@ -7,7 +7,7 @@ export const registerSchema = z.object({
         .email("Invalid email address."),
     password: z.string()
         .min(8, "Password must be at least 8 characters."),
-    role: z.enum(['PARENT', 'TEACHER'] as const),
+    role: z.enum(['PARENT', 'TUTOR'] as const),
 });
 
 // Export the inferred TypeScript type for type safety across the app

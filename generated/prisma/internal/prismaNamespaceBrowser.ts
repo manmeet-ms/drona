@@ -55,6 +55,12 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   User: 'User',
+  TutorProfile: 'TutorProfile',
+  Resource: 'Resource',
+  Student: 'Student',
+  Class: 'Class',
+  Homework: 'Homework',
+  Report: 'Report',
   VerificationRequest: 'VerificationRequest'
 } as const
 
@@ -121,6 +127,7 @@ export const UserScalarFieldEnum = {
   role: 'role',
   phoneNumber: 'phoneNumber',
   isVerified: 'isVerified',
+  verificationDocument: 'verificationDocument',
   verficationToken: 'verficationToken',
   verficationTokenExpiry: 'verficationTokenExpiry',
   passwordResetToken: 'passwordResetToken',
@@ -130,6 +137,85 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const TutorProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  subjects: 'subjects',
+  bio: 'bio',
+  hourlyRate: 'hourlyRate',
+  location: 'location',
+  isVerified: 'isVerified'
+} as const
+
+export type TutorProfileScalarFieldEnum = (typeof TutorProfileScalarFieldEnum)[keyof typeof TutorProfileScalarFieldEnum]
+
+
+export const ResourceScalarFieldEnum = {
+  id: 'id',
+  tutorId: 'tutorId',
+  title: 'title',
+  type: 'type',
+  url: 'url',
+  content: 'content',
+  createdAt: 'createdAt'
+} as const
+
+export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
+
+
+export const StudentScalarFieldEnum = {
+  id: 'id',
+  parentId: 'parentId',
+  name: 'name',
+  studentId: 'studentId',
+  password: 'password',
+  age: 'age',
+  photo: 'photo',
+  school: 'school',
+  aspirations: 'aspirations',
+  interests: 'interests'
+} as const
+
+export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
+
+
+export const ClassScalarFieldEnum = {
+  id: 'id',
+  tutorId: 'tutorId',
+  studentId: 'studentId',
+  scheduledAt: 'scheduledAt',
+  status: 'status',
+  attendanceToken: 'attendanceToken'
+} as const
+
+export type ClassScalarFieldEnum = (typeof ClassScalarFieldEnum)[keyof typeof ClassScalarFieldEnum]
+
+
+export const HomeworkScalarFieldEnum = {
+  id: 'id',
+  classId: 'classId',
+  studentId: 'studentId',
+  title: 'title',
+  description: 'description',
+  dueDate: 'dueDate',
+  isCompleted: 'isCompleted'
+} as const
+
+export type HomeworkScalarFieldEnum = (typeof HomeworkScalarFieldEnum)[keyof typeof HomeworkScalarFieldEnum]
+
+
+export const ReportScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  title: 'title',
+  feedback: 'feedback',
+  grade: 'grade',
+  createdAt: 'createdAt'
+} as const
+
+export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
 
 
 export const VerificationRequestScalarFieldEnum = {

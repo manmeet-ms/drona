@@ -18,3 +18,22 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const ClassStatus = {
+  SCHEDULED: 'SCHEDULED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ClassStatus = (typeof ClassStatus)[keyof typeof ClassStatus]
+
+
+export const ResourceType = {
+  PDF: 'PDF',
+  LINK: 'LINK',
+  TEXT: 'TEXT',
+  IMAGE: 'IMAGE'
+} as const
+
+export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType]

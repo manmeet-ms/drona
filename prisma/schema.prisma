@@ -11,14 +11,21 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  // url      = env("DATABASE_URL")
 }
 
 enum UserRole {
   STUDENT
   PARENT
-  TEACHER
+  TUTOR
   USER // default when no data would be received
   ADMIN // For system oversight, managing profiles, etc. (future expansion)
+}
+
+enum ClassStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
 }
 
 model Ping {
@@ -64,6 +71,7 @@ model User {
   phoneNumber String?  @unique
 
   isVerified               Boolean?  @default(false)
+  verificationDocument     String?   // URL to uploaded ID proof
   verficationToken         String?
   verficationTokenExpiry   DateTime?
   passwordResetToken       String?
@@ -73,6 +81,103 @@ model User {
   updatedAt DateTime  @updatedAt
   accounts  Account[]
   sessions  Session[]
+  
+  // Role specific
+  tutorProfile TutorProfile?
+  students     Student[]     @relation("ParentStudents") // For Parents
+}
+
+model TutorProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  
+  subjects  String[]
+  bio       String?
+  hourlyRate Decimal?
+  location  String?
+  isVerified Boolean @default(false)
+  
+  classes   Class[]
+  resources Resource[]
+}
+
+model Resource {
+  id        String   @id @default(cuid())
+  tutorId   String
+  tutor     TutorProfile @relation(fields: [tutorId], references: [id])
+  
+  title     String
+  type      ResourceType
+  url       String?
+  content   String?
+  createdAt DateTime @default(now())
+}
+
+enum ResourceType {
+  PDF
+  LINK
+  TEXT
+  IMAGE
+}
+
+model Student {
+  id           String   @id @default(cuid())
+  parentId     String
+  parent       User     @relation("ParentStudents", fields: [parentId], references: [id])
+  
+  name         String
+  studentId    String   @unique // YYYY + 7 chars (e.g., 2024ABC1234)
+  password     String   // Simple password set by parent
+  
+  // Extended Profile
+  age          Int?
+  photo        String?
+  school       String?
+  aspirations  String?
+  interests    String[]
+  
+  classes      Class[]
+  homeworks    Homework[]
+  reports      Report[]
+}
+
+model Class {
+  id        String   @id @default(cuid())
+  tutorId   String
+  tutor     TutorProfile @relation(fields: [tutorId], references: [id])
+  studentId String
+  student   Student      @relation(fields: [studentId], references: [id])
+  
+  scheduledAt DateTime
+  status      ClassStatus @default(SCHEDULED)
+  attendanceToken String?
+  
+  homeworks   Homework[]
+}
+
+model Homework {
+  id        String   @id @default(cuid())
+  classId   String
+  class     Class    @relation(fields: [classId], references: [id])
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+  
+  title     String
+  description String?
+  dueDate   DateTime?
+  isCompleted Boolean @default(false)
+}
+
+model Report {
+  id        String   @id @default(cuid())
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+  
+  title     String
+  feedback  String
+  grade     String?
+  createdAt DateTime @default(now())
 }
 
 model VerificationRequest {

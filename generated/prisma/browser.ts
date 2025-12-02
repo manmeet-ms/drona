@@ -38,6 +38,36 @@ export type Session = Prisma.SessionModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model TutorProfile
+ * 
+ */
+export type TutorProfile = Prisma.TutorProfileModel
+/**
+ * Model Resource
+ * 
+ */
+export type Resource = Prisma.ResourceModel
+/**
+ * Model Student
+ * 
+ */
+export type Student = Prisma.StudentModel
+/**
+ * Model Class
+ * 
+ */
+export type Class = Prisma.ClassModel
+/**
+ * Model Homework
+ * 
+ */
+export type Homework = Prisma.HomeworkModel
+/**
+ * Model Report
+ * 
+ */
+export type Report = Prisma.ReportModel
+/**
  * Model VerificationRequest
  * 
  */
