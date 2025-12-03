@@ -77,7 +77,7 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
             <DropdownMenuTrigger>
                <Avatar>
             <AvatarImage src={`${session?.user?.image}`} />
-            <AvatarFallback>{session?.user?.name[0] }</AvatarFallback>
+            <AvatarFallback>{session?.user?.name?.[0] || "*"}</AvatarFallback>
           </Avatar>
 
             </DropdownMenuTrigger>
@@ -119,7 +119,7 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
             <DropdownMenuTrigger>
                <Avatar>
             <AvatarImage src={`${session?.user?.image}`} />
-            <AvatarFallback>{session?.user?.name[0] }</AvatarFallback>
+            <AvatarFallback>{session?.user?.name?.[0] || "*" }</AvatarFallback>
           </Avatar>
 
             </DropdownMenuTrigger>

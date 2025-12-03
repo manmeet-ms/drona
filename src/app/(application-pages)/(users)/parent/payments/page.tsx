@@ -5,7 +5,7 @@ import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/src/components/ui/card";
 import { IconLoader2, IconCreditCard, IconReceipt } from "@tabler/icons-react";
 import { toast } from "sonner";
-
+import { Badge } from "@/src/components/ui/badge"
 interface Payment {
   id: string;
   amount: string;

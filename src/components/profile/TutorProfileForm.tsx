@@ -30,7 +30,7 @@ import { toast } from "sonner";
 const tutorProfileSchema = z.object({
   bio: z.string().optional(),
   subjects: z.string().min(1, "At least one subject is required"), // Comma separated string for input
-  hourlyRate: z.coerce.number().min(0, "Hourly rate must be positive"),
+  hourlyRate: z.number().min(0, "Hourly rate must be positive"),
   location: z.string().optional(),
 });
 

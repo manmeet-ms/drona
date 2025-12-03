@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { number, z } from "zod";
 import axios from "axios";
 import { Button } from "@/src/components/ui/button";
 import {
@@ -28,7 +28,7 @@ import { IconLoader2, IconDeviceFloppy } from "@tabler/icons-react";
 import { toast } from "sonner";
 
 const studentProfileSchema = z.object({
-  age: z.coerce.number().optional(),
+  age: z.number().optional(),
   school: z.string().optional(),
   aspirations: z.string().optional(),
   interests: z.string().optional(), // Comma separated for input

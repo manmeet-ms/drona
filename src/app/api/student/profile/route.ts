@@ -5,7 +5,7 @@ import prisma from "@/src/lib/prisma";
 import { z } from "zod";
 
 const profileSchema = z.object({
-  age: z.coerce.number().optional(),
+  age: z.number().optional(),
   school: z.string().optional(),
   aspirations: z.string().optional(),
   interests: z.array(z.string()).optional(),

@@ -40,7 +40,7 @@ console.log(session);
     if (!session || session.user.role !== "TUTOR") {
       console.log({ session:session, error: "Unauthorized" });
       
-      return NextResponse.json("session error segment",{ session:session, error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json( { session:session, error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json();
