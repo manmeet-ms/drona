@@ -13,24 +13,37 @@ const createStudentSchema = z.object({
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-
-    if (!session || session.user.role !== "PARENT") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const body = await req.json();
+console.log(`
+  +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+  this logs the session
+  +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+  ${session}
+  +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+  `);
+  
+  if (!session || session.user.role !== "PARENT") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
+  const body = await req.json();
+  console.log(`
+    +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+    this logs the body
+    +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+    ${body}
+    +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+    `);
     const validatedData = createStudentSchema.parse(body);
-
-    // Generate Student ID: YYYY + 7 random chars
-    const year = new Date().getFullYear();
-    const randomChars = Math.random().toString(36).substring(2, 9).toUpperCase();
-    const studentId = `${year}${randomChars}`;
+console.log({
+        name: validatedData.name,
+        password: validatedData.password, // Storing plain text as per MVP plan
+        parentId: session.user.id,
+      });
 
     const student = await prisma.student.create({
       data: {
         name: validatedData.name,
         password: validatedData.password, // Storing plain text as per MVP plan
-        studentId: studentId,
         parentId: session.user.id,
       },
     });
@@ -38,7 +51,7 @@ export async function POST(req: Request) {
     return NextResponse.json(student, { status: 201 });
   } catch (error: any) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: (error as z.ZodError).issues }, { status: 400 });
     }
     console.error("Error creating student:", error);
     return NextResponse.json(

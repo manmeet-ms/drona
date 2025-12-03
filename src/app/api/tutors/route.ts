@@ -32,6 +32,11 @@ export async function GET(req: Request) {
         },
       },
     });
+    // const tutors = await prisma.user.findMany({
+    //   where: {
+    //     role:"TUTOR"
+    //   },
+    // });
 
     return NextResponse.json(tutors);
   } catch (error) {

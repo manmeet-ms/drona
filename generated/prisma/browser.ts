@@ -72,3 +72,18 @@ export type Report = Prisma.ReportModel
  * 
  */
 export type VerificationRequest = Prisma.VerificationRequestModel
+/**
+ * Model Query
+ * 
+ */
+export type Query = Prisma.QueryModel
+/**
+ * Model QueryResponse
+ * 
+ */
+export type QueryResponse = Prisma.QueryResponseModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel

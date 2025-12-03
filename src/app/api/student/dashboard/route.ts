@@ -31,7 +31,6 @@ export async function GET(req: Request) {
       where: { id: studentId },
       select: {
         name: true,
-        studentId: true,
         homeworks: {
           where: { isCompleted: false },
           orderBy: { dueDate: 'asc' },

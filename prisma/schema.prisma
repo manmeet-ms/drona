@@ -85,6 +85,8 @@ model User {
   // Role specific
   tutorProfile TutorProfile?
   students     Student[]     @relation("ParentStudents") // For Parents
+  queries      Query[]       @relation("ParentQueries")
+  payments     Payment[]     @relation("ParentPayments")
 }
 
 model TutorProfile {
@@ -100,6 +102,8 @@ model TutorProfile {
   
   classes   Class[]
   resources Resource[]
+  queries   Query[]
+  payments  Payment[]
 }
 
 model Resource {
@@ -127,7 +131,6 @@ model Student {
   parent       User     @relation("ParentStudents", fields: [parentId], references: [id])
   
   name         String
-  studentId    String   @unique // YYYY + 7 chars (e.g., 2024ABC1234)
   password     String   // Simple password set by parent
   
   // Extended Profile
@@ -140,6 +143,7 @@ model Student {
   classes      Class[]
   homeworks    Homework[]
   reports      Report[]
+  queries      Query[]
 }
 
 model Class {
@@ -189,4 +193,70 @@ model VerificationRequest {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
+}
+
+model Query {
+  id        String   @id @default(cuid())
+  content   String
+  
+  // Sender info
+  senderId  String
+  senderRole UserRole
+  
+  // Context
+  tutorId   String
+  tutor     TutorProfile @relation(fields: [tutorId], references: [id])
+  
+  studentId String?
+  student   Student?     @relation(fields: [studentId], references: [id])
+  
+  parentId  String?
+  parent    User?        @relation("ParentQueries", fields: [parentId], references: [id])
+  
+  context   QueryContext
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  responses QueryResponse[]
+}
+
+model QueryResponse {
+  id        String   @id @default(cuid())
+  queryId   String
+  query     Query    @relation(fields: [queryId], references: [id])
+  
+  content   String
+  
+  senderId  String
+  senderRole UserRole
+  
+  createdAt DateTime @default(now())
+}
+
+enum QueryContext {
+  TUTOR_PARENT
+  TUTOR_STUDENT
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  amount    Decimal
+  currency  String   @default("INR")
+  status    PaymentStatus @default(PENDING)
+  
+  parentId  String
+  parent    User     @relation("ParentPayments", fields: [parentId], references: [id])
+  
+  tutorId   String?
+  tutor     TutorProfile? @relation(fields: [tutorId], references: [id])
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
 }

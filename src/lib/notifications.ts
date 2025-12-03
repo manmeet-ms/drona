@@ -41,6 +41,6 @@ export const showNotification = async (payload: NotificationPayload) => {
       icon: payload.icon || "/icons/icon-192x192.png",
       image: payload.image,
       data: payload.data,
-    });
+    } as any);
   }
 };

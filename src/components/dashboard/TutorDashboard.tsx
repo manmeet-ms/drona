@@ -25,7 +25,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/src/components/ui/form";
-import { Loader2, Save } from "lucide-react";
+import { IconLoader2, IconDeviceFloppy } from "@tabler/icons-react";
 import { toast } from "sonner";
 
 const tutorProfileSchema = z.object({
@@ -39,7 +39,7 @@ type TutorProfileForm = z.infer<typeof tutorProfileSchema>;
 export default function TutorDashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
-  const form = useForm<TutorProfileForm>({
+  const form = useForm({
     resolver: zodResolver(tutorProfileSchema),
     defaultValues: {
       bio: "",
@@ -87,73 +87,14 @@ export default function TutorDashboard() {
   if (isLoading) {
     return (
       <div className="flex justify-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin" />
+        <IconLoader2 className="h-8 w-8 animate-spin" />
       </div>
     );
   }
 
   return (
     <div className="space-y-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Tutor Profile</CardTitle>
-          <CardDescription>Update your public profile information</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="bio"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Bio</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Tell us about your experience..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="subjects"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Subjects</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Math, Physics, Chemistry" {...field} />
-                    </FormControl>
-                    <FormDescription>Comma-separated list of subjects</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="hourlyRate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Hourly Rate (₹)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="500" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting && (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                <Save className="mr-2 h-4 w-4" />
-                Save Profile
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-
+      
       {/* Placeholder for Classes */}
       <Card>
         <CardHeader>

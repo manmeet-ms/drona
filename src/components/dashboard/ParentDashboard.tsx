@@ -23,7 +23,7 @@ import {
   FormMessage,
 } from "@/src/components/ui/form";
 import { useProfile } from "@/src/providers/ProfileProvider";
-import { Loader2, UserPlus, Users } from "lucide-react";
+import { IconLoader2, IconUserPlus, IconUsers } from "@tabler/icons-react";
 import { toast } from "sonner";
 
 const createStudentSchema = z.object({
@@ -85,7 +85,7 @@ export default function ParentDashboard() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <UserPlus className="h-5 w-5" />
+              <IconUserPlus className="h-5 w-5" />
               Add Student
             </CardTitle>
             <CardDescription>Create a profile for your child</CardDescription>
@@ -100,7 +100,7 @@ export default function ParentDashboard() {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Rahul Kumar" {...field} />
+                        <Input placeholder="Shivkumar Batalvi" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -121,7 +121,7 @@ export default function ParentDashboard() {
                 />
                 <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
                   {form.formState.isSubmitting && (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <IconLoader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
                   Create Profile
                 </Button>
@@ -134,7 +134,7 @@ export default function ParentDashboard() {
         <Card className="md:col-span-1 lg:col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
+              <IconUsers className="h-5 w-5" />
               Your Children
             </CardTitle>
             <CardDescription>Manage profiles and switch views</CardDescription>
@@ -142,7 +142,7 @@ export default function ParentDashboard() {
           <CardContent>
             {isLoading ? (
               <div className="flex justify-center p-4">
-                <Loader2 className="h-6 w-6 animate-spin" />
+                <IconLoader2 className="h-6 w-6 animate-spin" />
               </div>
             ) : students.length === 0 ? (
               <p className="text-muted-foreground text-center py-8">
@@ -158,7 +158,7 @@ export default function ParentDashboard() {
                     <div>
                       <p className="font-medium">{student.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        ID: {student.studentId}
+                        ID: {student.id}
                       </p>
                     </div>
                     <Button

@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuIcon } from "lucide-react";
+import { IconMenu2 } from "@tabler/icons-react";
 
 import {
   Accordion,
@@ -133,7 +133,7 @@ export const LandingHeader = () => {
             <Sheet>
               <SheetTrigger asChild className="lg:hidden">
                 <Button variant="outline" size="icon">
-                  <MenuIcon className="h-4 w-4" />
+                  <IconMenu2 className="h-4 w-4" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="top" className="max-h-screen overflow-auto">

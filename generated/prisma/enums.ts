@@ -12,7 +12,7 @@
 export const UserRole = {
   STUDENT: 'STUDENT',
   PARENT: 'PARENT',
-  TEACHER: 'TEACHER',
+  TUTOR: 'TUTOR',
   USER: 'USER',
   ADMIN: 'ADMIN'
 } as const
@@ -37,3 +37,20 @@ export const ResourceType = {
 } as const
 
 export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType]
+
+
+export const QueryContext = {
+  TUTOR_PARENT: 'TUTOR_PARENT',
+  TUTOR_STUDENT: 'TUTOR_STUDENT'
+} as const
+
+export type QueryContext = (typeof QueryContext)[keyof typeof QueryContext]
+
+
+export const PaymentStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

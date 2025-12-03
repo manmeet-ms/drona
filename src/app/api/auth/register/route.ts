@@ -1,4 +1,4 @@
-import prisma from "@/src/lib/prisma";
+
 import { NextResponse, NextRequest } from "next/server";
 import { registerSchema } from "@/src/lib/validation/authSchema";
 import bcrypt from "bcryptjs";
@@ -6,6 +6,8 @@ import { generateOTP } from "@/src/lib/tokens";
 import { sendVerificationEmail } from "@/src/helpers/sendVerificationEmail";
 import { writeFile } from "fs/promises";
 import path from "path";
+import { UserRole } from "@/generated/prisma/client";
+import prisma from "@/src/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,7 +15,11 @@ export async function POST(req: NextRequest) {
     const fullname = formData.get("fullname") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const role = formData.get("role") as any;
+    let role = formData.get("role") as string;
+
+    // Normalize role (handle legacy TEACHER if present)
+    if (role === "TEACHER") role = "TUTOR";
+
     const file = formData.get("verificationDocument") as File | null;
 
     // Validate fields
@@ -27,14 +33,14 @@ export async function POST(req: NextRequest) {
 
     // Check if user exists
     const existingUser = await prisma.user.findUnique({
-        where: { email },
+      where: { email },
     });
 
     if (existingUser) {
-        return NextResponse.json(
-            { message: "User with this email already exists" },
-            { status: 409 }
-        );
+      return NextResponse.json(
+        { message: "User with this email already exists" },
+        { status: 409 }
+      );
     }
 
     // Handle File Upload
@@ -42,12 +48,12 @@ export async function POST(req: NextRequest) {
     if (file && (role === "PARENT" || role === "TUTOR")) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
-      
+
       // Ensure uploads directory exists (mocking this part or assuming it works in dev)
       // For MVP, we'll just save to a public/uploads folder if possible, or just log it.
       // In Vercel, fs is read-only. We'll simulate by saving the NAME.
       // Ideally, upload to S3/Blob.
-      
+
       // For local dev, let's try to write to public/uploads
       const filename = `${Date.now()}-${file.name.replace(/\s/g, '_')}`;
       try {
@@ -56,7 +62,7 @@ export async function POST(req: NextRequest) {
         // But let's try-catch it.
         // await writeFile(path.join(uploadDir, filename), buffer);
         // verificationDocumentPath = `/uploads/${filename}`;
-        
+
         // Fallback for safety/simplicity: Just store the filename as a "proof"
         verificationDocumentPath = `mock_upload/${filename}`;
       } catch (e) {
@@ -74,6 +80,7 @@ export async function POST(req: NextRequest) {
       if (suffix > 50) break;
     }
 
+    // const hashedPassword = password // TODO: change before serving to public 
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = generateOTP();
     const verificationTokenExpiry = new Date(Date.now() + 3600 * 1000);
@@ -84,7 +91,7 @@ export async function POST(req: NextRequest) {
         email: email || null,
         password: hashedPassword,
         fullname,
-        role: role,
+        role:role as UserRole,
         verficationToken: verificationToken,
         verficationTokenExpiry: verificationTokenExpiry,
         isVerified: false,
@@ -92,11 +99,11 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    await sendVerificationEmail(email, username, verificationToken);
+    // await sendVerificationEmail(email, username, verificationToken);
 
     return NextResponse.json({ message: "User created. Please verify your email.", userId: user.id }, { status: 201 });
   } catch (err: any) {
-    console.error("Registration error:", err);
+    console.error("Registration error:", err.message);
     const message = err?.message || "Internal Server Error";
     return NextResponse.json({ message }, { status: 500 });
   }

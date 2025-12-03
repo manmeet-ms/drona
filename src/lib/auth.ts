@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
                 // Scenario A: Student Direct Login
                 if (credentials?.isStudent === 'true' && credentials.studentId && credentials.password) {
                     const student = await prisma.student.findUnique({
-                        where: { studentId: credentials.studentId },
+                        where: { id: credentials.studentId },
                         include: { parent: true }
                     });
 
@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
                         name: student.name,
                         email: null, // Students might not have email
                         role: 'STUDENT',
-                        username: student.studentId,
+                        username: student.id,
                         isVerified: true,
                         createdAt: new Date(),
                         // Custom field to indicate this is a student session

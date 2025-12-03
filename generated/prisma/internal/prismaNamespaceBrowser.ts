@@ -61,7 +61,10 @@ export const ModelName = {
   Class: 'Class',
   Homework: 'Homework',
   Report: 'Report',
-  VerificationRequest: 'VerificationRequest'
+  VerificationRequest: 'VerificationRequest',
+  Query: 'Query',
+  QueryResponse: 'QueryResponse',
+  Payment: 'Payment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -169,7 +172,6 @@ export const StudentScalarFieldEnum = {
   id: 'id',
   parentId: 'parentId',
   name: 'name',
-  studentId: 'studentId',
   password: 'password',
   age: 'age',
   photo: 'photo',
@@ -228,6 +230,48 @@ export const VerificationRequestScalarFieldEnum = {
 } as const
 
 export type VerificationRequestScalarFieldEnum = (typeof VerificationRequestScalarFieldEnum)[keyof typeof VerificationRequestScalarFieldEnum]
+
+
+export const QueryScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  senderId: 'senderId',
+  senderRole: 'senderRole',
+  tutorId: 'tutorId',
+  studentId: 'studentId',
+  parentId: 'parentId',
+  context: 'context',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QueryScalarFieldEnum = (typeof QueryScalarFieldEnum)[keyof typeof QueryScalarFieldEnum]
+
+
+export const QueryResponseScalarFieldEnum = {
+  id: 'id',
+  queryId: 'queryId',
+  content: 'content',
+  senderId: 'senderId',
+  senderRole: 'senderRole',
+  createdAt: 'createdAt'
+} as const
+
+export type QueryResponseScalarFieldEnum = (typeof QueryResponseScalarFieldEnum)[keyof typeof QueryResponseScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  parentId: 'parentId',
+  tutorId: 'tutorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

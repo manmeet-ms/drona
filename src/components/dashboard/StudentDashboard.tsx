@@ -22,8 +22,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog";
-import { Loader2, BookOpen, Calendar, QrCode } from "lucide-react";
+import { IconLoader2, IconBook, IconCalendar, IconQrcode } from "@tabler/icons-react";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 interface Homework {
   id: string;
@@ -63,6 +64,9 @@ interface StudentData {
 
 export default function StudentDashboard() {
   const [data, setData] = useState<StudentData | null>(null);
+  const session = useSession()
+  console.log(session);
+  
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
@@ -110,7 +114,7 @@ export default function StudentDashboard() {
   if (isLoading) {
     return (
       <div className="flex justify-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin" />
+        <IconLoader2 className="h-8 w-8 animate-spin" />
       </div>
     );
   }
@@ -125,7 +129,7 @@ export default function StudentDashboard() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">
-            Welcome back, {data.student.name}! 👋
+            Welcome back, {session.data?.user.name}! 👋
           </h2>
           <p className="text-muted-foreground">
             Here is your learning dashboard.
@@ -177,7 +181,7 @@ export default function StudentDashboard() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
+              <IconCalendar className="h-5 w-5" />
               Upcoming Classes
             </CardTitle>
             <CardDescription>Your scheduled sessions</CardDescription>
@@ -209,7 +213,7 @@ export default function StudentDashboard() {
                         }
                       }}
                     >
-                      <QrCode className="h-4 w-4 mr-2" />
+                      <IconQrcode className="h-4 w-4 mr-2" />
                       Show Code
                     </Button>
                   </div>
@@ -223,7 +227,7 @@ export default function StudentDashboard() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5" />
+              <IconBook className="h-5 w-5" />
               Pending Homework
             </CardTitle>
             <CardDescription>Assignments to complete</CardDescription>

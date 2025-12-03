@@ -1,12 +1,13 @@
-"use client";
 
+"use client";
+import { Badge } from "@/src/components/ui/badge"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/src/lib/utils";
 import { NavItem } from "@/src/config/navigation";
 import { Button } from "@/src/components/ui/button";
 import { IconLogout } from "@tabler/icons-react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 interface SidebarProps {
   items: NavItem[];
@@ -14,6 +15,8 @@ interface SidebarProps {
 
 export function Sidebar({ items }: SidebarProps) {
   const pathname = usePathname();
+  const session = useSession();
+console.log(session);
 
   return (
     <div className="hidden lg:flex h-screen w-64 flex-col fixed left-0 top-0 border-r bg-background">
@@ -28,7 +31,7 @@ export function Sidebar({ items }: SidebarProps) {
             const Icon = item.icon;
             const isActive = pathname === item.href;
             return (
-              <Link
+              <Link 
                 key={index}
                 href={item.href}
                 className={cn(

@@ -231,6 +231,8 @@ export type TutorProfileWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   classes?: Prisma.ClassListRelationFilter
   resources?: Prisma.ResourceListRelationFilter
+  queries?: Prisma.QueryListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type TutorProfileOrderByWithRelationInput = {
@@ -244,6 +246,8 @@ export type TutorProfileOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   classes?: Prisma.ClassOrderByRelationAggregateInput
   resources?: Prisma.ResourceOrderByRelationAggregateInput
+  queries?: Prisma.QueryOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type TutorProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -260,6 +264,8 @@ export type TutorProfileWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   classes?: Prisma.ClassListRelationFilter
   resources?: Prisma.ResourceListRelationFilter
+  queries?: Prisma.QueryListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "userId">
 
 export type TutorProfileOrderByWithAggregationInput = {
@@ -300,6 +306,8 @@ export type TutorProfileCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutTutorProfileInput
   classes?: Prisma.ClassCreateNestedManyWithoutTutorInput
   resources?: Prisma.ResourceCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileUncheckedCreateInput = {
@@ -312,6 +320,8 @@ export type TutorProfileUncheckedCreateInput = {
   isVerified?: boolean
   classes?: Prisma.ClassUncheckedCreateNestedManyWithoutTutorInput
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryUncheckedCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileUpdateInput = {
@@ -324,6 +334,8 @@ export type TutorProfileUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutTutorProfileNestedInput
   classes?: Prisma.ClassUpdateManyWithoutTutorNestedInput
   resources?: Prisma.ResourceUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTutorNestedInput
 }
 
 export type TutorProfileUncheckedUpdateInput = {
@@ -336,6 +348,8 @@ export type TutorProfileUncheckedUpdateInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   classes?: Prisma.ClassUncheckedUpdateManyWithoutTutorNestedInput
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUncheckedUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTutorNestedInput
 }
 
 export type TutorProfileCreateManyInput = {
@@ -502,6 +516,36 @@ export type TutorProfileUpdateOneRequiredWithoutClassesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TutorProfileUpdateToOneWithWhereWithoutClassesInput, Prisma.TutorProfileUpdateWithoutClassesInput>, Prisma.TutorProfileUncheckedUpdateWithoutClassesInput>
 }
 
+export type TutorProfileCreateNestedOneWithoutQueriesInput = {
+  create?: Prisma.XOR<Prisma.TutorProfileCreateWithoutQueriesInput, Prisma.TutorProfileUncheckedCreateWithoutQueriesInput>
+  connectOrCreate?: Prisma.TutorProfileCreateOrConnectWithoutQueriesInput
+  connect?: Prisma.TutorProfileWhereUniqueInput
+}
+
+export type TutorProfileUpdateOneRequiredWithoutQueriesNestedInput = {
+  create?: Prisma.XOR<Prisma.TutorProfileCreateWithoutQueriesInput, Prisma.TutorProfileUncheckedCreateWithoutQueriesInput>
+  connectOrCreate?: Prisma.TutorProfileCreateOrConnectWithoutQueriesInput
+  upsert?: Prisma.TutorProfileUpsertWithoutQueriesInput
+  connect?: Prisma.TutorProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TutorProfileUpdateToOneWithWhereWithoutQueriesInput, Prisma.TutorProfileUpdateWithoutQueriesInput>, Prisma.TutorProfileUncheckedUpdateWithoutQueriesInput>
+}
+
+export type TutorProfileCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.TutorProfileCreateWithoutPaymentsInput, Prisma.TutorProfileUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.TutorProfileCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.TutorProfileWhereUniqueInput
+}
+
+export type TutorProfileUpdateOneWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.TutorProfileCreateWithoutPaymentsInput, Prisma.TutorProfileUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.TutorProfileCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.TutorProfileUpsertWithoutPaymentsInput
+  disconnect?: Prisma.TutorProfileWhereInput | boolean
+  delete?: Prisma.TutorProfileWhereInput | boolean
+  connect?: Prisma.TutorProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TutorProfileUpdateToOneWithWhereWithoutPaymentsInput, Prisma.TutorProfileUpdateWithoutPaymentsInput>, Prisma.TutorProfileUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type TutorProfileCreateWithoutUserInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
@@ -511,6 +555,8 @@ export type TutorProfileCreateWithoutUserInput = {
   isVerified?: boolean
   classes?: Prisma.ClassCreateNestedManyWithoutTutorInput
   resources?: Prisma.ResourceCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileUncheckedCreateWithoutUserInput = {
@@ -522,6 +568,8 @@ export type TutorProfileUncheckedCreateWithoutUserInput = {
   isVerified?: boolean
   classes?: Prisma.ClassUncheckedCreateNestedManyWithoutTutorInput
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryUncheckedCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileCreateOrConnectWithoutUserInput = {
@@ -549,6 +597,8 @@ export type TutorProfileUpdateWithoutUserInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   classes?: Prisma.ClassUpdateManyWithoutTutorNestedInput
   resources?: Prisma.ResourceUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTutorNestedInput
 }
 
 export type TutorProfileUncheckedUpdateWithoutUserInput = {
@@ -560,6 +610,8 @@ export type TutorProfileUncheckedUpdateWithoutUserInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   classes?: Prisma.ClassUncheckedUpdateManyWithoutTutorNestedInput
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUncheckedUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTutorNestedInput
 }
 
 export type TutorProfileCreateWithoutResourcesInput = {
@@ -571,6 +623,8 @@ export type TutorProfileCreateWithoutResourcesInput = {
   isVerified?: boolean
   user: Prisma.UserCreateNestedOneWithoutTutorProfileInput
   classes?: Prisma.ClassCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileUncheckedCreateWithoutResourcesInput = {
@@ -582,6 +636,8 @@ export type TutorProfileUncheckedCreateWithoutResourcesInput = {
   location?: string | null
   isVerified?: boolean
   classes?: Prisma.ClassUncheckedCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryUncheckedCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileCreateOrConnectWithoutResourcesInput = {
@@ -609,6 +665,8 @@ export type TutorProfileUpdateWithoutResourcesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTutorProfileNestedInput
   classes?: Prisma.ClassUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTutorNestedInput
 }
 
 export type TutorProfileUncheckedUpdateWithoutResourcesInput = {
@@ -620,6 +678,8 @@ export type TutorProfileUncheckedUpdateWithoutResourcesInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   classes?: Prisma.ClassUncheckedUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUncheckedUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTutorNestedInput
 }
 
 export type TutorProfileCreateWithoutClassesInput = {
@@ -631,6 +691,8 @@ export type TutorProfileCreateWithoutClassesInput = {
   isVerified?: boolean
   user: Prisma.UserCreateNestedOneWithoutTutorProfileInput
   resources?: Prisma.ResourceCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileUncheckedCreateWithoutClassesInput = {
@@ -642,6 +704,8 @@ export type TutorProfileUncheckedCreateWithoutClassesInput = {
   location?: string | null
   isVerified?: boolean
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryUncheckedCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTutorInput
 }
 
 export type TutorProfileCreateOrConnectWithoutClassesInput = {
@@ -669,6 +733,8 @@ export type TutorProfileUpdateWithoutClassesInput = {
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTutorProfileNestedInput
   resources?: Prisma.ResourceUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTutorNestedInput
 }
 
 export type TutorProfileUncheckedUpdateWithoutClassesInput = {
@@ -680,6 +746,144 @@ export type TutorProfileUncheckedUpdateWithoutClassesInput = {
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUncheckedUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTutorNestedInput
+}
+
+export type TutorProfileCreateWithoutQueriesInput = {
+  id?: string
+  subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
+  bio?: string | null
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: string | null
+  isVerified?: boolean
+  user: Prisma.UserCreateNestedOneWithoutTutorProfileInput
+  classes?: Prisma.ClassCreateNestedManyWithoutTutorInput
+  resources?: Prisma.ResourceCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTutorInput
+}
+
+export type TutorProfileUncheckedCreateWithoutQueriesInput = {
+  id?: string
+  userId: string
+  subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
+  bio?: string | null
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: string | null
+  isVerified?: boolean
+  classes?: Prisma.ClassUncheckedCreateNestedManyWithoutTutorInput
+  resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutTutorInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTutorInput
+}
+
+export type TutorProfileCreateOrConnectWithoutQueriesInput = {
+  where: Prisma.TutorProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.TutorProfileCreateWithoutQueriesInput, Prisma.TutorProfileUncheckedCreateWithoutQueriesInput>
+}
+
+export type TutorProfileUpsertWithoutQueriesInput = {
+  update: Prisma.XOR<Prisma.TutorProfileUpdateWithoutQueriesInput, Prisma.TutorProfileUncheckedUpdateWithoutQueriesInput>
+  create: Prisma.XOR<Prisma.TutorProfileCreateWithoutQueriesInput, Prisma.TutorProfileUncheckedCreateWithoutQueriesInput>
+  where?: Prisma.TutorProfileWhereInput
+}
+
+export type TutorProfileUpdateToOneWithWhereWithoutQueriesInput = {
+  where?: Prisma.TutorProfileWhereInput
+  data: Prisma.XOR<Prisma.TutorProfileUpdateWithoutQueriesInput, Prisma.TutorProfileUncheckedUpdateWithoutQueriesInput>
+}
+
+export type TutorProfileUpdateWithoutQueriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.UserUpdateOneRequiredWithoutTutorProfileNestedInput
+  classes?: Prisma.ClassUpdateManyWithoutTutorNestedInput
+  resources?: Prisma.ResourceUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTutorNestedInput
+}
+
+export type TutorProfileUncheckedUpdateWithoutQueriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  classes?: Prisma.ClassUncheckedUpdateManyWithoutTutorNestedInput
+  resources?: Prisma.ResourceUncheckedUpdateManyWithoutTutorNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTutorNestedInput
+}
+
+export type TutorProfileCreateWithoutPaymentsInput = {
+  id?: string
+  subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
+  bio?: string | null
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: string | null
+  isVerified?: boolean
+  user: Prisma.UserCreateNestedOneWithoutTutorProfileInput
+  classes?: Prisma.ClassCreateNestedManyWithoutTutorInput
+  resources?: Prisma.ResourceCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryCreateNestedManyWithoutTutorInput
+}
+
+export type TutorProfileUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  userId: string
+  subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
+  bio?: string | null
+  hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: string | null
+  isVerified?: boolean
+  classes?: Prisma.ClassUncheckedCreateNestedManyWithoutTutorInput
+  resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutTutorInput
+  queries?: Prisma.QueryUncheckedCreateNestedManyWithoutTutorInput
+}
+
+export type TutorProfileCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.TutorProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.TutorProfileCreateWithoutPaymentsInput, Prisma.TutorProfileUncheckedCreateWithoutPaymentsInput>
+}
+
+export type TutorProfileUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.TutorProfileUpdateWithoutPaymentsInput, Prisma.TutorProfileUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.TutorProfileCreateWithoutPaymentsInput, Prisma.TutorProfileUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.TutorProfileWhereInput
+}
+
+export type TutorProfileUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.TutorProfileWhereInput
+  data: Prisma.XOR<Prisma.TutorProfileUpdateWithoutPaymentsInput, Prisma.TutorProfileUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type TutorProfileUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.UserUpdateOneRequiredWithoutTutorProfileNestedInput
+  classes?: Prisma.ClassUpdateManyWithoutTutorNestedInput
+  resources?: Prisma.ResourceUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUpdateManyWithoutTutorNestedInput
+}
+
+export type TutorProfileUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  classes?: Prisma.ClassUncheckedUpdateManyWithoutTutorNestedInput
+  resources?: Prisma.ResourceUncheckedUpdateManyWithoutTutorNestedInput
+  queries?: Prisma.QueryUncheckedUpdateManyWithoutTutorNestedInput
 }
 
 
@@ -690,11 +894,15 @@ export type TutorProfileUncheckedUpdateWithoutClassesInput = {
 export type TutorProfileCountOutputType = {
   classes: number
   resources: number
+  queries: number
+  payments: number
 }
 
 export type TutorProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   classes?: boolean | TutorProfileCountOutputTypeCountClassesArgs
   resources?: boolean | TutorProfileCountOutputTypeCountResourcesArgs
+  queries?: boolean | TutorProfileCountOutputTypeCountQueriesArgs
+  payments?: boolean | TutorProfileCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -721,6 +929,20 @@ export type TutorProfileCountOutputTypeCountResourcesArgs<ExtArgs extends runtim
   where?: Prisma.ResourceWhereInput
 }
 
+/**
+ * TutorProfileCountOutputType without action
+ */
+export type TutorProfileCountOutputTypeCountQueriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QueryWhereInput
+}
+
+/**
+ * TutorProfileCountOutputType without action
+ */
+export type TutorProfileCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
 
 export type TutorProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -733,6 +955,8 @@ export type TutorProfileSelect<ExtArgs extends runtime.Types.Extensions.Internal
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   classes?: boolean | Prisma.TutorProfile$classesArgs<ExtArgs>
   resources?: boolean | Prisma.TutorProfile$resourcesArgs<ExtArgs>
+  queries?: boolean | Prisma.TutorProfile$queriesArgs<ExtArgs>
+  payments?: boolean | Prisma.TutorProfile$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.TutorProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tutorProfile"]>
 
@@ -773,6 +997,8 @@ export type TutorProfileInclude<ExtArgs extends runtime.Types.Extensions.Interna
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   classes?: boolean | Prisma.TutorProfile$classesArgs<ExtArgs>
   resources?: boolean | Prisma.TutorProfile$resourcesArgs<ExtArgs>
+  queries?: boolean | Prisma.TutorProfile$queriesArgs<ExtArgs>
+  payments?: boolean | Prisma.TutorProfile$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.TutorProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TutorProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -788,6 +1014,8 @@ export type $TutorProfilePayload<ExtArgs extends runtime.Types.Extensions.Intern
     user: Prisma.$UserPayload<ExtArgs>
     classes: Prisma.$ClassPayload<ExtArgs>[]
     resources: Prisma.$ResourcePayload<ExtArgs>[]
+    queries: Prisma.$QueryPayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1194,6 +1422,8 @@ export interface Prisma__TutorProfileClient<T, Null = never, ExtArgs extends run
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   classes<T extends Prisma.TutorProfile$classesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TutorProfile$classesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   resources<T extends Prisma.TutorProfile$resourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TutorProfile$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  queries<T extends Prisma.TutorProfile$queriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TutorProfile$queriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QueryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.TutorProfile$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TutorProfile$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1671,6 +1901,54 @@ export type TutorProfile$resourcesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.ResourceScalarFieldEnum | Prisma.ResourceScalarFieldEnum[]
+}
+
+/**
+ * TutorProfile.queries
+ */
+export type TutorProfile$queriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Query
+   */
+  select?: Prisma.QuerySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Query
+   */
+  omit?: Prisma.QueryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QueryInclude<ExtArgs> | null
+  where?: Prisma.QueryWhereInput
+  orderBy?: Prisma.QueryOrderByWithRelationInput | Prisma.QueryOrderByWithRelationInput[]
+  cursor?: Prisma.QueryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QueryScalarFieldEnum | Prisma.QueryScalarFieldEnum[]
+}
+
+/**
+ * TutorProfile.payments
+ */
+export type TutorProfile$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

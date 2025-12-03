@@ -10,6 +10,7 @@ import { useSession } from 'next-auth/react';
 import { json } from 'zod';
 import LogoutButton from '../components/LogoutButton';
 import { usePathname } from 'next/navigation';
+import Head from 'next/head';
  
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -146,7 +147,7 @@ const   pathname=usePathname()
   
   return (
     <>
-    
+
     <LandingHeader/>
     {JSON.stringify(session)}
     {JSON.stringify(pathname)}

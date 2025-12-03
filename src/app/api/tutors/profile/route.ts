@@ -12,7 +12,7 @@ const tutorProfileSchema = z.object({
 
 export async function GET(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession();
 
     if (!session || session.user.role !== "TUTOR") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -34,26 +34,44 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession();
+console.log(session);
 
     if (!session || session.user.role !== "TUTOR") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      console.log({ session:session, error: "Unauthorized" });
+      
+      return NextResponse.json("session error segment",{ session:session, error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json();
+    console.log(body);
     const validatedData = tutorProfileSchema.parse(body);
 
-    const profile = await prisma.tutorProfile.upsert({
-      where: { userId: session.user.id },
-      update: {
-        bio: validatedData.bio,
-        subjects: validatedData.subjects,
-        hourlyRate: validatedData.hourlyRate,
-      },
-      create: {
-        userId: session.user.id,
-        bio: validatedData.bio,
-        subjects: validatedData.subjects,
-        hourlyRate: validatedData.hourlyRate,
+    const profile = await prisma.tutorProfile.upsert(
+      {
+        where: { userId: session.user.id },
+        update: {
+          bio: validatedData.bio,
+          subjects: validatedData.subjects,
+          hourlyRate: validatedData.hourlyRate,
+        },
+        create: {
+          userId: session.user.id,
+          bio: validatedData.bio,
+          subjects: validatedData.subjects,
+          hourlyRate: validatedData.hourlyRate,
+        }
+      })
+
+    return NextResponse.json(profile, { status: 201 });
+
   }
+  catch (error) {
+    console.log("try-catch error segment",error);
+    return NextResponse.json(error)
+
+  }
+
+
 }
+

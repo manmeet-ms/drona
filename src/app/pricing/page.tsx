@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, Info, X } from "lucide-react";
+import { IconCheck, IconChevronDown, IconInfoCircle, IconX } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
 import { Badge } from "@/src/components/ui/badge";
@@ -101,19 +101,19 @@ const featureMatrix = [
         inclusions: [
           {
             plan: "Free",
-            content: <Check className="size-4 lg:size-5" />,
+            content: <IconCheck className="size-4 lg:size-5" />,
           },
           {
             plan: "Basic",
-            content: <Check className="size-4 lg:size-5" />,
+            content: <IconCheck className="size-4 lg:size-5" />,
           },
           {
             plan: "Teams",
-            content: <Check className="size-4 lg:size-5" />,
+            content: <IconCheck className="size-4 lg:size-5" />,
           },
           {
             plan: "Enterprise",
-            content: <Check className="size-4 lg:size-5" />,
+            content: <IconCheck className="size-4 lg:size-5" />,
           },
         ],
       },
@@ -123,19 +123,19 @@ const featureMatrix = [
         inclusions: [
           {
             plan: "Free",
-            content: <X className="text-muted-foreground size-4 lg:size-5" />,
+            content: <IconX className="text-muted-foreground size-4 lg:size-5" />,
           },
           {
             plan: "Basic",
-            content: <X className="text-muted-foreground size-4 lg:size-5" />,
+            content: <IconX className="text-muted-foreground size-4 lg:size-5" />,
           },
           {
             plan: "Teams",
-            content: <X className="text-muted-foreground size-4 lg:size-5" />,
+            content: <IconX className="text-muted-foreground size-4 lg:size-5" />,
           },
           {
             plan: "Enterprise",
-            content: <Check className="size-5" />,
+            content: <IconCheck className="size-5" />,
           },
         ],
       },
@@ -145,11 +145,11 @@ const featureMatrix = [
         inclusions: [
           {
             plan: "Free",
-            content: <X className="text-muted-foreground size-4 lg:size-5" />,
+            content: <IconX className="text-muted-foreground size-4 lg:size-5" />,
           },
           {
             plan: "Basic",
-            content: <X className="text-muted-foreground size-4 lg:size-5" />,
+            content: <IconX className="text-muted-foreground size-4 lg:size-5" />,
           },
           {
             plan: "Teams",
@@ -243,7 +243,7 @@ const PricingPage = () => {
                               <h4 className="group flex min-h-6 items-center gap-x-1 font-medium">
                                 {feature.title}{" "}
                                 {feature.info && (
-                                  <Info className="text-muted-foreground group-hover:text-accent-foreground ml-2 size-4 cursor-pointer" />
+                                  <IconInfoCircle className="text-muted-foreground group-hover:text-accent-foreground ml-2 size-4 cursor-pointer" />
                                 )}
                               </h4>
                             </TooltipTrigger>
@@ -276,7 +276,7 @@ const PricingPage = () => {
                                   <h4 className="group flex items-center gap-x-1 text-sm font-medium md:text-base">
                                     {feature.title}
                                     {feature.info && (
-                                      <Info className="text-muted-foreground group-hover:text-accent-foreground ml-2 size-4 cursor-pointer" />
+                                      <IconInfoCircle className="text-muted-foreground group-hover:text-accent-foreground ml-2 size-4 cursor-pointer" />
                                     )}
                                   </h4>
                                 </TooltipTrigger>
@@ -287,7 +287,7 @@ const PricingPage = () => {
                                 )}
                               </Tooltip>
 
-                              <ChevronDown className='size-5 transition-transform group-data-[state="open"]:rotate-180' />
+                              <IconChevronDown className='size-5 transition-transform group-data-[state="open"]:rotate-180' />
                             </dt>
                           </CollapsibleTrigger>
                           <CollapsibleContent>

@@ -1,9 +1,18 @@
-need and do , next js routing refactoring 
-replacing teacher terminologi with tutor everuhre in backend frontend  
+to implement caching , ratelimitting, paginations to prevent excessive api calls. 
+
+
+routes refactor fe be consistency in api calling
+
+DUMMY DTA GENERATION FOR CLASSES atTENDANCE PER STUDENT , every model in schema
+
+50 parents , their child added as STUDENT min : 1 and maximum 3 children  per parent
+100 tutor profiles, their subjects the calleases per student , home work, reports, tutor parent query per parent , tuto student query per student  ,   
+need and do , next js routing refactoring , queries visible on tutot dashboard as well 
+
 
 
 profile (for crud prfile maintenance and updation)
-        teacher
+        tutor
         student
         parent
 student 
