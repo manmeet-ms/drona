@@ -32,6 +32,8 @@ function ParentLoginContent() {
       });
 
       if (result?.error) {
+        console.log(result?.error);
+        
         setError('Invalid email or password');
       } else {
         router.push(callbackUrl);

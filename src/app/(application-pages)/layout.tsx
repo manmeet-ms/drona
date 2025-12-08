@@ -34,7 +34,7 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
 
   // Exclude Auth pages from this layout structure
   if (pathname?.startsWith("/auth")) {
-      return <>{children}</>;
+    return <>{children}</>;
   }
 
   if (status === "loading") {
@@ -71,39 +71,39 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
       <div className="lg:pl-64 pb-16 lg:pb-0">
         {/* Mobile Header */}
         <div className="lg:hidden p-4 border-b flex items-center justify-between bg-background sticky top-0 z-40">
-           <span className="font-bold text-lg"><Link href={"/"}>Drona</Link></span>
+          <span className="font-bold text-lg"><Link href={"/"}>Drona</Link></span>
           <div className="flex"> <ModeToggle />
-           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger>
-               <Avatar>
-            <AvatarImage src={`${session?.user?.image}`} />
-            <AvatarFallback>{session?.user?.name?.[0] || "*"}</AvatarFallback>
-          </Avatar>
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src={`${session?.user?.image}`} />
+                  <AvatarFallback>{session?.user?.name?.[0] || "*"}</AvatarFallback>
+                </Avatar>
 
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel> <div className="flex flex-col items-start gap-0.5">
-             <span className="text-sm font-medium">{session?.user?.name}</span>
-             <span className="text-xs font-medium text-muted-foreground">{session?.user?.role}</span>
-          </div></DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile page demo link</DropdownMenuItem>
-              
-            </DropdownMenuContent>
-          </DropdownMenu></div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel> <div className="flex flex-col items-start gap-0.5">
+                  <span className="text-sm font-medium">{session?.user?.name}</span>
+                  <span className="text-xs font-medium text-muted-foreground">{session?.user?.role}</span>
+                </div></DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile page demo link</DropdownMenuItem>
+
+              </DropdownMenuContent>
+            </DropdownMenu></div>
         </div>
 
         {/* Desktop Header / Top Bar */}
         <div className="hidden lg:flex h-16 items-center justify-end gap-4 border-b px-6">
-<Badge variant="outline"> 
-
-  
-  <div  className={cn(status === "authenticated" ? "bg-green-500" : "bg-red-500", "size-2 rounded-full ")} ></div> 
+          <Badge variant="outline">
 
 
-   {status}</Badge>
+            <div className={cn(status === "authenticated" ? "bg-green-500" : "bg-red-500", "size-2 rounded-full ")} ></div>
 
-            {isStudentView && (
+
+            {status}</Badge>
+
+          {isStudentView && (
             <Button
               onClick={exitStudentView}
               variant="destructive"
@@ -113,45 +113,45 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
             </Button>
           )}
           <ModeToggle />
- 
+
 
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger>
-               <Avatar>
-            <AvatarImage src={`${session?.user?.image}`} />
-            <AvatarFallback>{session?.user?.name?.[0] || "*" }</AvatarFallback>
-          </Avatar>
+              <Avatar>
+                <AvatarImage src={`${session?.user?.image}`} />
+                <AvatarFallback>{session?.user?.name?.[0] || "*"}</AvatarFallback>
+              </Avatar>
 
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel> <div className="flex flex-col items-start gap-0.5">
-             <span className="text-sm font-medium">{session?.user?.name}</span>
-             <span className="text-xs font-medium text-muted-foreground">{session?.user?.role}</span>
-          </div></DropdownMenuLabel>
+                <span className="text-sm font-medium">{session?.user?.name}</span>
+                <span className="text-xs font-medium text-muted-foreground">{session?.user?.role}</span>
+              </div></DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile page demo link</DropdownMenuItem>
-              
+
             </DropdownMenuContent>
           </DropdownMenu>
-         
+
 
         </div>
 
         <main className="container mx-auto p-6">
-            {/* Mobile "Exit Student View" Button */}
-            {isStudentView && (
-                <div className="lg:hidden mb-4">
-                     <Button
-                        onClick={exitStudentView}
-                        variant="destructive"
-                        size="sm"
-                        className="w-full"
-                        >
-                        Exit Student View
-                    </Button>
-                </div>
-            )}
-            {children}
+          {/* Mobile "Exit Student View" Button */}
+          {isStudentView && (
+            <div className="lg:hidden mb-4">
+              <Button
+                onClick={exitStudentView}
+                variant="destructive"
+                size="sm"
+                className="w-full"
+              >
+                Exit Student View
+              </Button>
+            </div>
+          )}
+          {children}
         </main>
       </div>
 

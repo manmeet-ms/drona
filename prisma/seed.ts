@@ -1,6 +1,7 @@
-import prisma from '@/src/lib/prisma';
+import prisma from '../src/lib/prisma';
 import {  UserRole, ClassStatus, ResourceType } from '../generated/prisma/client';
 import { faker } from '@faker-js/faker';
+import bcrypt from 'bcryptjs';
 
 
 
@@ -22,26 +23,29 @@ async function main() {
   // await prisma.user.deleteMany();
  
   // 1. Create Tutors
-  console.log('Creating 100 Tutors...');
-  const tutors: any[] = [];
-  for (let i = 0; i < 100; i++) {
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
-    const email = faker.internet.email({ firstName, lastName });
+  const numOfHardcodedTutors=5;
+  const numOfHardcodedParent=2;
+ 
+  console.log(`Creating ${numOfHardcodedTutors} Tutors...`);
+  const tutors = [];
+  for (let i = 0; i < numOfHardcodedTutors; i++) {
 
     const user = await prisma.user.create({
       data: {
-        fullname: `${firstName} ${lastName}`, // Fixed: name -> fullname
-        username: email,
-        password: 'password123',
+        fullname: faker.person.fullName(), // Fixed: name -> fullname
+        username: faker.internet.username().toLowerCase(),
+        email: faker.internet.email().toLowerCase(),
+        password: await bcrypt.hash('password123',10),
         role: UserRole.TUTOR,
+        phoneNumber:faker.phone.number(),
         tutorProfile: {
           create: {
-            bio: faker.person.bio(),
-            subjects: faker.helpers.arrayElements(SUBJECTS, { min: 1, max: 3 }),
-            hourlyRate: parseFloat(faker.commerce.price({ min: 300, max: 2000 })),
-            location: faker.helpers.arrayElement(LOCATIONS),
-            isVerified: faker.datatype.boolean(0.8),
+            bio: faker.lorem.sentences({min:2,max:5}),
+            subjects: faker.helpers.arrayElements(SUBJECTS, { min: 3, max: 8 }),
+            hourlyRate: faker.number.int({ min: 500, max: 2000, multipleOf: 10 }),
+            location: faker.location.state(),
+            // location: faker.helpers.arrayElement(LOCATIONS),
+            isVerified: faker.datatype.boolean(0.5),
           }
         }
       },
@@ -57,16 +61,16 @@ async function main() {
   const parents = [];
   const students = [];
 
-  for (let i = 0; i < 50; i++) {
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
-    const email = faker.internet.email({ firstName, lastName });
-
+  for (let i = 0; i < numOfHardcodedParent; i++) {
+      const lastName = faker.person.lastName();
+ 
     const parent = await prisma.user.create({
       data: {
-        fullname: `${firstName} ${lastName}`, // Fixed: name -> fullname
-        username: email,
-        password: 'password123',
+        fullname: faker.person.fullName(), // Fixed: name -> fullname
+        username: faker.internet.username().toLowerCase(),
+        email: faker.internet.email().toLowerCase(),
+        phoneNumber:faker.phone.number(),
+        password: await bcrypt.hash('password123',10),
         role: UserRole.PARENT,
       }
     });
@@ -80,7 +84,7 @@ async function main() {
         data: {
           name: `${studentName} ${lastName}`,
           parentId: parent.id,
-          password: 'password123',
+          password: await bcrypt.hash('password123',10),
           age: faker.number.int({ min: 6, max: 18 }),
           school: faker.company.name() + ' School',
           interests: faker.helpers.arrayElements(['Sports', 'Music', 'Coding', 'Art', 'Reading'], { min: 1, max: 3 }),
@@ -158,7 +162,7 @@ async function main() {
             tutorId: tutorUser.tutorProfile.id,
             studentId: student.id,
             parentId: student.parentId,
-            context: context as any,
+            context: context,
           }
         });
 

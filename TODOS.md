@@ -1,5 +1,12 @@
-to implement caching , ratelimitting, paginations to prevent excessive api calls. 
+pamyent system comisoon vs no direct paymeent, cash option marketplace fee, 
+call now nutton, profile card enhancement 
+do not allow to bookclass when student view is open
+share tutor proldide code , abasic text inforand link to profile 
 
+move the compoents to companent/landing.tsx to prevent confusion in the main landing page.
+to implement caching , ratelimitting, paginations to prevent excessive api calls. 
+        
+add shadcn breadcrumbs to show path where user currently is 
 
 routes refactor fe be consistency in api calling
 

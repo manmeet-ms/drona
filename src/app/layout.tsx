@@ -16,21 +16,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className='px-4 py-2' >
-         <Providers session={session}>
-            {children}
-         </Providers>
-         <script
-            dangerouslySetInnerHTML={{
-              __html: `
+      <body className=' ' >
+        <Providers session={session}>
+          {children}
+        </Providers>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register('/sw.js');
                   });
                 }
               `,
-            }}
-          />
+          }}
+        />
       </body>
     </html>
   );

@@ -60,20 +60,19 @@ export const LandingHeader = () => {
   console.log(session, pathname);
 
   return (
-    <section className="py-4">
+    <section className="py-2 px-6 sticky  top-0 z-50 w-full border-b border-accent/40 rounded-b-2xl  bg-background/95 backdrop-blur-2xl supports-backdrop-filter:bg-background/60">
 
-      <div className="container">
         <nav className="flex items-center justify-between">
           <Link
             href="/"
             className="flex items-center gap-2"
           >
 
-            <span className="text-lg font-semibold tracking-tighter">
+            <span className="text-lg  tracking-tighter">
               Drona
             </span>
           </Link>
-          <NavigationMenu className="hidden lg:block">
+          <NavigationMenu className="hidden  lg:block">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Features</NavigationMenuTrigger>
@@ -86,7 +85,7 @@ export const LandingHeader = () => {
                         className="hover:bg-muted/70 rounded-md p-3 transition-colors"
                       >
                         <div key={feature.title}>
-                          <p className="text-foreground mb-1 font-semibold">
+                          <p className="text-foreground mb-1 ">
                             {feature.title}
                           </p>
                           <p className="text-muted-foreground text-sm">
@@ -100,17 +99,17 @@ export const LandingHeader = () => {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink href="/about" className={navigationMenuTriggerStyle()}>
-                    About Us
-                  </NavigationMenuLink>
+                  About Us
+                </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                  <NavigationMenuLink href="/pricing" className={navigationMenuTriggerStyle()}>
-                    Pricing
-                  </NavigationMenuLink>
+                <NavigationMenuLink href="/tutors" className={navigationMenuTriggerStyle()}>
+                  Find Tutors
+                </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  href="#"
+                  href="/contact"
                   className={navigationMenuTriggerStyle()}
                 >
                   Contact
@@ -119,16 +118,17 @@ export const LandingHeader = () => {
             </NavigationMenuList>
           </NavigationMenu>
 
-          
-                  {session.status === "authenticated" ? <LogoutButton /> : <div className="hidden items-center gap-4 lg:flex">
-           <Button><Link href={"/auth/register"}>Register</Link></Button>
-                    <Button variant="outline"><Link href={"/auth/login"}>Login</Link></Button>
-                 
-          </div>
-                  }
 
-         
-          <div className="flex gap-1">
+          {/* {session.status === "authenticated" ? <LogoutButton /> : <div className="hidden items-center gap-4 lg:flex">
+            <Button><Link href={"/auth/register"}>Register</Link></Button>
+            <Button variant="outline"><Link href={"/auth/login"}>Login</Link></Button>
+            
+            </div>
+            } */}
+
+
+          <div className="flex gap-2 items-center ">
+            <Button size="sm" variant="secondary" ><Link href={"/auth/register"}>Get Started</Link></Button>
             <ModeToggle />
             <Sheet>
               <SheetTrigger asChild className="lg:hidden">
@@ -140,16 +140,16 @@ export const LandingHeader = () => {
                 <SheetHeader>
                   <SheetTitle>
                     <a
-                      href="https://www.shadcnblocks.com"
+                      href="#"
                       className="flex items-center gap-2"
                     >
                       <img
-                        src="https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg"
+                        src="#"
                         className="max-h-8"
-                        alt="Shadcn UI Navbar"
+                        alt="Drona"
                       />
-                      <span className="text-lg font-semibold tracking-tighter">
-                        Shadcnblocks.com
+                      <span className="text-lg  tracking-tighter">
+                        Drona
                       </span>
                     </a>
                   </SheetTitle>
@@ -169,7 +169,7 @@ export const LandingHeader = () => {
                               className="hover:bg-muted/70 rounded-md p-3 transition-colors"
                             >
                               <div key={feature.title}>
-                                <p className="text-foreground mb-1 font-semibold">
+                                <p className="text-foreground mb-1 ">
                                   {feature.title}
                                 </p>
                                 <p className="text-muted-foreground text-sm">
@@ -183,23 +183,24 @@ export const LandingHeader = () => {
                     </AccordionItem>
                   </Accordion>
                   <div className="flex flex-col gap-6">
-                    <Link href="/about" className="font-medium">
+                    <Link href="/about" className="">
                       About Us
                     </Link>
-                    <Link href="/pricing" className="font-medium">
+                    <Link href="/pricing" className="">
                       Pricing
                     </Link>
-                    <Link href="#" className="font-medium">
+                    <Link href="#" className="">
                       Contact
                     </Link>
                   </div>
 
 
-                  {session.status === "authenticated" ? <LogoutButton /> : <div className="mt-6 flex flex-col gap-4">
+                  <Button><Link href={"/auth/register"}>Schedule a demo</Link></Button>
+                  {/* {session.status === "authenticated" ? <LogoutButton /> : <div className="mt-6 flex flex-col gap-4">
                     <Button><Link href={"/auth/register"}>Register</Link></Button>
                     <Button variant="outline"><Link href={"/auth/login"}>Login</Link></Button>
                   </div>
-                  }
+                  } */}
 
 
                 </div>
@@ -207,7 +208,6 @@ export const LandingHeader = () => {
             </Sheet>
           </div>
         </nav>
-      </div>
     </section>
   );
 };

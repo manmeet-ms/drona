@@ -20,7 +20,7 @@ export default function LoginPage() {
               Login as Parent
             </Button>
           </Link>
-          
+
           <Link href="/auth/login/tutor" className="block">
             <Button variant="outline" className="w-full h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
               <IconSchool className="h-6 w-6" />

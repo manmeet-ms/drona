@@ -28,6 +28,7 @@ export async function GET(req: Request) {
         user: {
           select: {
             fullname: true,
+            phoneNumber: true,
           },
         },
       },

@@ -1,11 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/src/components/ui/card";
+import { User } from "@/generated/prisma/client";
 import { Button } from "@/src/components/ui/button";
-import { IconLoader2, IconMessage, IconUser, IconPlus } from "@tabler/icons-react";
-import { toast } from "sonner";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +12,6 @@ import {
   DialogTrigger,
 } from "@/src/components/ui/dialog";
 import { Label } from "@/src/components/ui/label";
-import { Textarea } from "@/src/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -27,10 +23,15 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetFooter,
 } from "@/src/components/ui/sheet";
+import { Textarea } from "@/src/components/ui/textarea";
+import { IconLoader2, IconMessage, IconPlus, IconUser } from "@tabler/icons-react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface QueryResponse {
   id: string;
@@ -53,10 +54,10 @@ export default function ParentQueryPage() {
   const [queries, setQueries] = useState<Query[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  
+
   const [newQueryContent, setNewQueryContent] = useState("");
-  const [tutorId, setTutorId] = useState(""); 
-  const [tutors, setTutors] = useState<any[]>([]);
+  const [tutorId, setTutorId] = useState("");
+  const [tutors, setTutors] = useState<User[]>([]);
 
   const [selectedQuery, setSelectedQuery] = useState<Query | null>(null);
   const [replyContent, setReplyContent] = useState("");
@@ -76,7 +77,7 @@ export default function ParentQueryPage() {
       const response = await axios.get("/api/queries/recipients?context=TUTOR_PARENT");
       setTutors(response.data);
     } catch (error) {
-      console.error("Failed to fetch tutors");
+      console.error(`${error} Failed to fetch tutors`);
     }
   };
 
@@ -85,7 +86,7 @@ export default function ParentQueryPage() {
       const response = await axios.get("/api/queries");
       setQueries(response.data);
     } catch (error) {
-      toast.error("Failed to fetch queries");
+      toast.error(`${error} Failed to fetch queries`);
     } finally {
       setIsLoading(false);
     }
@@ -109,7 +110,7 @@ export default function ParentQueryPage() {
       setTutorId("");
       fetchQueries();
     } catch (error) {
-      toast.error("Failed to send query");
+      toast.error(`${error} Failed to send query`);
     }
   };
 
@@ -123,15 +124,15 @@ export default function ParentQueryPage() {
       });
       toast.success("Reply sent!");
       setReplyContent("");
-      
+
       const response = await axios.get("/api/queries");
       setQueries(response.data);
-      
+
       const updatedQuery = response.data.find((q: Query) => q.id === selectedQuery.id);
       if (updatedQuery) setSelectedQuery(updatedQuery);
 
     } catch (error) {
-      toast.error("Failed to send reply");
+      toast.error(`${error} Failed to send reply`);
     }
   };
 
@@ -140,7 +141,7 @@ export default function ParentQueryPage() {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">Queries</h1>
-          <p className="text-muted-foreground">Discuss with your child's tutors</p>
+          <p className="text-muted-foreground">Discuss with your child&apos;s tutors</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
@@ -157,8 +158,8 @@ export default function ParentQueryPage() {
             <div className="space-y-4 py-4">
               <div className="space-y-2">
                 <Label>Tutor</Label>
-                <Select 
-                  value={tutorId} 
+                <Select
+                  value={tutorId}
                   onValueChange={setTutorId}
                 >
                   <SelectTrigger>
@@ -167,7 +168,7 @@ export default function ParentQueryPage() {
                   <SelectContent>
                     {tutors.map((tutor) => (
                       <SelectItem key={tutor.id} value={tutor.id}>
-                        {tutor.name}
+                        {tutor.fullname}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -176,13 +177,13 @@ export default function ParentQueryPage() {
 
               <div className="space-y-2">
                 <Label>Message</Label>
-                <Textarea 
-                  placeholder="Type your message here..." 
+                <Textarea
+                  placeholder="Type your message here..."
                   value={newQueryContent}
                   onChange={(e) => setNewQueryContent(e.target.value)}
                 />
               </div>
-              
+
               <Button onClick={handleCreateQuery} className="w-full">Send Query</Button>
             </div>
           </DialogContent>
@@ -244,7 +245,7 @@ export default function ParentQueryPage() {
               With {selectedQuery?.tutor?.user.fullname}
             </SheetDescription>
           </SheetHeader>
-          
+
           <div className="flex-1 overflow-y-auto py-4 space-y-4">
             {selectedQuery && (
               <>
@@ -275,8 +276,8 @@ export default function ParentQueryPage() {
 
           <SheetFooter className="pt-4 border-t">
             <div className="w-full space-y-2">
-              <Textarea 
-                placeholder="Type your reply..." 
+              <Textarea
+                placeholder="Type your reply..."
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 className="min-h-[80px]"

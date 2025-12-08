@@ -16,7 +16,7 @@ interface SidebarProps {
 export function Sidebar({ items }: SidebarProps) {
   const pathname = usePathname();
   const session = useSession();
-console.log(session);
+  console.log(session);
 
   return (
     <div className="hidden lg:flex h-screen w-64 flex-col fixed left-0 top-0 border-r bg-background">
@@ -31,7 +31,7 @@ console.log(session);
             const Icon = item.icon;
             const isActive = pathname === item.href;
             return (
-              <Link 
+              <Link
                 key={index}
                 href={item.href}
                 className={cn(
@@ -47,13 +47,13 @@ console.log(session);
         </nav>
       </div>
       <div className="p-4 border-t">
-        <Button 
-            variant="ghost" 
-            className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
-            onClick={() => signOut({ callbackUrl: '/' })}
+        <Button
+          variant="ghost"
+          className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
+          onClick={() => signOut({ callbackUrl: '/' })}
         >
-            <IconLogout className="h-4 w-4" />
-            Logout
+          <IconLogout className="h-4 w-4" />
+          Logout
         </Button>
       </div>
     </div>
