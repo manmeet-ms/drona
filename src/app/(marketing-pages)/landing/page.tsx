@@ -66,7 +66,7 @@ interface Hero1Props {
 }
 
 export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
-  , heading = "The Perfect Connection for Your child&apos;s Education"
+  , heading = "The Perfect Connection for Your child's Education"
   , description = "Drona bridges the gap between passionate tutors and parents seeking quality education. We provide a secure, transparent platform dedicated to empowering the next generation through authentic learning connections."
   , buttons = {
     primary: {
@@ -118,7 +118,7 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
               )}
             </div>
           </div>
-          <div className="h-screen w-screen   object-cover">
+          <div className="h-screen w-screen hidden sm:block object-cover">
             <Dithering
               style={{ height: "100%", width: "100%" }}
               colorBack={true ? "#040710" : "hsla(0, 0%, 95%,0%)"}

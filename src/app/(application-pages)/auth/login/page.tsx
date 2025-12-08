@@ -13,23 +13,23 @@ export default function LoginPage() {
           <CardTitle className="text-2xl">Welcome to Drona</CardTitle>
           <CardDescription>Choose your login type</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-2">
           <Link href="/auth/login/parent" className="block">
-            <Button variant="outline" className="w-full h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
+            <Button variant="outline" className="w-full  rounded-md  h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
               <IconUser className="h-6 w-6" />
               Login as Parent
             </Button>
           </Link>
 
           <Link href="/auth/login/tutor" className="block">
-            <Button variant="outline" className="w-full h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
+            <Button variant="outline" className="w-full  rounded-md  h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
               <IconSchool className="h-6 w-6" />
               Login as Tutor
             </Button>
           </Link>
 
           <Link href="/auth/login/student" className="block">
-            <Button variant="outline" className="w-full h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
+            <Button variant="outline" className="w-full  rounded-md  h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
               <IconBook className="h-6 w-6" />
               Login as Student
             </Button>
@@ -38,7 +38,7 @@ export default function LoginPage() {
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-500">
             Don't have an account?{' '}
-            <Link href="/auth/register" className="text-blue-600 hover:underline">
+            <Link href="/auth/register" className="text-primary hover:underline">
               Sign up
             </Link>
           </p>

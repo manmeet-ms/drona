@@ -13,7 +13,7 @@ function ParentLoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -33,7 +33,7 @@ function ParentLoginContent() {
 
       if (result?.error) {
         console.log(result?.error);
-        
+
         setError('Invalid email or password');
       } else {
         router.push(callbackUrl);
@@ -69,7 +69,7 @@ function ParentLoginContent() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+                <Link href="/auth/forgot-password" className="text-sm text-primary hover:underline">
                   Forgot password?
                 </Link>
               </div>
@@ -90,13 +90,13 @@ function ParentLoginContent() {
         <CardFooter className="flex justify-center flex-col gap-2">
           <p className="text-sm text-gray-500">
             Don't have an account?{' '}
-            <Link href="/auth/register/parent" className="text-blue-600 hover:underline">
+            <Link href="/auth/register/parent" className="text-primary hover:underline">
               Register as Parent
             </Link>
           </p>
-           <Link href="/auth/login" className="text-sm text-muted-foreground hover:underline">
-              Back to Login Options
-            </Link>
+          <Link href="/auth/login" className="text-sm text-muted-foreground hover:underline">
+            Back to Login Options
+          </Link>
         </CardFooter>
       </Card>
     </div>

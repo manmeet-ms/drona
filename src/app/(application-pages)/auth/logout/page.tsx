@@ -11,8 +11,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from "next/link";
 
 function LogoutContent() {
-  
-    
+
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
@@ -22,12 +22,12 @@ function LogoutContent() {
           <CardDescription>Sign in back to your account to continue</CardDescription>
         </CardHeader>
         <CardContent>
-           
+
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-500">
             Login again?{' '}
-            <Link href="/auth/login" className="text-blue-600 hover:underline">
+            <Link href="/auth/login" className="text-primary hover:underline">
               Click here
             </Link>
           </p>

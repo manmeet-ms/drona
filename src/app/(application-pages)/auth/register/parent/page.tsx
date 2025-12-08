@@ -14,10 +14,10 @@ import Link from 'next/link';
 
 export default function ParentRegisterPage() {
     const router = useRouter();
-    const { 
-        register, 
-        handleSubmit, 
-        formState: { errors, isSubmitting } 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting }
     } = useForm<RegisterInput>({
         resolver: zodResolver(registerSchema),
         defaultValues: { fullname: '', email: '', password: '', role: 'PARENT' }
@@ -57,7 +57,7 @@ export default function ParentRegisterPage() {
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                        
+
                         <div className="space-y-2">
                             <Label htmlFor="fullname">Full Name</Label>
                             <Input id="fullname" placeholder="John Doe" {...register('fullname')} />
@@ -69,7 +69,7 @@ export default function ParentRegisterPage() {
                             <Input id="email" type="email" placeholder="m@example.com" {...register('email')} />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
-                        
+
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
                             <Input id="password" type="password" placeholder="********" {...register('password')} />
@@ -78,11 +78,11 @@ export default function ParentRegisterPage() {
 
                         <div className="space-y-2">
                             <Label htmlFor="document">Identity Proof (Optional)</Label>
-                            <Input 
-                                id="document" 
-                                type="file" 
+                            <Input
+                                id="document"
+                                type="file"
                                 accept="image/*,.pdf"
-                                onChange={(e) => setFile(e.target.files?.[0] || null)} 
+                                onChange={(e) => setFile(e.target.files?.[0] || null)}
                             />
                             <p className="text-xs text-muted-foreground">Upload a valid ID (Aadhaar, PAN, etc.)</p>
                         </div>
@@ -95,7 +95,7 @@ export default function ParentRegisterPage() {
                 <CardFooter className="flex justify-center flex-col gap-2">
                     <p className="text-sm text-gray-500">
                         Already have an account?{' '}
-                        <Link href="/auth/login/parent" className="text-blue-600 hover:underline">
+                        <Link href="/auth/login/parent" className="text-primary hover:underline">
                             Sign in
                         </Link>
                     </p>

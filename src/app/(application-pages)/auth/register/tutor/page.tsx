@@ -14,10 +14,10 @@ import Link from 'next/link';
 
 export default function TutorRegisterPage() {
     const router = useRouter();
-    const { 
-        register, 
-        handleSubmit, 
-        formState: { errors, isSubmitting } 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting }
     } = useForm<RegisterInput>({
         resolver: zodResolver(registerSchema),
         defaultValues: { fullname: '', email: '', password: '', role: 'TUTOR' }
@@ -42,7 +42,7 @@ export default function TutorRegisterPage() {
             console.log("User created successfully:", response.data);
             router.push(`/auth/login/tutor`);
         } catch (error: any) {
-            console.error("Registration failed:",error);
+            console.error("Registration failed:", error);
             // alert(error?.response?.data?.message || error?.message || "Registration failed due to server error.");
         }
     };
@@ -56,7 +56,7 @@ export default function TutorRegisterPage() {
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                        
+
                         <div className="space-y-2">
                             <Label htmlFor="fullname">Full Name</Label>
                             <Input id="fullname" placeholder="Jane Doe" {...register('fullname')} />
@@ -68,7 +68,7 @@ export default function TutorRegisterPage() {
                             <Input id="email" type="email" placeholder="tutor@example.com" {...register('email')} />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
                         </div>
-                        
+
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
                             <Input id="password" type="password" placeholder="********" {...register('password')} />
@@ -77,11 +77,11 @@ export default function TutorRegisterPage() {
 
                         <div className="space-y-2">
                             <Label htmlFor="document">Identity Proof (Optional)</Label>
-                            <Input 
-                                id="document" 
-                                type="file" 
+                            <Input
+                                id="document"
+                                type="file"
                                 accept="image/*,.pdf"
-                                onChange={(e) => setFile(e.target.files?.[0] || null)} 
+                                onChange={(e) => setFile(e.target.files?.[0] || null)}
                             />
                             <p className="text-xs text-muted-foreground">Upload a valid ID (Aadhaar, PAN, etc.)</p>
                         </div>
@@ -94,7 +94,7 @@ export default function TutorRegisterPage() {
                 <CardFooter className="flex justify-center flex-col gap-2">
                     <p className="text-sm text-gray-500">
                         Already have an account?{' '}
-                        <Link href="/auth/login/tutor" className="text-blue-600 hover:underline">
+                        <Link href="/auth/login/tutor" className="text-primary hover:underline">
                             Sign in
                         </Link>
                     </p>

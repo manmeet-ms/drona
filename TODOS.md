@@ -1,3 +1,4 @@
+add headreson login register pages , sadd some dotted bg in empty like pages 
 pamyent system comisoon vs no direct paymeent, cash option marketplace fee, 
 call now nutton, profile card enhancement 
 do not allow to bookclass when student view is open

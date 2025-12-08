@@ -144,7 +144,7 @@ export default function TutorProfilePage() {
                               href={res.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-xs text-blue-600 hover:underline"
+                              className="text-xs text-primary hover:underline"
                             >
                               {res.url}
                             </a>

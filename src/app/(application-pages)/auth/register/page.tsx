@@ -15,14 +15,14 @@ export default function RegisterPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <Link href="/auth/register/parent" className="block">
-            <Button variant="outline" className="w-full h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
+            <Button variant="outline" className="w-full rounded-md h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
               <IconUser className="h-6 w-6" />
               Register as Parent
             </Button>
           </Link>
-          
+
           <Link href="/auth/register/tutor" className="block">
-            <Button variant="outline" className="w-full h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
+            <Button variant="outline" className="w-full rounded-md h-16 text-lg justify-start px-6 gap-4 hover:bg-primary/5 hover:text-primary">
               <IconSchool className="h-6 w-6" />
               Register as Tutor
             </Button>
@@ -31,7 +31,7 @@ export default function RegisterPage() {
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-500">
             Already have an account?{' '}
-            <Link href="/auth/login" className="text-blue-600 hover:underline">
+            <Link href="/auth/login" className="text-primary hover:underline">
               Sign in
             </Link>
           </p>
