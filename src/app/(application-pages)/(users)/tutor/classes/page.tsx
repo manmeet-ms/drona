@@ -60,7 +60,7 @@ export default function TutorClassesPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {classes.map((cls) => (
             <Card key={cls.id}>
               <CardContent className="flex items-center justify-between p-4">

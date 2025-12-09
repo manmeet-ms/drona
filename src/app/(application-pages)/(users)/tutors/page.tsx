@@ -31,7 +31,10 @@ interface Tutor {
   };
 }
 
+import { usePageTitle } from "@/src/hooks/usePageTitle";
+
 export default function TutorsPage() {
+  usePageTitle("Find Tutors");
   const [tutors, setTutors] = useState<Tutor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [subject, setSubject] = useState("");

@@ -1,4 +1,10 @@
 import UserProfileForm from "@/src/components/profile/UserProfileForm";
+import { constructMetadata } from "@/src/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Parent Profile",
+  description: "Manage your account information."
+});
 
 export default function ParentProfilePage() {
   return (

@@ -1,4 +1,18 @@
-add headreson login register pages , sadd some dotted bg in empty like pages 
+1. Add a page editing meta utility that set sets the page meta and chages teh page title and dscription , bu page tile chsouldbe chanding teh and being hot updatd according to the page is being rendered like and added to every page like the format should be app name dash the component being rendered like for example drona hash student dashboard parent dashboard update profile update profiles find tutors homework assignments reports queries like that for my payments add a page editing meta utility that set is the sets the page meta according to the component is being rendered like and added to every page like the format should be app name dash the component being rendered like for example drona hash student dashboard parent dashboard update profile update profiles find tutors homework assignments reports queries like that for my payments 
+
+2. add shadcn breadcrumbs to show path where user currently is 
+
+3. on  headres add  login register pages accordingto teh if no session detected render login sign up buttons otherwise go to the app button 
+
+ 
+don't modify the back end or anything don't build yet I'll see it myself
+don't modify any rest of the code keep it as is don't modify any CSS just and tasks listed above users have to basic components on every page that is being rendered on front end 
+
+you get it?
+
+
+
+we need to add application specific headers like we have in marketing page, sadd some dotted bg in empty like pages 
 pamyent system comisoon vs no direct paymeent, cash option marketplace fee, 
 call now nutton, profile card enhancement 
 do not allow to bookclass when student view is open
@@ -7,7 +21,6 @@ share tutor proldide code , abasic text inforand link to profile
 move the compoents to companent/landing.tsx to prevent confusion in the main landing page.
 to implement caching , ratelimitting, paginations to prevent excessive api calls. 
         
-add shadcn breadcrumbs to show path where user currently is 
 
 routes refactor fe be consistency in api calling
 

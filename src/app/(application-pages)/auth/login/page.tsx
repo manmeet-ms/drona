@@ -4,8 +4,11 @@ import { Button } from '@/src/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/src/components/ui/card';
 import Link from 'next/link';
 import { IconUser, IconSchool, IconBook } from '@tabler/icons-react';
+import { usePageTitle } from '@/src/hooks/usePageTitle';
 
 export default function LoginPage() {
+  usePageTitle("Login");
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
       <Card className="w-full max-w-md">

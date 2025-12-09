@@ -1,4 +1,10 @@
 import StudentProfileForm from "@/src/components/profile/StudentProfileForm";
+import { constructMetadata } from "@/src/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Student Profile",
+  description: "Manage your student profile."
+});
 
 export default function StudentProfilePage() {
   return (

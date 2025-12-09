@@ -23,7 +23,7 @@ async function main() {
   // await prisma.user.deleteMany();
  
   // 1. Create Tutors
-  const numOfHardcodedTutors=5;
+  const numOfHardcodedTutors=2;
   const numOfHardcodedParent=2;
  
   console.log(`Creating ${numOfHardcodedTutors} Tutors...`);
@@ -85,6 +85,7 @@ async function main() {
           name: `${studentName} ${lastName}`,
           parentId: parent.id,
           password: await bcrypt.hash('password123',10),
+          // password: await bcrypt.hash('password123',10),
           age: faker.number.int({ min: 6, max: 18 }),
           school: faker.company.name() + ' School',
           interests: faker.helpers.arrayElements(['Sports', 'Music', 'Coding', 'Art', 'Reading'], { min: 1, max: 3 }),

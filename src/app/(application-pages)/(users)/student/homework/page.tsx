@@ -22,7 +22,10 @@ interface Homework {
   };
 }
 
+import { usePageTitle } from "@/src/hooks/usePageTitle";
+
 export default function StudentHomeworkPage() {
+  usePageTitle("Homework Assignments");
   const [homeworks, setHomeworks] = useState<Homework[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

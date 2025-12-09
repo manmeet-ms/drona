@@ -31,6 +31,7 @@ import { ModeToggle } from "./mode-toggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+
 export const LandingHeader = () => {
   const features = [
     {
@@ -54,7 +55,7 @@ export const LandingHeader = () => {
       href: "/dashboard/schedule",
     },
   ];
-  const session = useSession();
+  const { data: session } = useSession();
   const pathname = usePathname();
 
   console.log(session, pathname);
@@ -128,7 +129,24 @@ export const LandingHeader = () => {
 
 
           <div className="flex gap-2 items-center ">
-            <Button size="sm" variant="secondary" ><Link href={"/auth/register"}>Get Started</Link></Button>
+            {session ? (
+              <div className="hidden lg:flex items-center gap-2">
+                 <Button size="sm" asChild variant="secondary">
+                   <Link href="/dashboard">Go to App</Link>
+                 </Button>
+                 {/* <LogoutButton /> */}
+              </div>
+            ) : (
+                <div className="hidden lg:flex items-center gap-2">
+                 <Button asChild variant="ghost">
+                    <Link href="/auth/login">Login</Link>
+                 </Button>
+                 <Button asChild variant="default">
+                    <Link href="/auth/register">Get Started</Link>
+                 </Button>
+                </div>
+            )}
+            
             <ModeToggle />
             <Sheet>
               <SheetTrigger asChild className="lg:hidden">
@@ -139,19 +157,14 @@ export const LandingHeader = () => {
               <SheetContent side="top" className="max-h-screen overflow-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a
-                      href="#"
+                    <Link
+                      href="/"
                       className="flex items-center gap-2"
                     >
-                      <img
-                        src="#"
-                        className="max-h-8"
-                        alt="Drona"
-                      />
                       <span className="text-lg  tracking-tighter">
                         Drona
                       </span>
-                    </a>
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col p-4">
@@ -163,7 +176,7 @@ export const LandingHeader = () => {
                       <AccordionContent>
                         <div className="grid md:grid-cols-2">
                           {features.map((feature, index) => (
-                            <a
+                            <Link
                               href={feature.href}
                               key={index}
                               className="hover:bg-muted/70 rounded-md p-3 transition-colors"
@@ -176,7 +189,7 @@ export const LandingHeader = () => {
                                   {feature.description}
                                 </p>
                               </div>
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       </AccordionContent>
@@ -189,18 +202,24 @@ export const LandingHeader = () => {
                     <Link href="/pricing" className="">
                       Pricing
                     </Link>
-                    <Link href="#" className="">
+                    <Link href="/contact" className="">
                       Contact
                     </Link>
                   </div>
 
-
-                  <Button><Link href={"/auth/register"}>Schedule a demo</Link></Button>
-                  {/* {session.status === "authenticated" ? <LogoutButton /> : <div className="mt-6 flex flex-col gap-4">
-                    <Button><Link href={"/auth/register"}>Register</Link></Button>
-                    <Button variant="outline"><Link href={"/auth/login"}>Login</Link></Button>
+                  <div className="mt-8 flex flex-col gap-4">
+                    {session ? (
+                        <>
+                        <Button asChild className="w-full"><Link href={"/dashboard"}>Go to App</Link></Button>
+                        {/* <LogoutButton/> */}
+                        </>
+                    ) : (
+                        <>
+                        <Button asChild className="w-full"><Link href={"/auth/register"}>Get Started</Link></Button>
+                        <Button asChild variant="outline" className="w-full"><Link href={"/auth/login"}>Login</Link></Button>
+                        </>
+                    )}
                   </div>
-                  } */}
 
 
                 </div>

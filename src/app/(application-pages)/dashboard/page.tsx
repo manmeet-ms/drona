@@ -6,12 +6,21 @@ import StudentDashboard from "@/src/components/dashboard/StudentDashboard";
 import ParentDashboard from "@/src/components/dashboard/ParentDashboard";
 import TutorDashboard from "@/src/components/dashboard/TutorDashboard";
 import { IconLoader2 } from "@tabler/icons-react";
-import Head from "next/head";
+
+
+import { usePageTitle } from "@/src/hooks/usePageTitle";
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const { isStudentView } = useProfile();
-console.log(session, session?.user?.role);
+
+  const title = (isStudentView || session?.user?.role === "STUDENT") ? "Student Dashboard" :
+                session?.user?.role === "PARENT" ? "Parent Dashboard" :
+                session?.user?.role === "TUTOR" ? "Tutor Dashboard" : "Dashboard";
+  
+  usePageTitle(title);
+
+  console.log(session, session?.user?.role);
 
   if (status === "loading") {
     return (

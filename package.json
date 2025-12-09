@@ -9,7 +9,11 @@
         "build:dev": "next build",
         "start": "next start",
         "lint": "eslint",
-        "test": "jest"
+        "test": "jest",
+        "dbreset": "npx prisma migrate reset",
+        "migrate": "npx prisma migrate dev "
+         
+        
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",

@@ -26,6 +26,7 @@ import { LandingHeader } from "@/src/components/Headers";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/src/lib/utils";
+import { DynamicBreadcrumb } from "@/src/components/DynamicBreadcrumb";
 
 export default function ApplicationLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
@@ -138,6 +139,7 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
         </div>
 
         <main className="container mx-auto p-6">
+          <DynamicBreadcrumb />
           {/* Mobile "Exit Student View" Button */}
           {isStudentView && (
             <div className="lg:hidden mb-4">

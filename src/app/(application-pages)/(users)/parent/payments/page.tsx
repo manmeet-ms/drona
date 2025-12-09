@@ -19,7 +19,10 @@ interface Payment {
   };
 }
 
+import { usePageTitle } from "@/src/hooks/usePageTitle";
+
 export default function ParentPaymentsPage() {
+  usePageTitle("My Payments");
   const [payments, setPayments] = useState<Payment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

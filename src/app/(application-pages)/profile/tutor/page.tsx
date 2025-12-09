@@ -1,4 +1,10 @@
 import TutorProfileForm from "@/src/components/profile/TutorProfileForm";
+import { constructMetadata } from "@/src/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Tutor Profile",
+  description: "Manage your tutor profile."
+});
 
 export default function TutorProfilePage() {
   return (

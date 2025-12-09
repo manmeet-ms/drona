@@ -215,7 +215,7 @@ const ScheduleDemoTestimonials = ({ testimonials }: TestimonialsProps) => {
           onClick={() =>
             setActiveTestimonial(
               (activeTestimonial + testimonials.length - 1) %
-                testimonials.length,
+              testimonials.length,
             )
           }
         >
@@ -351,7 +351,7 @@ const ScheduleDemo = ({
     description: {
       text: "Book a demo to explore our development platform and discover how it can accelerate your team's productivity. If you have technical questions, feel free to reach out to our team.",
       hyperlink: "reach out to our team",
-      url: "https://shadcnblocks.com",
+      url: "https://drona-beta",
     },
     avatars: [
       {
@@ -477,19 +477,19 @@ const ScheduleDemo = ({
 }: ScheduleDemoProps) => {
   return (
     <>
-   
-    <section className="py-32">
-      <div className="container">
-        <div className="flex flex-col items-center gap-12 lg:gap-24">
-          <ScheduleDemoHeader {...header} />
-          <div className="grid max-w-6xl grid-cols-1 rounded-lg border lg:grid-cols-2">
-            <ScheduleDemoContactForm />
-            <ScheduleDemoTestimonials testimonials={testimonials} />
+
+      <section className="py-32">
+        <div className="container">
+          <div className="flex flex-col items-center gap-12 lg:gap-24">
+            <ScheduleDemoHeader {...header} />
+            <div className="grid max-w-6xl grid-cols-1 rounded-lg border lg:grid-cols-2">
+              <ScheduleDemoContactForm />
+              <ScheduleDemoTestimonials testimonials={testimonials} />
+            </div>
+            <ScheduleDemoFooter {...footer} />
           </div>
-          <ScheduleDemoFooter {...footer} />
         </div>
-      </div>
-    </section></>
+      </section></>
 
   );
 };

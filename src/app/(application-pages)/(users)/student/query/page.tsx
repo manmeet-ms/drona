@@ -49,7 +49,10 @@ interface Query {
   responses: QueryResponse[];
 }
 
+import { usePageTitle } from "@/src/hooks/usePageTitle";
+
 export default function StudentQueryPage() {
+  usePageTitle("Queries");
   const [queries, setQueries] = useState<Query[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);

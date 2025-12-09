@@ -251,8 +251,8 @@ export const Feature51 = ({
             value={tab.id}
             className="transition-opacity duration-300"
           >
-            <Image 
-            width={100}
+            <Image
+              width={100}
               height={100}
               src={tab.image}
               alt={tab.heading}
@@ -581,9 +581,9 @@ export const Gallery = ({
               >
                 <Link href={item.href} className="group rounded-xl">
                   <div className="md:aspect-5/4 lg:aspect-video group relative h-full min-h-108 max-w-full overflow-hidden rounded-xl">
-                    <Image 
-                    width={100}
-              height={100}
+                    <Image
+                      width={100}
+                      height={100}
                       src={item.image}
                       alt={item.title}
                       className="brightness-30  absolute h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
@@ -629,8 +629,8 @@ export const Testimonial = () => {
       <div className="">
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 items-stretch gap-x-0 gap-y-4 lg:grid-cols-3 lg:gap-4">
-            <Image 
-            width={100}
+            <Image
+              width={100}
               height={100}
               src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2070&auto=format&fit=crop"
               alt="Students learning"
@@ -786,7 +786,7 @@ const FeatureSecondary51 = ({
       description:
         "Discover the powerful featureSecondarys that make our platform stand out from the rest.",
       image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
-      url: "https://shadcnblocks.com",
+      url: "https://drona-beta",
       isDefault: true,
     },
     {
@@ -797,7 +797,7 @@ const FeatureSecondary51 = ({
       description:
         "Built with the latest technology and designed for maximum productivity.",
       image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-2.svg",
-      url: "https://shadcnblocks.com",
+      url: "https://drona-beta",
       isDefault: false,
     },
     {
@@ -807,7 +807,7 @@ const FeatureSecondary51 = ({
       description:
         "Create amazing experiences with our comprehensive toolkit and resources.",
       image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-3.svg",
-      url: "https://shadcnblocks.com",
+      url: "https://drona-beta",
       isDefault: false,
     },
   ],
@@ -851,9 +851,9 @@ const FeatureSecondary51 = ({
               value={tab.id}
               className="transition-opacity duration-300"
             >
-              <Image 
-              width={100}
-              height={100}
+              <Image
+                width={100}
+                height={100}
                 src={tab.image}
                 alt={tab.heading}
                 className="aspect-video w-full rounded-md object-cover transition-opacity duration-300"

@@ -16,7 +16,10 @@ interface Session {
   };
 }
 
+import { usePageTitle } from "@/src/hooks/usePageTitle";
+
 export default function StudentAttendancePage() {
+  usePageTitle("Attendance Records");
   const [sessions, setSessions] = useState<Session[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
