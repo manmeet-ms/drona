@@ -1,5 +1,5 @@
-const bcrypt = require("bcryptjs");
+import { compare } from "bcryptjs";
 
-bcrypt.compare("password123", "$2b$10$z9XGrfiyH9.0KpoiGZEWM.0yOxWp2xUWDohOF2l9dCSPtr7mm2/Vy", (err, res) => {
+compare("password123", "$2b$10$78ggorrhQRjuUF9gMS2B6eYfFkCs/ImlYYtpmf9Ic6jH3kY8rUBM2", (err, res) => {
     console.log(res);
 })

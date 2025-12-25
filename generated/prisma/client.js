@@ -44,6 +44,6 @@ __exportStar(require("./enums.ts"), exports);
  * const pings = await prisma.ping.findMany()
  * ```
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 exports.PrismaClient = $Class.getPrismaClientClass();

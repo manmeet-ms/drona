@@ -75,7 +75,7 @@ export default function TutorProfileForm() {
     try {
       // Convert comma-separated subjects string to array
       const subjectsArray = data.subjects.split(",").map((s) => s.trim()).filter((s) => s !== "");
-      
+
       await axios.post("/api/tutors/profile", {
         ...data,
         subjects: subjectsArray,

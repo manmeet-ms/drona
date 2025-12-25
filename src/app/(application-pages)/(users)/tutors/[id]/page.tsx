@@ -1,5 +1,5 @@
 "use client";
-
+import { Badge } from "@/src/components/ui/badge"
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -86,12 +86,8 @@ export default function TutorProfilePage() {
                   <h3 className="font-semibold mb-2">Subjects</h3>
                   <div className="flex flex-wrap gap-2">
                     {tutor.subjects.map((subj) => (
-                      <span
-                        key={subj}
-                        className="px-2 py-1 bg-secondary text-secondary-foreground rounded-md text-xs"
-                      >
-                        {subj}
-                      </span>
+                                             <Badge variant="secondary" key={subj}>{subj}</Badge>
+
                     ))}
                   </div>
                 </div>
@@ -99,8 +95,12 @@ export default function TutorProfilePage() {
                   <h3 className="font-semibold">Hourly Rate</h3>
                   <p className="text-lg">₹{tutor.hourlyRate}/hr</p>
                 </div>
-                <Button className="w-full">Book Class</Button>
-              </CardContent>
+                <div className="flex flex-col gap-2">
+                  <Button className="w-full">Book Class</Button>
+                <Button variant='outline' className="w-full">Enquire Now</Button>
+             
+                </div>
+                 </CardContent>
             </Card>
           </div>
 
@@ -117,7 +117,7 @@ export default function TutorProfilePage() {
               </CardContent>
             </Card>
 
-            <Card>
+            {/* <Card>
               <CardHeader>
                 <CardTitle>Resources</CardTitle>
                 <CardDescription>Study materials shared by the tutor</CardDescription>
@@ -160,7 +160,7 @@ export default function TutorProfilePage() {
                   </div>
                 )}
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </div>

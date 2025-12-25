@@ -3,7 +3,7 @@
 import { signIn } from 'next-auth/react';
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Button } from '@/src/components/ui/button';
+import { Button } from '@/src/components/ui/bkp.button';
 import { Input } from '@/src/components/ui/input';
 import { Label } from '@/src/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/src/components/ui/card';
@@ -13,7 +13,7 @@ function StudentLoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
-  
+
   const [studentId, setStudentId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -82,9 +82,9 @@ function StudentLoginContent() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-center flex-col gap-2">
-           <Link href="/auth/login" className="text-sm text-muted-foreground hover:underline">
-              Back to Login Options
-            </Link>
+          <Link href="/auth/login" className="text-sm text-muted-foreground hover:underline">
+            Back to Login Options
+          </Link>
         </CardFooter>
       </Card>
     </div>

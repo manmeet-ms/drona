@@ -74,7 +74,7 @@ export default function StudentProfileForm() {
   const onSubmit = async (data: StudentProfileFormValues) => {
     try {
       const interestsArray = data.interests ? data.interests.split(",").map((s) => s.trim()).filter((s) => s !== "") : [];
-      
+
       await axios.put("/api/student/profile", {
         ...data,
         interests: interestsArray,

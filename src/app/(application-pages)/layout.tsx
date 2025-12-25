@@ -14,9 +14,9 @@ import {
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar"
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useProfile } from "@/src/providers/ProfileProvider";
-import { IconLoader2 } from "@tabler/icons-react";
+import { IconLoader2, IconLogout } from "@tabler/icons-react";
 import { Sidebar } from "@/src/components/Sidebar";
 import { BottomNav } from "@/src/components/BottomNav";
 import { parentNavItems, tutorNavItems, studentNavItems } from "@/src/config/navigation";
@@ -88,7 +88,17 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
                   <span className="text-xs font-medium text-muted-foreground">{session?.user?.role}</span>
                 </div></DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile page demo link</DropdownMenuItem>
+                <DropdownMenuItem>
+                   <Button
+                            variant="ghost"
+                            className="w-full justify-start gap-3"
+                            onClick={() => signOut({ callbackUrl: '/' })}
+                          >
+                            <IconLogout className="h-4 w-4" />
+                            Logout
+                          </Button>
+
+                </DropdownMenuItem>
 
               </DropdownMenuContent>
             </DropdownMenu></div>
@@ -130,7 +140,17 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
                 <span className="text-xs font-medium text-muted-foreground">{session?.user?.role}</span>
               </div></DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile page demo link</DropdownMenuItem>
+              <DropdownMenuItem>
+                 <Button
+          variant="ghost"
+          className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
+          onClick={() => signOut({ callbackUrl: '/' })}
+        >
+          <IconLogout className="h-4 w-4" />
+          Logout
+        </Button>
+
+              </DropdownMenuItem>
 
             </DropdownMenuContent>
           </DropdownMenu>

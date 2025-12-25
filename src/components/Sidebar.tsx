@@ -35,8 +35,8 @@ export function Sidebar({ items }: SidebarProps) {
                 key={index}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary",
-                  isActive ? "bg-muted text-primary" : "text-muted-foreground"
+                  "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary-400",
+                  isActive ? "bg-primary/20 text-primary-400" : "text-muted-foreground"
                 )}
               >
                 <Icon className="h-4 w-4" />

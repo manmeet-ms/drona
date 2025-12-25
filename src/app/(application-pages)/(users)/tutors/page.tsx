@@ -54,10 +54,10 @@ export default function TutorsPage() {
       // const response = await axios.get(`/api/tutors?${params.toString()}`);
       const response = await axios.get(`/api/tutors`);
 
-      
+
       setTutors(response.data);
       console.log(response.data);
-      
+
     } catch (error) {
       console.error("Failed to fetch tutors", error);
     } finally {
@@ -138,15 +138,15 @@ export default function TutorsPage() {
           //     </Link>
           //   ))}
           // </div>
-          <Masonry spacing={1.5} columns={{ xs: 1, sm: 2, md:3 }}>
+          <Masonry spacing={1.5} columns={{ xs: 1, sm: 2, md: 3 }}>
 
             {tutors.map((tutor) => (
               <Link href={`/tutors/${tutor.id}`} key={tutor.id}>
                 <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
                   <CardHeader>
-                    <CardTitle className='flex justify-between items-center' >{tutor.user.fullname} 
+                    <CardTitle className='flex justify-between items-center' >{tutor.user.fullname}
                       {/* <IconShare className='size-4' stroke={1.75}/> */}
-                      <span>₹{tutor.hourlyRate}/hr</span> 
+                      <span>₹{tutor.hourlyRate}/hr</span>
                     </CardTitle>
                     <CardDescription className="flex items-center gap-1">
                       <IconMapPin className="h-3 w-3" />
@@ -156,23 +156,23 @@ export default function TutorsPage() {
                   <CardContent>
                     <div className="flex flex-wrap gap-1 mb-2">
                       {tutor.subjects.map((subj) => (
-                        <Badge variant="secondary"  key={subj}>{subj}</Badge>
+                        <Badge variant="secondary" key={subj}>{subj}</Badge>
                       ))}
                     </div>
                     <p className="text-sm  text-muted-foreground/80 line-clamp-2">
                       {tutor.bio || "No bio available."}
                     </p>
-                    <Separator className='mt-4'/>
+                    <Separator className='mt-4' />
                     <div className="mt-4 flex items-center justify-between">
-                      <Link  className='text-primary text-sm font-semibold' href={`/tutors/${tutor.id}`} key={tutor.id}>More details <IconArrowRight className='inline-flex size-3 items-center justify-center gap-2 ' /></Link>
+                      <Link className='text-primary text-sm font-semibold' href={`/tutors/${tutor.id}`} key={tutor.id}>More details <IconArrowRight className='inline-flex size-3 items-center justify-center gap-2 ' /></Link>
                       <ButtonGroup>
-                        <Button size="sm"  variant="outline" ><IconPhone/></Button>
-                        <Button size="sm"  variant="outline" ><IconMessage2/></Button>
-                        <Button size="sm"  variant="outline" ><IconShare/></Button>
+                        <Button size="sm" variant="outline" ><IconPhone /></Button>
+                        <Button size="sm" variant="outline" ><IconMessage2 /></Button>
+                        <Button size="sm" variant="outline" ><IconShare /></Button>
                       </ButtonGroup>
-                      
-                      
-                      </div>
+
+
+                    </div>
                   </CardContent>
                 </Card>
               </Link>

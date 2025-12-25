@@ -1,4 +1,5 @@
-import prisma from '../src/lib/prisma';
+
+import prisma from '../src/lib/prisma.ts';
 import {  UserRole, ClassStatus, ResourceType } from '../generated/prisma/client';
 import { faker } from '@faker-js/faker';
 import bcrypt from 'bcryptjs';
@@ -23,8 +24,8 @@ async function main() {
   // await prisma.user.deleteMany();
  
   // 1. Create Tutors
-  const numOfHardcodedTutors=2;
-  const numOfHardcodedParent=2;
+  const numOfHardcodedTutors=20;
+  const numOfHardcodedParent=7;
  
   console.log(`Creating ${numOfHardcodedTutors} Tutors...`);
   const tutors = [];

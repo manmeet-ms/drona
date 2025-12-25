@@ -47,23 +47,23 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
       {/* Main Content Area */}
       <div className="   ">
-       
+
 
         <main className="container mx-auto p-6">
-            {/* Mobile "Exit Student View" Button */}
-            {isStudentView && (
-                <div className="lg:hidden mb-4">
-                     <Button
-                        onClick={exitStudentView}
-                        variant="destructive"
-                        size="sm"
-                        className="w-full"
-                        >
-                        Exit Student View
-                    </Button>
-                </div>
-            )}
-            {children}
+          {/* Mobile "Exit Student View" Button */}
+          {isStudentView && (
+            <div className="lg:hidden mb-4">
+              <Button
+                onClick={exitStudentView}
+                variant="destructive"
+                size="sm"
+                className="w-full"
+              >
+                Exit Student View
+              </Button>
+            </div>
+          )}
+          {children}
         </main>
       </div>
 

@@ -14,7 +14,7 @@ export const parentNavItems: NavItem[] = [
   // { title: "Messages", href: "/dashboard/messages", icon: IconMessage },
   { title: "Queries", href: "/parent/query", icon: IconMessage },
   { title: "Profile", href: "/profile/parent", icon: IconUser },
-  { title: "Payments", href: "/parent/payments", icon: IconCreditCard },
+  // { title: "Payments", href: "/parent/payments", icon: IconCreditCard },
   { title: "Find Tutors", href: "/tutors", icon: IconSearch },
 ];
 

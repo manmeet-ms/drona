@@ -58,10 +58,10 @@ export default function TutorQueryPage() {
   const [queries, setQueries] = useState<Query[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  
+
   const [newQueryContext, setNewQueryContext] = useState<"TUTOR_PARENT" | "TUTOR_STUDENT">("TUTOR_STUDENT");
   const [newQueryContent, setNewQueryContent] = useState("");
-  const [recipientId, setRecipientId] = useState(""); 
+  const [recipientId, setRecipientId] = useState("");
   const [recipients, setRecipients] = useState<any[]>([]);
 
   const [selectedQuery, setSelectedQuery] = useState<Query | null>(null);
@@ -136,11 +136,11 @@ export default function TutorQueryPage() {
       });
       toast.success("Reply sent!");
       setReplyContent("");
-      
+
       // Refresh queries
       const response = await axios.get("/api/queries");
       setQueries(response.data);
-      
+
       // Update selected query
       const updatedQuery = response.data.find((q: Query) => q.id === selectedQuery.id);
       if (updatedQuery) setSelectedQuery(updatedQuery);
@@ -172,8 +172,8 @@ export default function TutorQueryPage() {
             <div className="space-y-4 py-4">
               <div className="space-y-2">
                 <Label>Context</Label>
-                <Select 
-                  value={newQueryContext} 
+                <Select
+                  value={newQueryContext}
                   onValueChange={(val: any) => {
                     setNewQueryContext(val);
                     setRecipientId(""); // Reset recipient when context changes
@@ -188,11 +188,11 @@ export default function TutorQueryPage() {
                   </SelectContent>
                 </Select>
               </div>
-              
+
               <div className="space-y-2">
                 <Label>Recipient</Label>
-                <Select 
-                  value={recipientId} 
+                <Select
+                  value={recipientId}
                   onValueChange={setRecipientId}
                 >
                   <SelectTrigger>
@@ -210,13 +210,13 @@ export default function TutorQueryPage() {
 
               <div className="space-y-2">
                 <Label>Message</Label>
-                <Textarea 
-                  placeholder="Type your message here..." 
+                <Textarea
+                  placeholder="Type your message here..."
                   value={newQueryContent}
                   onChange={(e) => setNewQueryContent(e.target.value)}
                 />
               </div>
-              
+
               <Button onClick={handleCreateQuery} className="w-full">Send Query</Button>
             </div>
           </DialogContent>
@@ -245,9 +245,9 @@ export default function TutorQueryPage() {
                     <IconUser className="h-5 w-5 text-muted-foreground" />
                     <div>
                       <CardTitle className="text-base">
-                        {query.senderRole === "TUTOR" ? "You" : 
-                         query.senderRole === "STUDENT" ? query.student?.name : 
-                         query.parent?.fullname}
+                        {query.senderRole === "TUTOR" ? "You" :
+                          query.senderRole === "STUDENT" ? query.student?.name :
+                            query.parent?.fullname}
                       </CardTitle>
                       <CardDescription className="text-xs">
                         {query.context === "TUTOR_STUDENT" ? "Student Query" : "Parent Query"} • {new Date(query.createdAt).toLocaleString()}
@@ -280,16 +280,16 @@ export default function TutorQueryPage() {
               {selectedQuery?.context === "TUTOR_STUDENT" ? "Student Query" : "Parent Query"}
             </SheetDescription>
           </SheetHeader>
-          
+
           <div className="flex-1 overflow-y-auto py-4 space-y-4">
             {selectedQuery && (
               <>
                 <div className="flex flex-col gap-1 p-3 rounded-lg bg-muted/50">
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
                     <span className="font-semibold text-foreground">
-                      {selectedQuery.senderRole === "TUTOR" ? "You" : 
-                       selectedQuery.senderRole === "STUDENT" ? selectedQuery.student?.name : 
-                       selectedQuery.parent?.fullname}
+                      {selectedQuery.senderRole === "TUTOR" ? "You" :
+                        selectedQuery.senderRole === "STUDENT" ? selectedQuery.student?.name :
+                          selectedQuery.parent?.fullname}
                     </span>
                     <span>{new Date(selectedQuery.createdAt).toLocaleString()}</span>
                   </div>
@@ -300,9 +300,9 @@ export default function TutorQueryPage() {
                   <div key={response.id} className={`flex flex-col gap-1 p-3 rounded-lg ${response.senderRole === "TUTOR" ? "bg-primary/10 ml-8" : "bg-muted/50 mr-8"}`}>
                     <div className="flex justify-between items-center text-xs text-muted-foreground">
                       <span className="font-semibold text-foreground">
-                        {response.senderRole === "TUTOR" ? "You" : 
-                         response.senderRole === "STUDENT" ? selectedQuery.student?.name : 
-                         selectedQuery.parent?.fullname}
+                        {response.senderRole === "TUTOR" ? "You" :
+                          response.senderRole === "STUDENT" ? selectedQuery.student?.name :
+                            selectedQuery.parent?.fullname}
                       </span>
                       <span>{new Date(response.createdAt).toLocaleString()}</span>
                     </div>
@@ -315,8 +315,8 @@ export default function TutorQueryPage() {
 
           <SheetFooter className="pt-4 border-t">
             <div className="w-full space-y-2">
-              <Textarea 
-                placeholder="Type your reply..." 
+              <Textarea
+                placeholder="Type your reply..."
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 className="min-h-[80px]"

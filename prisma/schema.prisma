@@ -24,6 +24,7 @@ enum UserRole {
 
 enum ClassStatus {
   SCHEDULED
+  IN_PROGRESS
   COMPLETED
   CANCELLED
 }
@@ -111,10 +112,17 @@ model Resource {
   tutorId   String
   tutor     TutorProfile @relation(fields: [tutorId], references: [id])
   
+  classId   String?
+  class     Class?       @relation(fields: [classId], references: [id])
+
   title     String
   type      ResourceType
   url       String?
   content   String?
+  
+  size      Int?
+  mimeType  String?
+
   createdAt DateTime @default(now())
 }
 
@@ -156,8 +164,10 @@ model Class {
   scheduledAt DateTime
   status      ClassStatus @default(SCHEDULED)
   attendanceToken String?
+  verificationDate DateTime?
   
   homeworks   Homework[]
+  resources   Resource[]
 }
 
 model Homework {

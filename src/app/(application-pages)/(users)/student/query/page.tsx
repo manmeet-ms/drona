@@ -56,9 +56,9 @@ export default function StudentQueryPage() {
   const [queries, setQueries] = useState<Query[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  
+
   const [newQueryContent, setNewQueryContent] = useState("");
-  const [tutorId, setTutorId] = useState(""); 
+  const [tutorId, setTutorId] = useState("");
   const [tutors, setTutors] = useState<any[]>([]);
 
   const [selectedQuery, setSelectedQuery] = useState<Query | null>(null);
@@ -126,10 +126,10 @@ export default function StudentQueryPage() {
       });
       toast.success("Reply sent!");
       setReplyContent("");
-      
+
       const response = await axios.get("/api/queries");
       setQueries(response.data);
-      
+
       const updatedQuery = response.data.find((q: Query) => q.id === selectedQuery.id);
       if (updatedQuery) setSelectedQuery(updatedQuery);
 
@@ -160,8 +160,8 @@ export default function StudentQueryPage() {
             <div className="space-y-4 py-4">
               <div className="space-y-2">
                 <Label>Tutor</Label>
-                <Select 
-                  value={tutorId} 
+                <Select
+                  value={tutorId}
                   onValueChange={setTutorId}
                 >
                   <SelectTrigger>
@@ -179,13 +179,13 @@ export default function StudentQueryPage() {
 
               <div className="space-y-2">
                 <Label>Message</Label>
-                <Textarea 
-                  placeholder="Type your message here..." 
+                <Textarea
+                  placeholder="Type your message here..."
                   value={newQueryContent}
                   onChange={(e) => setNewQueryContent(e.target.value)}
                 />
               </div>
-              
+
               <Button onClick={handleCreateQuery} className="w-full">Send Query</Button>
             </div>
           </DialogContent>
@@ -247,7 +247,7 @@ export default function StudentQueryPage() {
               With {selectedQuery?.tutor?.user.fullname}
             </SheetDescription>
           </SheetHeader>
-          
+
           <div className="flex-1 overflow-y-auto py-4 space-y-4">
             {selectedQuery && (
               <>
@@ -278,8 +278,8 @@ export default function StudentQueryPage() {
 
           <SheetFooter className="pt-4 border-t">
             <div className="w-full space-y-2">
-              <Textarea 
-                placeholder="Type your reply..." 
+              <Textarea
+                placeholder="Type your reply..."
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 className="min-h-[80px]"

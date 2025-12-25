@@ -26,6 +26,7 @@ import { Dithering } from "@paper-design/shaders-react";
 import { IconArrowRight, IconBolt, IconBook, IconCalendarCheck, IconMessageCircle, IconShieldCheck, IconUsers } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
+import { HoleBackground } from "@/src/components/animate-ui/components/backgrounds/hole";
 
 interface CtaProps {
   title?: string;
@@ -82,21 +83,22 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
     src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop",
     alt: "Students learning",
   } }: Hero1Props) => {
-  return (
+   
+    return (
     <>
 
 
       <section>
         <div className="  flex justify-between items-center gap-8  ">
 
-          <div className="flex w-full   flex-col items-center text-center lg:items-start lg:text-left pl-4 lg:pl-20 pr-4">
+          <div className="flex w-full  z-10 flex-col items-center text-center lg:items-start lg:text-left pl-4 lg:pl-20 pr-4">
             {badge && (
               <Badge variant="outline">
                 {badge}
                 <IconArrowRight className="ml-2 size-4" />
               </Badge>
             )}
-            <h1 className="my-6 text-pretty text-4xl font-bold lg:text-6xl">
+            <h1 className="my-6 text-balance text-4xl font-medium lg:text-6xl">
               {heading}
             </h1>
             <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
@@ -118,11 +120,11 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
               )}
             </div>
           </div>
-          <div className="h-screen w-screen hidden sm:block object-cover">
+          <div className="h-screen  w-screen hidden sm:block object-cover">
             <Dithering
               style={{ height: "100%", width: "100%" }}
-              colorBack={true ? "#040710" : "hsla(0, 0%, 95%,0%)"}
-              colorFront={true ? "#bc9155" : "hsla(0, 0%, 95%,0%)"}
+              colorBack={true ? "#04071000" : "#f8faff00"}
+              colorFront={true ? "#7f8af6" : "#3732a0"}
               shape="simplex"
               type="4x4"
               pxSize={4}
@@ -132,7 +134,8 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
               rotation={0}
               speed={0.1}
             />
-
+  {/* <HoleBackground className="   absolute inset-0 flex items-center justify-center rounded-xl" /> */}
+ 
           </div>
 
 
@@ -188,7 +191,7 @@ export const Feature51 = ({
         "Browse profiles of verified tutors, filter by subject and grade, and find the perfect match for your child.",
       image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop",
       url: "/tutors",
-      isDefault: true,
+      isDefault: tr,
     },
     {
       id: "feature-2",
@@ -787,7 +790,7 @@ const FeatureSecondary51 = ({
         "Discover the powerful featureSecondarys that make our platform stand out from the rest.",
       image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
       url: "https://drona-beta",
-      isDefault: true,
+      isDefault: tr,
     },
     {
       id: "featureSecondary-2",

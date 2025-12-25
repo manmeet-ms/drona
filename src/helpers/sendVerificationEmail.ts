@@ -1,5 +1,5 @@
 import { resend } from '@/src/lib/resend';
-import VerficationEmail from '@/emails/VerficationEmail';
+import VerficationEmail from '@/src/components/emails/VerficationEmail';
 
 export const sendVerificationEmail = async (email: string, username: string, token: string) => {
     try {

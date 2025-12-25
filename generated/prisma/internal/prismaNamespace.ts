@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.0.1
- * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
+ * Prisma Client JS version: 7.1.0
+ * Query Engine version: ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.0.1",
-  engine: "f09f2815f091dbba658cdcd2264306d88bb5bda6"
+  client: "7.1.0",
+  engine: "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba"
 }
 
 /**
@@ -1567,10 +1567,13 @@ export type TutorProfileScalarFieldEnum = (typeof TutorProfileScalarFieldEnum)[k
 export const ResourceScalarFieldEnum = {
   id: 'id',
   tutorId: 'tutorId',
+  classId: 'classId',
   title: 'title',
   type: 'type',
   url: 'url',
   content: 'content',
+  size: 'size',
+  mimeType: 'mimeType',
   createdAt: 'createdAt'
 } as const
 
@@ -1598,7 +1601,8 @@ export const ClassScalarFieldEnum = {
   studentId: 'studentId',
   scheduledAt: 'scheduledAt',
   status: 'status',
-  attendanceToken: 'attendanceToken'
+  attendanceToken: 'attendanceToken',
+  verificationDate: 'verificationDate'
 } as const
 
 export type ClassScalarFieldEnum = (typeof ClassScalarFieldEnum)[keyof typeof ClassScalarFieldEnum]
@@ -1908,7 +1912,7 @@ export type PrismaClientOptions = ({
    *  { emit: 'stdout', level: 'error' }
    * 
    * ```
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+   * Read more in our [docs](https://pris.ly/d/logging).
    */
   log?: (LogLevel | LogDefinition)[]
   /**
@@ -1936,6 +1940,22 @@ export type PrismaClientOptions = ({
    * ```
    */
   omit?: GlobalOmitConfig
+  /**
+   * SQL commenter plugins that add metadata to SQL queries as comments.
+   * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   comments: [
+   *     traceContext(),
+   *     queryInsights(),
+   *   ],
+   * })
+   * ```
+   */
+  comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
   ping?: Prisma.PingOmit

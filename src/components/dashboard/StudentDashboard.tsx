@@ -22,22 +22,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/src/components/ui/dialog";
-import { IconLoader2, IconBook, IconCalendar, IconQrcode } from "@tabler/icons-react";
+import { IconLoader2, IconBook, IconCalendar, IconQrcode, IconLink, IconFile } from "@tabler/icons-react";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { generateStudentClassCode } from "@/src/app/actions/student";
 
-interface Homework {
+interface Resource {
   id: string;
   title: string;
-  description: string | null;
-  dueDate: string | null;
-  class: {
-    tutor: {
-      user: {
-        fullname: string;
-      };
-    };
-  };
+  type: string;
+  url: string | null;
 }
 
 interface ClassSession {
@@ -48,11 +42,13 @@ interface ClassSession {
       fullname: string;
     };
   };
+  resources: Resource[];
 }
 
 interface StudentData {
   student: {
     name: string;
+    id: string; // Needed for server action
     age?: number;
     school?: string;
     aspirations?: string;
@@ -64,8 +60,7 @@ interface StudentData {
 
 export default function StudentDashboard() {
   const [data, setData] = useState<StudentData | null>(null);
-  const session = useSession()
-  console.log(session);
+  const session = useSession();
   
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -76,6 +71,10 @@ export default function StudentDashboard() {
     interests: [] as string[],
   });
 
+  // Code Display State
+  const [codeDialogOpen, setCodeDialogOpen] = useState(false);
+  const [currentCode, setCurrentCode] = useState("");
+
   useEffect(() => {
     fetchDashboard();
   }, []);
@@ -84,7 +83,6 @@ export default function StudentDashboard() {
     try {
       const response = await axios.get("/api/student/dashboard");
       setData(response.data);
-      // Initialize profile form data
       if (response.data.student) {
         setProfileData({
           age: response.data.student.age || 0,
@@ -105,10 +103,22 @@ export default function StudentDashboard() {
       await axios.put('/api/student/profile', profileData);
       toast.success("Profile updated!");
       setIsEditing(false);
-      fetchDashboard(); // Refresh data
+      fetchDashboard();
     } catch (e) {
       toast.error("Failed to update profile");
     }
+  };
+  
+  const handleShowCode = async (classId: string) => {
+      if (!data?.student?.id) return;
+      
+      const res = await generateStudentClassCode(classId, data.student.id);
+      if (res.error) {
+          toast.error(res.error);
+      } else if (res.code) {
+          setCurrentCode(res.code);
+          setCodeDialogOpen(true);
+      }
   };
 
   if (isLoading) {
@@ -125,7 +135,7 @@ export default function StudentDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Welcome & Profile Section */}
+      {/* ... Welcome Section ... */}
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">
@@ -140,31 +150,32 @@ export default function StudentDashboard() {
             <Button variant="outline">Edit Profile</Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogHeader>
+             {/* ... Profile inputs ... */}
+             <DialogHeader>
               <DialogTitle>Edit Your Profile</DialogTitle>
               <DialogDescription>Tell us more about yourself!</DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
                 <Label>Age</Label>
-                <Input 
-                  type="number" 
-                  value={profileData.age} 
-                  onChange={(e) => setProfileData({...profileData, age: parseInt(e.target.value) || 0})} 
+                <Input
+                  type="number"
+                  value={profileData.age}
+                  onChange={(e) => setProfileData({ ...profileData, age: parseInt(e.target.value) || 0 })}
                 />
               </div>
               <div className="space-y-2">
                 <Label>School</Label>
-                <Input 
-                  value={profileData.school} 
-                  onChange={(e) => setProfileData({...profileData, school: e.target.value})} 
+                <Input
+                  value={profileData.school}
+                  onChange={(e) => setProfileData({ ...profileData, school: e.target.value })}
                 />
               </div>
               <div className="space-y-2">
                 <Label>Aspirations</Label>
-                <Textarea 
-                  value={profileData.aspirations} 
-                  onChange={(e) => setProfileData({...profileData, aspirations: e.target.value})} 
+                <Textarea
+                  value={profileData.aspirations}
+                  onChange={(e) => setProfileData({ ...profileData, aspirations: e.target.value })}
                   placeholder="What do you want to be?"
                 />
               </div>
@@ -190,32 +201,48 @@ export default function StudentDashboard() {
             {data.classes.length === 0 ? (
               <p className="text-muted-foreground text-sm">No upcoming classes.</p>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {data.classes.map((cls) => (
-                  <div key={cls.id} className="rounded-lg border p-3 flex justify-between items-center">
-                    <div>
-                      <p className="font-medium">
-                        {new Date(cls.scheduledAt).toLocaleString()}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Tutor: {cls.tutor.user.fullname}
-                      </p>
+                  <div key={cls.id} className="rounded-lg border p-4 flex flex-col gap-3">
+                    <div className="flex justify-between items-start">
+                        <div>
+                          <p className="font-medium text-lg">
+                            {new Date(cls.scheduledAt).toLocaleString()}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Tutor: {cls.tutor.user.fullname}
+                          </p>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleShowCode(cls.id)}
+                        >
+                          <IconQrcode className="h-4 w-4 mr-2" />
+                          Show Code
+                        </Button>
                     </div>
-                    <Button 
-                      size="sm" 
-                      variant="outline"
-                      onClick={async () => {
-                        try {
-                          const res = await axios.post('/api/attendance/generate', { classId: cls.id });
-                          alert(`Class Code: ${res.data.token}\n(Show this to tutor)`);
-                        } catch (e) {
-                          toast.error("Failed to generate Code");
-                        }
-                      }}
-                    >
-                      <IconQrcode className="h-4 w-4 mr-2" />
-                      Show Code
-                    </Button>
+                    
+                    {/* Resources Section */}
+                    {cls.resources && cls.resources.length > 0 && (
+                        <div className="bg-muted/30 p-3 rounded-md">
+                            <h5 className="text-xs font-semibold uppercase mb-2 text-muted-foreground">Resources</h5>
+                            <div className="flex flex-col gap-2">
+                                {cls.resources.map(res => (
+                                    <div key={res.id} className="flex items-center gap-2 text-sm">
+                                        {res.type === 'LINK' ? <IconLink className="w-3 h-3 text-blue-500"/> : <IconFile className="w-3 h-3 text-orange-500"/>}
+                                        {res.url ? (
+                                            <a href={res.url} target="_blank" rel="noreferrer" className="hover:underline text-primary">
+                                                {res.title}
+                                            </a>
+                                        ) : (
+                                            <span>{res.title}</span>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -255,6 +282,26 @@ export default function StudentDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Code Display Dialog */}
+      <Dialog open={codeDialogOpen} onOpenChange={setCodeDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                  <DialogTitle>Class Verification Code</DialogTitle>
+                  <DialogDescription>Share this code with your tutor to start the class.</DialogDescription>
+              </DialogHeader>
+              <div className="flex items-center justify-center p-6">
+                  <div className="text-4xl font-mono font-bold tracking-widest border-2 border-dashed p-4 rounded-lg bg-muted/50">
+                      {currentCode}
+                  </div>
+              </div>
+              <DialogFooter className="sm:justify-center">
+                  <Button type="button" variant="secondary" onClick={() => setCodeDialogOpen(false)}>
+                      Close
+                  </Button>
+              </DialogFooter>
+          </DialogContent>
+      </Dialog>
     </div>
   );
 }
