@@ -165,6 +165,7 @@ model Class {
   status      ClassStatus @default(SCHEDULED)
   attendanceToken String?
   verificationDate DateTime?
+  createdAt   DateTime @default(now())
   
   homeworks   Homework[]
   resources   Resource[]

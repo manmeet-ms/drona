@@ -31,7 +31,7 @@ export const tutorNavItems: NavItem[] = [
 
 export const studentNavItems: NavItem[] = [
   { title: "Dashboard", href: "/dashboard", icon: IconDashboard },
-  { title: "Find Tutors", href: "/tutors", icon: IconSearch },
+  // { title: "Find Tutors", href: "/tutors", icon: IconSearch },
   { title: "Homework", href: "/student/homework", icon: IconBook },
   { title: "Attendance", href: "/student/attendance", icon: IconCalendar },
   { title: "Queries", href: "/student/query", icon: IconMessage },

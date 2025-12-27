@@ -58,6 +58,32 @@ interface StudentData {
   classes: ClassSession[];
 }
 
+function CodeDisplay({ classId }: { classId: string }) {
+  const [code, setCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchCode = async () => {
+      setLoading(true);
+      setError(false);
+      try {
+        const res = await axios.post('/api/attendance/generate', { classId });
+        setCode(res.data.token);
+      } catch (e) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCode();
+  }, [classId]);
+
+  if (loading) return <IconLoader2 className="animate-spin" />;
+  if (error) return <span className="text-red-500 text-sm">Error</span>;
+  return <span>{code}</span>;
+}
+
 export default function StudentDashboard() {
   const [data, setData] = useState<StudentData | null>(null);
   const session = useSession();

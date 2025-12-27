@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/src/lib/auth";
 import prisma from "@/src/lib/prisma";
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 
 // Schema for creating a student
 const createStudentSchema = z.object({
@@ -13,37 +14,20 @@ const createStudentSchema = z.object({
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-console.log(`
-  +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
-  this logs the session
-  +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
-  ${session}
-  +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
-  `);
   
-  if (!session || session.user.role !== "PARENT") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+    if (!session || session.user.role !== "PARENT") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   
-  const body = await req.json();
-  console.log(`
-    +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
-    this logs the body
-    +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
-    ${body}
-    +*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
-    `);
+    const body = await req.json();
     const validatedData = createStudentSchema.parse(body);
-console.log({
-        name: validatedData.name,
-        password: validatedData.password, // Storing plain text as per MVP plan
-        parentId: session.user.id,
-      });
+
+    const hashedPassword = await bcrypt.hash(validatedData.password, 10);
 
     const student = await prisma.student.create({
       data: {
         name: validatedData.name,
-        password: validatedData.password, // Storing plain text as per MVP plan
+        password: hashedPassword,
         parentId: session.user.id,
       },
     });

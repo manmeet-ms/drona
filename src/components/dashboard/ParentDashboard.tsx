@@ -58,6 +58,11 @@ interface Tutor {
   };
 }
 
+import { Switch } from "@/src/components/ui/switch";
+import { Slider } from "@/src/components/ui/slider";
+
+// ... existing imports
+
 export default function ParentDashboard() {
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -70,6 +75,9 @@ export default function ParentDashboard() {
   const [tutorResults, setTutorResults] = useState<Tutor[]>([]);
   const [selectedTutor, setSelectedTutor] = useState<Tutor | null>(null);
   const [bookingDate, setBookingDate] = useState("");
+
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [recurringWeeks, setRecurringWeeks] = useState(1);
 
   const form = useForm<CreateStudentForm>({
     resolver: zodResolver(createStudentSchema),
@@ -108,36 +116,57 @@ export default function ParentDashboard() {
   const handleTutorSearch = async () => {
     const res = await searchTutors(searchQuery);
     if (res.tutors) {
-      // @ts-ignore - Booking API return type needs to be inferred or cast properly for strict TS, but for now we map relevant fields
+      // @ts-ignore
       setTutorResults(res.tutors as unknown as Tutor[]);
     }
   };
-
-  const handleBookClass = async () => {
-    if (!selectedStudentId || !selectedTutor || !bookingDate || !session.data?.user.id) return;
-
-    const date = new Date(bookingDate);
-    const res = await bookClass(session.data.user.id, selectedStudentId, selectedTutor.id, date);
-
-    if (res.success) {
-      toast.success("Class booked successfully!");
-      setBookingDialogOpen(false);
-      setSelectedTutor(null);
-      setBookingDate("");
-      setSearchQuery("");
-      setTutorResults([]);
-    } else {
-      toast.error(res.error || "Booking failed");
-    }
-  };
-
+  
   const openBooking = (studentId: string) => {
     setSelectedStudentId(studentId);
     setBookingDialogOpen(true);
   };
 
+  const handleBookClass = async () => {
+    if (!selectedStudentId || !selectedTutor || !bookingDate || !session.data?.user.id) return;
+
+    try {
+        const start = new Date(bookingDate);
+        const schedules = [];
+
+        if (isRecurring) {
+            for (let i = 0; i < recurringWeeks; i++) {
+                const date = new Date(start);
+                date.setDate(start.getDate() + (i * 7));
+                schedules.push(date.toISOString());
+            }
+        } else {
+            schedules.push(start.toISOString());
+        }
+
+        await axios.post('/api/class/create', {
+            tutorId: selectedTutor.id,
+            studentId: selectedStudentId,
+            schedules: schedules
+        });
+
+      toast.success(isRecurring ? `${schedules.length} classes booked successfully!` : "Class booked successfully!");
+      setBookingDialogOpen(false);
+      setSelectedTutor(null);
+      setBookingDate("");
+      setSearchQuery("");
+      setTutorResults([]);
+      setIsRecurring(false);
+      setRecurringWeeks(1);
+    } catch (e) {
+      toast.error("Booking failed");
+    }
+  };
+
+  // ... openBooking, etc.
+
   return (
     <div className="space-y-8">
+      {/* ... Add Student & List Cards (unchanged) ... */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {/* Add Student Form */}
         <Card>
@@ -285,27 +314,64 @@ export default function ParentDashboard() {
               </div>
             </div>
           ) : (
-            <div className="space-y-4 py-4">
-              <div className="flex items-center justify-between p-3 bg-muted rounded-md mb-4">
-                <span className="font-medium">Selected: {selectedTutor.user.fullname}</span>
+            <div className="space-y-6 py-4">
+              <div className="flex items-center justify-between p-3 bg-muted rounded-md border">
+                <div className="flex flex-col">
+                    <span className="text-xs text-muted-foreground">Tutor</span>
+                    <span className="font-medium">{selectedTutor.user.fullname}</span>
+                </div>
                 <Button variant="ghost" size="sm" onClick={() => setSelectedTutor(null)}>Change</Button>
               </div>
 
-              <div className="space-y-2">
-                <FormLabel>Select Date & Time</FormLabel>
-                <Input
-                  type="datetime-local"
-                  value={bookingDate}
-                  onChange={(e) => setBookingDate(e.target.value)}
-                  min={new Date().toISOString().slice(0, 16)}
-                />
+              <div className="space-y-4 border p-4 rounded-md">
+                <div className="space-y-2">
+                    <FormLabel>Start Date & Time</FormLabel>
+                    <Input
+                    type="datetime-local"
+                    value={bookingDate}
+                    onChange={(e) => setBookingDate(e.target.value)}
+                    min={new Date().toISOString().slice(0, 16)}
+                    />
+                </div>
+
+                <div className="flex items-center justify-between space-x-2">
+                    <FormLabel className="flex flex-col space-y-1">
+                        <span>Recurring Booking</span>
+                        <span className="font-normal text-xs text-muted-foreground">Repeat this slot weekly?</span>
+                    </FormLabel>
+                    <Switch
+                        checked={isRecurring}
+                        onCheckedChange={setIsRecurring}
+                    />
+                </div>
+
+                {isRecurring && (
+                    <div className="space-y-4 pt-2">
+                        <div className="flex justify-between">
+                            <FormLabel>Duration</FormLabel>
+                            <span className="text-sm text-muted-foreground">{recurringWeeks} Weeks</span>
+                        </div>
+                        <Slider
+                            value={[recurringWeeks]}
+                            onValueChange={(vals) => setRecurringWeeks(vals[0])}
+                            min={2}
+                            max={12}
+                            step={1}
+                        />
+                         <p className="text-xs text-muted-foreground">
+                            Class will be scheduled every {bookingDate && new Date(bookingDate).toLocaleDateString("en-US", { weekday: 'long' })} at {bookingDate && new Date(bookingDate).toLocaleTimeString("en-US", { hour: '2-digit', minute:'2-digit' })}.
+                        </p>
+                    </div>
+                )}
               </div>
             </div>
           )}
 
           <DialogFooter>
             {selectedTutor && (
-              <Button onClick={handleBookClass}>Confirm Booking</Button>
+              <Button onClick={handleBookClass}>
+                  {isRecurring ? `Confirm ${recurringWeeks} Sessions` : "Confirm Booking"}
+              </Button>
             )}
           </DialogFooter>
         </DialogContent>

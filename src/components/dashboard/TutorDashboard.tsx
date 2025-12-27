@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -8,11 +7,12 @@ import { z } from "zod";
 import axios from "axios";
 import { toast } from "sonner";
 import { IconLoader2, IconDeviceFloppy } from "@tabler/icons-react";
+import { Badge } from "@/src/components/ui/badge";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
-import { Label } from "@/src/components/ui/label";
 import {
   Card,
   CardContent,
@@ -30,23 +30,11 @@ import {
   FormMessage,
 } from "@/src/components/ui/form";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter
-} from "@/src/components/ui/dialog";
-import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/src/components/ui/tabs";
-import { verifyClassAttendance } from "@/src/app/actions/class";
-import { addResourceLink, uploadResourceFile } from "@/src/app/actions/resources";
-
-// ... imports
 
 const tutorProfileSchema = z.object({
   bio: z.string().min(10, "Bio must be at least 10 characters"),
@@ -57,19 +45,10 @@ const tutorProfileSchema = z.object({
 type TutorProfileForm = z.infer<typeof tutorProfileSchema>;
 
 export default function TutorDashboard() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const [classes, setClasses] = useState<any[]>([]);
-  const [verificationCode, setVerificationCode] = useState("");
-  const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
+  const [classes, setClasses] = useState<any[]>([]); // Using any primarily for quick iteration, ideally specific interface should be reused
   
-  // Resource Upload State
-  const [resourceClassId, setResourceClassId] = useState<string | null>(null);
-  const [resourceDialogOpen, setResourceDialogOpen] = useState(false);
-  const [resourceType, setResourceType] = useState("file");
-  const [resourceTitle, setResourceTitle] = useState("");
-  const [resourceUrl, setResourceUrl] = useState("");
-  const [resourceFile, setResourceFile] = useState<File | null>(null);
-
   const form = useForm<TutorProfileForm>({
     resolver: zodResolver(tutorProfileSchema) as any,
     defaultValues: {
@@ -83,8 +62,7 @@ export default function TutorDashboard() {
     try {
       const [profileRes, classesRes] = await Promise.all([
         axios.get("/api/tutors/profile"),
-        // Mocking classes fetch for now, ideally strictly typed API or server action
-        axios.get("/api/tutors/classes") 
+        axios.get("/api/tutor/classes") 
       ]);
       
       if (profileRes.data && profileRes.data.id) {
@@ -121,85 +99,6 @@ export default function TutorDashboard() {
     }
   };
 
-  const handleVerify = async (classId: string) => {
-      if(!verificationCode) {
-          toast.error("Please enter a code");
-          return;
-      }
-      
-      const res = await verifyClassAttendance(classId, verificationCode);
-      if(res.error) {
-           toast.error(res.error);
-      } else { 
-          toast.success("Class Verified Successfully!"); 
-          fetchData(); // Refresh list
-          setVerificationCode("");
-          setSelectedClassId(null);
-      }
-  };
-
-  const handleResourceUpload = async () => {
-      if (!resourceClassId || !resourceTitle) {
-          toast.error("Please fill in all required fields");
-          return;
-      }
-
-      // We need the tutorId. In a real scenario, we'd get this from the session or the class object 
-      // if we trust the client (we shouldn't). 
-      // ideally the Server Action should fetch the current user's tutorId from session.
-      // For this implementation, we will pass a placeholder "tutor-id" and let the server 
-      // action strictly validate (the server action provided earlier took tutorId as arg, 
-      // implying it trusts the caller or the caller is another server component).
-      
-      // Let's assume we find the tutorId from the class object for now, or the API call needs to handle it.
-      // Since `classes` state has `tutorId` usually.
-      const cls = classes.find(c => c.id === resourceClassId);
-      const tutorId = cls?.tutorId; 
-
-      if (!tutorId) {
-          toast.error("Tutor ID missing");
-          return;
-      }
-
-      let res;
-      if (resourceType === "link") {
-          if (!resourceUrl) {
-              toast.error("Please enter a URL");
-              return;
-          }
-          res = await addResourceLink(resourceClassId, tutorId, resourceTitle, resourceUrl);
-      } else {
-          if (!resourceFile) {
-              toast.error("Please select a file");
-              return;
-          }
-           const formData = new FormData();
-           formData.append("file", resourceFile);
-           formData.append("title", resourceTitle);
-           // We need to modify uploadResourceFile signature to accept formData directly or wrap it?
-           // The server action 'uploadResourceFile' defined previously takes (classId, tutorId, formData).
-           // But we can't easily pass classId/tutorId INSIDE formData unless we parse it there.
-           // Let's call a wrapper or assume we modify the server action to parse form data for IDs?
-           // Actually, best practice with Server Actions & FormData is usually `action={uploadResource}` form.
-           // But here we are calling it programmatically.
-           
-           // We'll invoke it directly:
-           res = await uploadResourceFile(resourceClassId, tutorId, formData);
-      }
-
-      if (res.error) {
-          toast.error(res.error);
-      } else {
-          toast.success("Resource added successfully!");
-          setResourceDialogOpen(false);
-          // Reset form
-          setResourceTitle("");
-          setResourceUrl("");
-          setResourceFile(null);
-      }
-  };
-
-
   if (isLoading) {
     return (
       <div className="flex justify-center p-8">
@@ -210,7 +109,7 @@ export default function TutorDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Profile Form (Existing) ... */}
+      {/* Profile Form */}
            <Card>
         <CardHeader>
           <CardTitle>Profile Settings</CardTitle>
@@ -285,113 +184,124 @@ export default function TutorDashboard() {
         </CardContent>
       </Card>
 
-      {/* Class Management */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Class Management</CardTitle>
-          <CardDescription>Manage your scheduled classes</CardDescription>
-        </CardHeader>
-        <CardContent>
-             {classes.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground border-dashed border rounded-lg">
-                    No classes scheduled.
-                </div>
-             ) : (
-                 <div className="space-y-4">
-                     {classes.map((cls) => (
-                         <div key={cls.id} className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg gap-4">
-                             <div>
-                                 <h4 className="font-semibold">{cls.student.name} - {new Date(cls.scheduledAt).toLocaleString()}</h4>
-                                 <p className="text-sm text-muted-foreground">Status: {cls.status}</p>
-                             </div>
-                             <div className="flex gap-2 items-center">
-                                 {cls.status === 'SCHEDULED' && (
-                                     <div className="flex items-center gap-2">
-                                        <Input 
-                                            placeholder="Enter 6-digit Code" 
-                                            className="w-40"
-                                            maxLength={6}
-                                            value={selectedClassId === cls.id ? verificationCode : ""}
-                                            onChange={(e) => {
-                                                setSelectedClassId(cls.id);
-                                                setVerificationCode(e.target.value);
-                                            }}
-                                        />
-                                        <Button size="sm" onClick={() => handleVerify(cls.id)}>Verify</Button>
-                                     </div>
-                                 )}
-                                 <Button 
-                                    variant="outline" 
-                                    size="sm"
-                                    onClick={() => {
-                                        setResourceClassId(cls.id);
-                                        setResourceDialogOpen(true);
-                                    }}
-                                 >
-                                     Upload Resources
-                                 </Button>
-                             </div>
-                         </div>
-                     ))}
-                 </div>
-             )}
-        </CardContent>
-      </Card>
+      {/* Notifications and Classes Tabs */}
+      <Tabs defaultValue="classes" className="space-y-4">
+        <TabsList>
+            <TabsTrigger value="classes">My Classes</TabsTrigger>
+            <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger value="notifications">
+                Notifications
+                {classes.filter(c => new Date(c.createdAt) > new Date(Date.now() - 86400000)).length > 0 && (
+                    <Badge variant="destructive" className="ml-2 h-2 w-2 rounded-full p-0" />
+                )}
+            </TabsTrigger>
+        </TabsList>
 
-      {/* Resource Upload Dialog */}
-      <Dialog open={resourceDialogOpen} onOpenChange={setResourceDialogOpen}>
-          <DialogContent>
-              <DialogHeader>
-                  <DialogTitle>Add Resource</DialogTitle>
-                  <DialogDescription>
-                      Share files or links with your students.
-                  </DialogDescription>
-              </DialogHeader>
-              
-              <Tabs defaultValue="file" value={resourceType} onValueChange={setResourceType}>
-                  <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="file">File Upload</TabsTrigger>
-                      <TabsTrigger value="link">External Link</TabsTrigger>
-                  </TabsList>
-                  
-                  <div className="py-4 space-y-4">
-                      <div className="space-y-2">
-                          <Label>Title</Label>
-                          <Input 
-                              placeholder="Resource Title"
-                              value={resourceTitle}
-                              onChange={(e) => setResourceTitle(e.target.value)}
-                          />
-                      </div>
+        <TabsContent value="classes">
+            <Card>
+                <CardHeader>
+                <CardTitle>Class Management</CardTitle>
+                <CardDescription>Manage your scheduled classes</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    {classes.filter((cls) => cls.status !== "COMPLETED").length === 0 ? (
+                        <div className="text-center py-8 text-muted-foreground border-dashed border rounded-lg">
+                            No active classes.
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            {classes.filter((cls) => cls.status !== "COMPLETED").map((cls) => (
+                                <div 
+                                    key={cls.id} 
+                                    className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg gap-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                                    onClick={() => router.push(`/tutor/classes/${cls.id}`)}
+                                >
+                                    <div>
+                                        <h4 className="font-semibold">{cls.student.name} - {new Date(cls.scheduledAt).toLocaleString()}</h4>
+                                        <p className="text-sm text-muted-foreground">Status: {cls.status}</p>
+                                    </div>
+                                    <div className="flex gap-2 items-center" onClick={(e) => e.stopPropagation()}>
+                                       <Button variant="outline" size="sm" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>
+                                           View Details
+                                       </Button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
+        </TabsContent>
 
-                      <TabsContent value="file" className="space-y-2">
-                          <Label>File (Max 10MB)</Label>
-                          <Input 
-                               type="file" 
-                               onChange={(e) => setResourceFile(e.target.files?.[0] || null)}
-                          />
-                      </TabsContent>
-                      
-                      <TabsContent value="link" className="space-y-2">
-                          <Label>URL</Label>
-                          <Input 
-                               placeholder="https://youtube.com/..." 
-                               value={resourceUrl}
-                               onChange={(e) => setResourceUrl(e.target.value)}
-                          />
-                          <p className="text-xs text-muted-foreground">
-                              Supported: YouTube, LinkedIn, Instagram, GitHub, etc.
-                          </p>
-                      </TabsContent>
-                  </div>
-              </Tabs>
+        <TabsContent value="history">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Class History</CardTitle>
+                    <CardDescription>View your past completed classes</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    {classes.filter(c => c.status === "COMPLETED").length === 0 ? (
+                        <div className="text-center py-8 text-muted-foreground">
+                            No completed classes yet.
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            {classes
+                                .filter(c => c.status === "COMPLETED")
+                                .sort((a, b) => new Date(b.scheduledAt).getTime() - new Date(a.scheduledAt).getTime())
+                                .map((cls) => (
+                                <div key={cls.id} className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg bg-muted/20">
+                                    <div>
+                                        <h4 className="font-semibold text-muted-foreground">{cls.student.name}</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            Completed on {new Date(cls.scheduledAt).toLocaleDateString()} at {new Date(cls.scheduledAt).toLocaleTimeString()}
+                                        </p>
+                                    </div>
+                                    <Button size="sm" variant="secondary" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>Review Details</Button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
+        </TabsContent>
 
-              <DialogFooter>
-                  <Button variant="outline" onClick={() => setResourceDialogOpen(false)}>Cancel</Button>
-                  <Button onClick={handleResourceUpload}>Add Resource</Button>
-              </DialogFooter>
-          </DialogContent>
-      </Dialog>
+        <TabsContent value="notifications">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Recent Booking Activities</CardTitle>
+                    <CardDescription>New classes booked in the last 7 days</CardDescription>
+                </CardHeader>
+                <CardContent>
+                     {classes.filter(c => new Date(c.createdAt) > new Date(Date.now() - 7 * 86400000)).length === 0 ? (
+                        <div className="text-center py-8 text-muted-foreground">
+                            No recent notifications.
+                        </div>
+                     ) : (
+                        <div className="space-y-4">
+                            {classes
+                                .filter(c => new Date(c.createdAt) > new Date(Date.now() - 7 * 86400000))
+                                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                                .map((cls) => (
+                                <div key={cls.id} className="flex items-center justify-between p-4 border rounded-lg bg-muted/20">
+                                    <div>
+                                        <p className="font-medium">New Class Booked!</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            Parent booked a session for <strong>{cls.student.name}</strong> on {new Date(cls.scheduledAt).toLocaleString()}.
+                                        </p>
+                                        <p className="text-xs text-muted-foreground mt-1">
+                                            Booked {new Date(cls.createdAt).toLocaleString()}
+                                        </p>
+                                    </div>
+                                    <Button size="sm" variant="outline" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>View</Button>
+                                </div>
+                            ))}
+                        </div>
+                     )}
+                </CardContent>
+            </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

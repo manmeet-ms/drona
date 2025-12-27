@@ -32,10 +32,9 @@ export const authOptions: NextAuthOptions = {
 
                     if (!student) return null;
 
-                    // In a real app, you should hash student passwords too. 
-                    // For MVP, if stored as plain text (as per plan), compare directly.
-                    // If hashed, use bcrypt.compare(credentials.password, student.password)
-                    if (student.password !== credentials.password) return null;
+                    // Hash comparison for secure student login
+                    const isStudentMatch = await bcrypt.compare(credentials.password, student.password);
+                    if (!isStudentMatch) return null;
 
                     return {
                         id: student.id,

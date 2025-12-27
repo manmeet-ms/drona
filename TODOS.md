@@ -203,3 +203,15 @@ year+7_characters_uniuely_identifiable_string_across_the_database_uuid_is_too_lo
 and password, visible to parent dashboard, if student has mobile one or more mobile in their home they can eaily login into the devices and sart learninng, but another problem is that if home only has a parent device student got no device how wil we mitigate this problem. 
 my oncern is  If a parent struggles with tech espiceial y with teh tech literacy rate in india , they will get overwhelmend by the procecss th and outr app will not work there in india.
 
+
+### Explicit Constraints (Non-Negotiable)
+
+- Do not modify backend structure much.
+- Do not build new features yet.
+- Do not change REST APIs.
+- Do not modify existing code unless required for the issues listed.
+- Do not change any CSS.
+- Do not alter existing logic outside the listed tasks.
+- Base components under ui/ and components must remain present and untouched logic change allowed.
+
+I will review and implement myself after verification.

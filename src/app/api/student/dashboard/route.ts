@@ -30,7 +30,12 @@ export async function GET(req: Request) {
     const studentData = await prisma.student.findUnique({
       where: { id: studentId },
       select: {
+        id: true,
         name: true,
+        age: true,
+        school: true,
+        aspirations: true,
+        interests: true,
         homeworks: {
           where: { isCompleted: false },
           orderBy: { dueDate: 'asc' },
@@ -48,20 +53,41 @@ export async function GET(req: Request) {
         classes: {
           where: { 
             status: 'SCHEDULED',
-            scheduledAt: { gte: new Date() }
+            scheduledAt: { 
+              gte: new Date(new Date().setHours(0, 0, 0, 0)) 
+            }
           },
           orderBy: { scheduledAt: 'asc' },
           take: 5,
           include: {
             tutor: {
               include: { user: { select: { fullname: true } } }
-            }
+            },
+            resources: true // Including resources as frontend uses it
           }
         }
       }
     });
 
-    return NextResponse.json(studentData);
+    if (!studentData) {
+        return NextResponse.json({ error: "Student not found" }, { status: 404 });
+    }
+
+    // Structure response to match frontend StudentData interface
+    const response = {
+        student: {
+            id: studentData.id,
+            name: studentData.name,
+            age: studentData.age,
+            school: studentData.school,
+            aspirations: studentData.aspirations,
+            interests: studentData.interests
+        },
+        homeworks: studentData.homeworks,
+        classes: studentData.classes
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Error fetching student dashboard:", error);
     return NextResponse.json(

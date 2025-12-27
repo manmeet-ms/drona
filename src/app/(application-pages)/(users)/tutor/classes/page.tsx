@@ -7,19 +7,29 @@ import { IconLoader2, IconBook, IconCalendar } from "@tabler/icons-react";
 import { toast } from "sonner";
 import { Badge } from "@/src/components/ui/badge";
 
-interface ClassSession {
-  id: string;
-  scheduledAt: string;
-  status: "SCHEDULED" | "COMPLETED" | "CANCELLED";
-  student: {
-    id: string;
-    name: string;
-  };
-}
+import { Input } from "@/src/components/ui/input";
+import { Button } from "@/src/components/ui/button";
+import { verifyClassAttendance } from "@/src/app/actions/class";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter
+} from "@/src/components/ui/dialog";
+import { Label } from "@/src/components/ui/label";
+
+// ... existing imports
 
 export default function TutorClassesPage() {
-  const [classes, setClasses] = useState<ClassSession[]>([]);
+  const [classes, setClasses] = useState<any[]>([]); // Relaxed type for now to match dashboard
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Interactive State
+  const [viewClass, setViewClass] = useState<any | null>(null);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchClasses();
@@ -34,6 +44,25 @@ export default function TutorClassesPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleVerify = async (classId: string) => {
+      if(!verificationCode) {
+          toast.error("Please enter a code");
+          return;
+      }
+      
+      const res = await verifyClassAttendance(classId, verificationCode);
+      if(res.error) {
+           toast.error(res.error);
+      } else { 
+          toast.success("Class Verified Successfully!"); 
+          fetchClasses(); 
+          setVerificationCode("");
+          setSelectedClassId(null);
+          // If viewing details, update that too if needed, or close it
+          if (viewClass?.id === classId) setViewClass(null);
+      }
   };
 
   if (isLoading) {
@@ -60,29 +89,89 @@ export default function TutorClassesPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-          {classes.map((cls) => (
-            <Card key={cls.id}>
-              <CardContent className="flex items-center justify-between p-4">
-                <div className="flex items-center gap-4">
-                  <div className="bg-primary/10 p-2 rounded-full">
-                    <IconCalendar className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Student: {cls.student.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(cls.scheduledAt).toLocaleString()}
-                    </p>
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* {classes.filter((cls) => cls.status !== "COMPLETED").map((cls) => ( */}
+          {/* {classes.map((cls) => ( */}
+          {classes.filter((cls) => cls.status !== "COMPLETED").map((cls) => (
+            <Card 
+                key={cls.id} 
+                className="cursor-pointer hover:border-primary/50 transition-colors"
+                onClick={() => setViewClass(cls)}
+            >
+              <CardContent className="flex flex-col gap-4 p-4">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                    <div className="bg-primary/10 p-2 rounded-full">
+                        <IconCalendar className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                        <p className="font-medium">Student: {cls.student.name}</p>
+                        <p className="text-sm text-muted-foreground">
+                        {new Date(cls.scheduledAt).toLocaleString()}
+                        </p>
+                    </div>
+                    </div>
                 </div>
-                <Badge variant={cls.status === "COMPLETED" ? "default" : cls.status === "CANCELLED" ? "destructive" : "secondary"}>
-                  {cls.status}
-                </Badge>
+                <div className="flex items-center justify-between">
+                    <Badge variant={cls.status === "COMPLETED" ? "default" : cls.status === "CANCELLED" ? "destructive" : "secondary"}>
+                    {cls.status}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">Click for details</span>
+                </div>
+                
+                {cls.status === 'SCHEDULED' && (
+                     <div className="flex items-center gap-2 mt-2" onClick={(e) => e.stopPropagation()}>
+                        <Input 
+                            placeholder="Code" 
+                            className="w-24 h-8 text-xs"
+                            maxLength={6}
+                            value={selectedClassId === cls.id ? verificationCode : ""}
+                            onChange={(e) => {
+                                setSelectedClassId(cls.id);
+                                setVerificationCode(e.target.value);
+                            }}
+                        />
+                        <Button size="sm" className="h-8" onClick={() => handleVerify(cls.id)}>Verify</Button>
+                     </div>
+                )}
               </CardContent>
             </Card>
           ))}
         </div>
       )}
+
+      {/* View Class Details Dialog */}
+      <Dialog open={!!viewClass} onOpenChange={(open) => !open && setViewClass(null)}>
+        <DialogContent>
+            <DialogHeader>
+                <DialogTitle>Class Details</DialogTitle>
+                <DialogDescription>
+                    {viewClass?.student.name} <br/> 
+                    {viewClass && new Date(viewClass.scheduledAt).toLocaleString()}
+                </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+                <div className="grid grid-cols-2 gap-4">
+                    <div>
+                        <Label className="text-muted-foreground">Status</Label>
+                        <p className="font-medium">{viewClass?.status}</p>
+                    </div>
+                     <div>
+                        <Label className="text-muted-foreground">Details</Label>
+                        <p className="text-sm"> booked on {viewClass && new Date(viewClass.createdAt || Date.now()).toLocaleDateString()}</p>
+                    </div>
+                </div>
+                
+                <div className="bg-muted p-4 rounded-lg text-sm">
+                    <p><strong>Attendance Verification:</strong></p>
+                    <p className="text-muted-foreground">Enter the 6-digit code provided by the student to verify attendance.</p>
+                </div>
+            </div>
+            <DialogFooter>
+                <Button variant="outline" onClick={() => setViewClass(null)}>Close</Button>
+            </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
