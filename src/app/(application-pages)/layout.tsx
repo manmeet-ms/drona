@@ -112,7 +112,7 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
             <div className={cn(status === "authenticated" ? "bg-green-500" : "bg-red-500", "size-2 rounded-full ")} ></div>
 
 
-            {status}</Badge>
+           {session?.user?.role} | {status}</Badge>
 
           {isStudentView && (
             <Button

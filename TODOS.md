@@ -9,13 +9,13 @@ the flow was that parents can view tutropeofile scehdule a class with one of the
 tutot cannot touvh My Classes none of the clas is clickable to show info that you saying 
 student login not working with correct uuid and correct password123 password , adding form where parent can add student is not storing passworkin in bcrypt. and not working login as student
 
-we cannot touch click the scehduled classes , no code is genrated in 
+we cannot touch click the scehduled cl   asses , no code  is genrated in 
 
 the flow was that parents can view tutropeofile scehdule a class with one of their children or a child, not like you have implement rightnow, parent will search whrer parent will come scross a tutor peofile he lies then he can bok a class with one of his schildren adn and that tutor. got it? 
 
 tutot cannot touvh My Classes none of the clas is clickable to show info that you saying 
 
-tutor can upload the Homework and resources to the  to the respoective class that t student or tutora had seemless mechanism   
+tutor can upload the Homework and resources to the  to the respoective class that t student or tutorS HAVE  seemless mechanism   
 book class notification to the teacher side from teh parent dashbord, parent will book class to tutor, or call the tutor i have the cbuttons 
 cant i implement websockets without having dedicated server
 https://lordicon.com/icons/system/regular?c=143&f=free&i=117-bolt
