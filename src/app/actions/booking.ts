@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/src/lib/prisma';
-import { ClassStatus } from '@prisma/client';
+import { ClassStatus } from '@/generated/prisma/client';
 import { revalidatePath } from 'next/cache';
 
 export async function bookClass(parentId: string, studentId: string, tutorId: string, scheduledAt: Date) {

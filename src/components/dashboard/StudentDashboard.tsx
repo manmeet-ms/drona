@@ -45,6 +45,21 @@ interface ClassSession {
   resources: Resource[];
 }
 
+interface Homework {
+  id: string;
+  title: string;
+  description: string | null;
+  dueDate: string | null;
+  isCompleted: boolean;
+  class: {
+    tutor: {
+      user: {
+        fullname: string;
+      };
+    };
+  };
+}
+
 interface StudentData {
   student: {
     name: string;
@@ -58,31 +73,7 @@ interface StudentData {
   classes: ClassSession[];
 }
 
-function CodeDisplay({ classId }: { classId: string }) {
-  const [code, setCode] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const fetchCode = async () => {
-      setLoading(true);
-      setError(false);
-      try {
-        const res = await axios.post('/api/attendance/generate', { classId });
-        setCode(res.data.token);
-      } catch (e) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCode();
-  }, [classId]);
-
-  if (loading) return <IconLoader2 className="animate-spin" />;
-  if (error) return <span className="text-red-500 text-sm">Error</span>;
-  return <span>{code}</span>;
-}
 
 export default function StudentDashboard() {
   const [data, setData] = useState<StudentData | null>(null);
@@ -117,7 +108,7 @@ export default function StudentDashboard() {
           interests: response.data.student.interests || [],
         });
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to fetch student data");
     } finally {
       setIsLoading(false);
@@ -130,13 +121,16 @@ export default function StudentDashboard() {
       toast.success("Profile updated!");
       setIsEditing(false);
       fetchDashboard();
-    } catch (e) {
+    } catch {
       toast.error("Failed to update profile");
     }
   };
   
   const handleShowCode = async (classId: string) => {
-      if (!data?.student?.id) return;
+      if (!data?.student?.id) {
+          toast.error("Student ID missing. Please refresh.");
+          return;
+      }
       
       const res = await generateStudentClassCode(classId, data.student.id);
       if (res.error) {

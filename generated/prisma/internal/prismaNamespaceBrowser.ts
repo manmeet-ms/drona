@@ -193,7 +193,8 @@ export const ClassScalarFieldEnum = {
   scheduledAt: 'scheduledAt',
   status: 'status',
   attendanceToken: 'attendanceToken',
-  verificationDate: 'verificationDate'
+  verificationDate: 'verificationDate',
+  createdAt: 'createdAt'
 } as const
 
 export type ClassScalarFieldEnum = (typeof ClassScalarFieldEnum)[keyof typeof ClassScalarFieldEnum]

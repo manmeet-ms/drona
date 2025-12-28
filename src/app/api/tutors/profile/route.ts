@@ -12,7 +12,7 @@ const tutorProfileSchema = z.object({
 
 export async function GET(req: Request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
 
     if (!session || session.user.role !== "TUTOR") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

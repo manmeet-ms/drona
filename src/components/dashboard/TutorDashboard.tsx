@@ -48,7 +48,7 @@ export default function TutorDashboard() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [classes, setClasses] = useState<any[]>([]); // Using any primarily for quick iteration, ideally specific interface should be reused
-  
+
   const form = useForm<TutorProfileForm>({
     resolver: zodResolver(tutorProfileSchema) as any,
     defaultValues: {
@@ -62,9 +62,11 @@ export default function TutorDashboard() {
     try {
       const [profileRes, classesRes] = await Promise.all([
         axios.get("/api/tutors/profile"),
-        axios.get("/api/tutor/classes") 
+        axios.get("/api/tutor/classes"),
       ]);
-      
+console.log(profileRes,
+classesRes);
+
       if (profileRes.data && profileRes.data.id) {
         form.reset({
           bio: profileRes.data.bio || "",
@@ -109,8 +111,127 @@ export default function TutorDashboard() {
 
   return (
     <div className="space-y-8">
+      {/* Notifications and Classes Tabs */}
+      <Tabs defaultValue="classes" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="classes">My Classes</TabsTrigger>
+          <TabsTrigger value="history">History</TabsTrigger>
+          <TabsTrigger value="notifications">
+            Notifications
+            {classes.filter(c => new Date(c.createdAt) > new Date(Date.now() - 86400000)).length > 0 && (
+              <Badge variant="destructive" className="ml-2 h-2 w-2 rounded-full p-0" />
+            )}
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="classes">
+          <Card>
+            <CardHeader>
+              <CardTitle>Class Management</CardTitle>
+              <CardDescription>Manage your scheduled classes</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {classes.filter((cls) => cls.status !== "COMPLETED").length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground border-dashed border rounded-lg">
+                  No active classes.
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {classes.filter((cls) => cls.status !== "COMPLETED").map((cls) => (
+                    <div
+                      key={cls.id}
+                      className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg gap-4 cursor-pointer hover:bg-muted/50 transition-colors"
+                      onClick={() => router.push(`/tutor/classes/${cls.id}`)}
+                    >
+                      <div>
+                        <h4 className="font-semibold">{cls.student.name} - {new Date(cls.scheduledAt).toLocaleString()}</h4>
+                        <p className="text-sm text-muted-foreground">Status: {cls.status}</p>
+                      </div>
+                      <div className="flex gap-2 items-center" onClick={(e) => e.stopPropagation()}>
+                        <Button variant="outline" size="sm" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>
+                          View Details
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="history">
+          <Card>
+            <CardHeader>
+              <CardTitle>Class History</CardTitle>
+              <CardDescription>View your past completed classes</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {classes.filter(c => c.status === "COMPLETED").length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  No completed classes yet.
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {classes
+                    .filter(c => c.status === "COMPLETED")
+                    .sort((a, b) => new Date(b.scheduledAt).getTime() - new Date(a.scheduledAt).getTime())
+                    .map((cls) => (
+                      <div key={cls.id} className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg bg-muted/20">
+                        <div>
+                          <h4 className="font-semibold text-muted-foreground">{cls.student.name}</h4>
+                          <p className="text-sm text-muted-foreground">
+                            Completed on {new Date(cls.scheduledAt).toLocaleDateString()} at {new Date(cls.scheduledAt).toLocaleTimeString()}
+                          </p>
+                        </div>
+                        <Button size="sm" variant="secondary" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>Review Details</Button>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="notifications">
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Booking Activities</CardTitle>
+              <CardDescription>New classes booked in the last 7 days</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {classes.filter(c => new Date(c.createdAt) > new Date(Date.now() - 7 * 86400000)).length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  No recent notifications.
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {classes
+                    .filter(c => new Date(c.createdAt) > new Date(Date.now() - 7 * 86400000))
+                    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                    .map((cls) => (
+                      <div key={cls.id} className="flex items-center justify-between p-4 border rounded-lg bg-muted/20">
+                        <div>
+                          <p className="font-medium">New Class Booked!</p>
+                          <p className="text-sm text-muted-foreground">
+                            Parent booked a session for <strong>{cls.student.name}</strong> on {new Date(cls.scheduledAt).toLocaleString()}.
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Booked {new Date(cls.createdAt).toLocaleString()}
+                          </p>
+                        </div>
+                        <Button size="sm" variant="outline" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>View</Button>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
       {/* Profile Form */}
-           <Card>
+      <Card>
         <CardHeader>
           <CardTitle>Profile Settings</CardTitle>
           <CardDescription>Update your public tutor profile</CardDescription>
@@ -184,124 +305,7 @@ export default function TutorDashboard() {
         </CardContent>
       </Card>
 
-      {/* Notifications and Classes Tabs */}
-      <Tabs defaultValue="classes" className="space-y-4">
-        <TabsList>
-            <TabsTrigger value="classes">My Classes</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
-            <TabsTrigger value="notifications">
-                Notifications
-                {classes.filter(c => new Date(c.createdAt) > new Date(Date.now() - 86400000)).length > 0 && (
-                    <Badge variant="destructive" className="ml-2 h-2 w-2 rounded-full p-0" />
-                )}
-            </TabsTrigger>
-        </TabsList>
 
-        <TabsContent value="classes">
-            <Card>
-                <CardHeader>
-                <CardTitle>Class Management</CardTitle>
-                <CardDescription>Manage your scheduled classes</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {classes.filter((cls) => cls.status !== "COMPLETED").length === 0 ? (
-                        <div className="text-center py-8 text-muted-foreground border-dashed border rounded-lg">
-                            No active classes.
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            {classes.filter((cls) => cls.status !== "COMPLETED").map((cls) => (
-                                <div 
-                                    key={cls.id} 
-                                    className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg gap-4 cursor-pointer hover:bg-muted/50 transition-colors"
-                                    onClick={() => router.push(`/tutor/classes/${cls.id}`)}
-                                >
-                                    <div>
-                                        <h4 className="font-semibold">{cls.student.name} - {new Date(cls.scheduledAt).toLocaleString()}</h4>
-                                        <p className="text-sm text-muted-foreground">Status: {cls.status}</p>
-                                    </div>
-                                    <div className="flex gap-2 items-center" onClick={(e) => e.stopPropagation()}>
-                                       <Button variant="outline" size="sm" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>
-                                           View Details
-                                       </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
-        </TabsContent>
-
-        <TabsContent value="history">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Class History</CardTitle>
-                    <CardDescription>View your past completed classes</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {classes.filter(c => c.status === "COMPLETED").length === 0 ? (
-                        <div className="text-center py-8 text-muted-foreground">
-                            No completed classes yet.
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            {classes
-                                .filter(c => c.status === "COMPLETED")
-                                .sort((a, b) => new Date(b.scheduledAt).getTime() - new Date(a.scheduledAt).getTime())
-                                .map((cls) => (
-                                <div key={cls.id} className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg bg-muted/20">
-                                    <div>
-                                        <h4 className="font-semibold text-muted-foreground">{cls.student.name}</h4>
-                                        <p className="text-sm text-muted-foreground">
-                                            Completed on {new Date(cls.scheduledAt).toLocaleDateString()} at {new Date(cls.scheduledAt).toLocaleTimeString()}
-                                        </p>
-                                    </div>
-                                    <Button size="sm" variant="secondary" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>Review Details</Button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
-        </TabsContent>
-
-        <TabsContent value="notifications">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Recent Booking Activities</CardTitle>
-                    <CardDescription>New classes booked in the last 7 days</CardDescription>
-                </CardHeader>
-                <CardContent>
-                     {classes.filter(c => new Date(c.createdAt) > new Date(Date.now() - 7 * 86400000)).length === 0 ? (
-                        <div className="text-center py-8 text-muted-foreground">
-                            No recent notifications.
-                        </div>
-                     ) : (
-                        <div className="space-y-4">
-                            {classes
-                                .filter(c => new Date(c.createdAt) > new Date(Date.now() - 7 * 86400000))
-                                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-                                .map((cls) => (
-                                <div key={cls.id} className="flex items-center justify-between p-4 border rounded-lg bg-muted/20">
-                                    <div>
-                                        <p className="font-medium">New Class Booked!</p>
-                                        <p className="text-sm text-muted-foreground">
-                                            Parent booked a session for <strong>{cls.student.name}</strong> on {new Date(cls.scheduledAt).toLocaleString()}.
-                                        </p>
-                                        <p className="text-xs text-muted-foreground mt-1">
-                                            Booked {new Date(cls.createdAt).toLocaleString()}
-                                        </p>
-                                    </div>
-                                    <Button size="sm" variant="outline" onClick={() => router.push(`/tutor/classes/${cls.id}`)}>View</Button>
-                                </div>
-                            ))}
-                        </div>
-                     )}
-                </CardContent>
-            </Card>
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }

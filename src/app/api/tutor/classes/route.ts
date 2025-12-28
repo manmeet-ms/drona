@@ -37,7 +37,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(classes);
   } catch (error) {
-    console.error("Error fetching classes:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error("----------------------------\nError fetching classes:\n----------------------------\n", error);
+    return NextResponse.json(error, { status: 500 });
   }
 }

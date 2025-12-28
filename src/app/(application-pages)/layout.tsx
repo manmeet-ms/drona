@@ -57,7 +57,7 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
 
   // Determine Navigation Items based on Role/View
   let navItems = parentNavItems;
-  if (isStudentView) {
+  if (session?.user?.role === "STUDENT" || isStudentView) {
     navItems = studentNavItems;
   } else if (session?.user?.role === "TUTOR") {
     navItems = tutorNavItems;
@@ -106,13 +106,13 @@ export default function ApplicationLayout({ children }: { children: React.ReactN
 
         {/* Desktop Header / Top Bar */}
         <div className="hidden lg:flex h-16 items-center justify-end gap-4 border-b px-6">
-          <Badge variant="outline">
+          {/* <Badge variant="outline">
 
 
             <div className={cn(status === "authenticated" ? "bg-green-500" : "bg-red-500", "size-2 rounded-full ")} ></div>
 
 
-           {session?.user?.role} | {status}</Badge>
+           {session?.user?.role} | {status}</Badge> */}
 
           {isStudentView && (
             <Button

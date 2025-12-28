@@ -52,6 +52,6 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: (error as z.ZodError).issues }, { status: 400 });
     }
     console.error("Error creating class:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(error, { status: 500 });
   }
 }

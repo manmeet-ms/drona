@@ -25,7 +25,13 @@ import {
     DialogTrigger,
   } from "@/src/components/ui/dialog";
 import { Label } from "@/src/components/ui/label";
-import { verifyClassAttendance } from "@/src/app/actions/class";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/src/components/ui/input-otp"
+import { verifyClassAttendance, endClassSession } from "@/src/app/actions/class";
 import { addResourceLink, uploadResourceFile } from "@/src/app/actions/resources";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
 
@@ -45,7 +51,9 @@ export default function ClassDetailsPage() {
   const [resourceTitle, setResourceTitle] = useState("");
   const [resourceUrl, setResourceUrl] = useState("");
   const [resourceFile, setResourceFile] = useState<File | null>(null);
+  const [resourceFile, setResourceFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [ending, setEnding] = useState(false);
 
   useEffect(() => {
     fetchClassDetails();
@@ -152,24 +160,50 @@ export default function ClassDetailsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-6">
             {/* Verification Section */}
-            {classData.status === "SCHEDULED" && (
+            {(classData.status === "SCHEDULED" || classData.status === "IN_PROGRESS") && (
                 <Card>
                     <CardHeader>
-                        <CardTitle>Attendance Verification</CardTitle>
-                        <CardDescription>Enter the code provided by the student to verify this class.</CardDescription>
+                        <CardTitle>{classData.status === "SCHEDULED" ? "Attendance Verification" : "Class In Progress"}</CardTitle>
+                        <CardDescription>
+                            {classData.status === "SCHEDULED" 
+                                ? "Enter the code provided by the student to start class." 
+                                : "Class is currently active. End the session when done."}
+                        </CardDescription>
                     </CardHeader>
-                    <CardContent className="flex gap-4">
-                        <Input 
-                            placeholder="6-digit Code" 
-                            value={verificationCode} 
-                            onChange={(e) => setVerificationCode(e.target.value)}
-                            maxLength={6}
-                            className="font-mono text-lg tracking-widest max-w-[200px]"
-                        />
-                        <Button onClick={handleVerify} disabled={verifying}>
-                            {verifying && <IconLoader2 className="mr-2 w-4 h-4 animate-spin"/>}
-                            Verify Class
-                        </Button>
+                    <CardContent className="flex flex-col gap-4">
+                        {classData.status === "SCHEDULED" ? (
+                            <div className="flex gap-4 items-center">
+                                <div className="space-y-1">
+                                    <Label className="text-xs text-muted-foreground ml-1">Student Code</Label>
+                                    <InputOTP 
+                                        maxLength={6} 
+                                        value={verificationCode} 
+                                        onChange={(val) => setVerificationCode(val)}
+                                    >
+                                        <InputOTPGroup>
+                                            <InputOTPSlot index={0} />
+                                            <InputOTPSlot index={1} />
+                                            <InputOTPSlot index={2} />
+                                        </InputOTPGroup>
+                                        <InputOTPSeparator />
+                                        <InputOTPGroup>
+                                            <InputOTPSlot index={3} />
+                                            <InputOTPSlot index={4} />
+                                            <InputOTPSlot index={5} />
+                                        </InputOTPGroup>
+                                    </InputOTP>
+                                </div>
+                                <Button onClick={handleVerify} disabled={verifying} className="mt-5">
+                                    {verifying && <IconLoader2 className="mr-2 w-4 h-4 animate-spin"/>}
+                                    Verify & Start
+                                </Button>
+                            </div>
+                        ) : (
+                             <Button onClick={handleEndClass} disabled={ending} variant="destructive" className="w-full md:w-auto">
+                                {ending && <IconLoader2 className="mr-2 w-4 h-4 animate-spin"/>}
+                                End Class Session
+                            </Button>
+                        )}
                     </CardContent>
                 </Card>
             )}

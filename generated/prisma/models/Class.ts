@@ -32,6 +32,7 @@ export type ClassMinAggregateOutputType = {
   status: $Enums.ClassStatus | null
   attendanceToken: string | null
   verificationDate: Date | null
+  createdAt: Date | null
 }
 
 export type ClassMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type ClassMaxAggregateOutputType = {
   status: $Enums.ClassStatus | null
   attendanceToken: string | null
   verificationDate: Date | null
+  createdAt: Date | null
 }
 
 export type ClassCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type ClassCountAggregateOutputType = {
   status: number
   attendanceToken: number
   verificationDate: number
+  createdAt: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type ClassMinAggregateInputType = {
   status?: true
   attendanceToken?: true
   verificationDate?: true
+  createdAt?: true
 }
 
 export type ClassMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type ClassMaxAggregateInputType = {
   status?: true
   attendanceToken?: true
   verificationDate?: true
+  createdAt?: true
 }
 
 export type ClassCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type ClassCountAggregateInputType = {
   status?: true
   attendanceToken?: true
   verificationDate?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type ClassGroupByOutputType = {
   status: $Enums.ClassStatus
   attendanceToken: string | null
   verificationDate: Date | null
+  createdAt: Date
   _count: ClassCountAggregateOutputType | null
   _min: ClassMinAggregateOutputType | null
   _max: ClassMaxAggregateOutputType | null
@@ -198,6 +205,7 @@ export type ClassWhereInput = {
   status?: Prisma.EnumClassStatusFilter<"Class"> | $Enums.ClassStatus
   attendanceToken?: Prisma.StringNullableFilter<"Class"> | string | null
   verificationDate?: Prisma.DateTimeNullableFilter<"Class"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Class"> | Date | string
   tutor?: Prisma.XOR<Prisma.TutorProfileScalarRelationFilter, Prisma.TutorProfileWhereInput>
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   homeworks?: Prisma.HomeworkListRelationFilter
@@ -212,6 +220,7 @@ export type ClassOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   attendanceToken?: Prisma.SortOrderInput | Prisma.SortOrder
   verificationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   tutor?: Prisma.TutorProfileOrderByWithRelationInput
   student?: Prisma.StudentOrderByWithRelationInput
   homeworks?: Prisma.HomeworkOrderByRelationAggregateInput
@@ -229,6 +238,7 @@ export type ClassWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumClassStatusFilter<"Class"> | $Enums.ClassStatus
   attendanceToken?: Prisma.StringNullableFilter<"Class"> | string | null
   verificationDate?: Prisma.DateTimeNullableFilter<"Class"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Class"> | Date | string
   tutor?: Prisma.XOR<Prisma.TutorProfileScalarRelationFilter, Prisma.TutorProfileWhereInput>
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   homeworks?: Prisma.HomeworkListRelationFilter
@@ -243,6 +253,7 @@ export type ClassOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   attendanceToken?: Prisma.SortOrderInput | Prisma.SortOrder
   verificationDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.ClassCountOrderByAggregateInput
   _max?: Prisma.ClassMaxOrderByAggregateInput
   _min?: Prisma.ClassMinOrderByAggregateInput
@@ -259,6 +270,7 @@ export type ClassScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumClassStatusWithAggregatesFilter<"Class"> | $Enums.ClassStatus
   attendanceToken?: Prisma.StringNullableWithAggregatesFilter<"Class"> | string | null
   verificationDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Class"> | Date | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Class"> | Date | string
 }
 
 export type ClassCreateInput = {
@@ -267,6 +279,7 @@ export type ClassCreateInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   tutor: Prisma.TutorProfileCreateNestedOneWithoutClassesInput
   student: Prisma.StudentCreateNestedOneWithoutClassesInput
   homeworks?: Prisma.HomeworkCreateNestedManyWithoutClassInput
@@ -281,6 +294,7 @@ export type ClassUncheckedCreateInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   homeworks?: Prisma.HomeworkUncheckedCreateNestedManyWithoutClassInput
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClassInput
 }
@@ -291,6 +305,7 @@ export type ClassUpdateInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tutor?: Prisma.TutorProfileUpdateOneRequiredWithoutClassesNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutClassesNestedInput
   homeworks?: Prisma.HomeworkUpdateManyWithoutClassNestedInput
@@ -305,6 +320,7 @@ export type ClassUncheckedUpdateInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeworks?: Prisma.HomeworkUncheckedUpdateManyWithoutClassNestedInput
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutClassNestedInput
 }
@@ -317,6 +333,7 @@ export type ClassCreateManyInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
 }
 
 export type ClassUpdateManyMutationInput = {
@@ -325,6 +342,7 @@ export type ClassUpdateManyMutationInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ClassUncheckedUpdateManyInput = {
@@ -335,6 +353,7 @@ export type ClassUncheckedUpdateManyInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ClassListRelationFilter = {
@@ -360,6 +379,7 @@ export type ClassCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   attendanceToken?: Prisma.SortOrder
   verificationDate?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type ClassMaxOrderByAggregateInput = {
@@ -370,6 +390,7 @@ export type ClassMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   attendanceToken?: Prisma.SortOrder
   verificationDate?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type ClassMinOrderByAggregateInput = {
@@ -380,6 +401,7 @@ export type ClassMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   attendanceToken?: Prisma.SortOrder
   verificationDate?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type ClassScalarRelationFilter = {
@@ -511,6 +533,7 @@ export type ClassCreateWithoutTutorInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutClassesInput
   homeworks?: Prisma.HomeworkCreateNestedManyWithoutClassInput
   resources?: Prisma.ResourceCreateNestedManyWithoutClassInput
@@ -523,6 +546,7 @@ export type ClassUncheckedCreateWithoutTutorInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   homeworks?: Prisma.HomeworkUncheckedCreateNestedManyWithoutClassInput
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClassInput
 }
@@ -564,6 +588,7 @@ export type ClassScalarWhereInput = {
   status?: Prisma.EnumClassStatusFilter<"Class"> | $Enums.ClassStatus
   attendanceToken?: Prisma.StringNullableFilter<"Class"> | string | null
   verificationDate?: Prisma.DateTimeNullableFilter<"Class"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"Class"> | Date | string
 }
 
 export type ClassCreateWithoutResourcesInput = {
@@ -572,6 +597,7 @@ export type ClassCreateWithoutResourcesInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   tutor: Prisma.TutorProfileCreateNestedOneWithoutClassesInput
   student: Prisma.StudentCreateNestedOneWithoutClassesInput
   homeworks?: Prisma.HomeworkCreateNestedManyWithoutClassInput
@@ -585,6 +611,7 @@ export type ClassUncheckedCreateWithoutResourcesInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   homeworks?: Prisma.HomeworkUncheckedCreateNestedManyWithoutClassInput
 }
 
@@ -610,6 +637,7 @@ export type ClassUpdateWithoutResourcesInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tutor?: Prisma.TutorProfileUpdateOneRequiredWithoutClassesNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutClassesNestedInput
   homeworks?: Prisma.HomeworkUpdateManyWithoutClassNestedInput
@@ -623,6 +651,7 @@ export type ClassUncheckedUpdateWithoutResourcesInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeworks?: Prisma.HomeworkUncheckedUpdateManyWithoutClassNestedInput
 }
 
@@ -632,6 +661,7 @@ export type ClassCreateWithoutStudentInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   tutor: Prisma.TutorProfileCreateNestedOneWithoutClassesInput
   homeworks?: Prisma.HomeworkCreateNestedManyWithoutClassInput
   resources?: Prisma.ResourceCreateNestedManyWithoutClassInput
@@ -644,6 +674,7 @@ export type ClassUncheckedCreateWithoutStudentInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   homeworks?: Prisma.HomeworkUncheckedCreateNestedManyWithoutClassInput
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClassInput
 }
@@ -680,6 +711,7 @@ export type ClassCreateWithoutHomeworksInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   tutor: Prisma.TutorProfileCreateNestedOneWithoutClassesInput
   student: Prisma.StudentCreateNestedOneWithoutClassesInput
   resources?: Prisma.ResourceCreateNestedManyWithoutClassInput
@@ -693,6 +725,7 @@ export type ClassUncheckedCreateWithoutHomeworksInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
   resources?: Prisma.ResourceUncheckedCreateNestedManyWithoutClassInput
 }
 
@@ -718,6 +751,7 @@ export type ClassUpdateWithoutHomeworksInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tutor?: Prisma.TutorProfileUpdateOneRequiredWithoutClassesNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutClassesNestedInput
   resources?: Prisma.ResourceUpdateManyWithoutClassNestedInput
@@ -731,6 +765,7 @@ export type ClassUncheckedUpdateWithoutHomeworksInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutClassNestedInput
 }
 
@@ -741,6 +776,7 @@ export type ClassCreateManyTutorInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
 }
 
 export type ClassUpdateWithoutTutorInput = {
@@ -749,6 +785,7 @@ export type ClassUpdateWithoutTutorInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutClassesNestedInput
   homeworks?: Prisma.HomeworkUpdateManyWithoutClassNestedInput
   resources?: Prisma.ResourceUpdateManyWithoutClassNestedInput
@@ -761,6 +798,7 @@ export type ClassUncheckedUpdateWithoutTutorInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeworks?: Prisma.HomeworkUncheckedUpdateManyWithoutClassNestedInput
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutClassNestedInput
 }
@@ -772,6 +810,7 @@ export type ClassUncheckedUpdateManyWithoutTutorInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ClassCreateManyStudentInput = {
@@ -781,6 +820,7 @@ export type ClassCreateManyStudentInput = {
   status?: $Enums.ClassStatus
   attendanceToken?: string | null
   verificationDate?: Date | string | null
+  createdAt?: Date | string
 }
 
 export type ClassUpdateWithoutStudentInput = {
@@ -789,6 +829,7 @@ export type ClassUpdateWithoutStudentInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tutor?: Prisma.TutorProfileUpdateOneRequiredWithoutClassesNestedInput
   homeworks?: Prisma.HomeworkUpdateManyWithoutClassNestedInput
   resources?: Prisma.ResourceUpdateManyWithoutClassNestedInput
@@ -801,6 +842,7 @@ export type ClassUncheckedUpdateWithoutStudentInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   homeworks?: Prisma.HomeworkUncheckedUpdateManyWithoutClassNestedInput
   resources?: Prisma.ResourceUncheckedUpdateManyWithoutClassNestedInput
 }
@@ -812,6 +854,7 @@ export type ClassUncheckedUpdateManyWithoutStudentInput = {
   status?: Prisma.EnumClassStatusFieldUpdateOperationsInput | $Enums.ClassStatus
   attendanceToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -862,6 +905,7 @@ export type ClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   status?: boolean
   attendanceToken?: boolean
   verificationDate?: boolean
+  createdAt?: boolean
   tutor?: boolean | Prisma.TutorProfileDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   homeworks?: boolean | Prisma.Class$homeworksArgs<ExtArgs>
@@ -877,6 +921,7 @@ export type ClassSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   status?: boolean
   attendanceToken?: boolean
   verificationDate?: boolean
+  createdAt?: boolean
   tutor?: boolean | Prisma.TutorProfileDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["class"]>
@@ -889,6 +934,7 @@ export type ClassSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   status?: boolean
   attendanceToken?: boolean
   verificationDate?: boolean
+  createdAt?: boolean
   tutor?: boolean | Prisma.TutorProfileDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["class"]>
@@ -901,9 +947,10 @@ export type ClassSelectScalar = {
   status?: boolean
   attendanceToken?: boolean
   verificationDate?: boolean
+  createdAt?: boolean
 }
 
-export type ClassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tutorId" | "studentId" | "scheduledAt" | "status" | "attendanceToken" | "verificationDate", ExtArgs["result"]["class"]>
+export type ClassOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tutorId" | "studentId" | "scheduledAt" | "status" | "attendanceToken" | "verificationDate" | "createdAt", ExtArgs["result"]["class"]>
 export type ClassInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tutor?: boolean | Prisma.TutorProfileDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -936,6 +983,7 @@ export type $ClassPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     status: $Enums.ClassStatus
     attendanceToken: string | null
     verificationDate: Date | null
+    createdAt: Date
   }, ExtArgs["result"]["class"]>
   composites: {}
 }
@@ -1370,6 +1418,7 @@ export interface ClassFieldRefs {
   readonly status: Prisma.FieldRef<"Class", 'ClassStatus'>
   readonly attendanceToken: Prisma.FieldRef<"Class", 'String'>
   readonly verificationDate: Prisma.FieldRef<"Class", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Class", 'DateTime'>
 }
     
 

@@ -1,8 +1,14 @@
-student login not working with correct uuid and correct password123 password , adding form where parent can add student is not storing passworkin in bcrypt. and not working login as student 
-chek the walskthoufht and and try again implementing it corectyly the fow  
-student login not working with correct uuid and correct password123 password , adding form where parent can add student is not storing passworkin in bcrypt. and not working login as student
+Automatically trigger after a certain duration (like 2 hours) via a cron job but the oroblemis we cant trakc scron jobs for multipleclasses here inthe apps for multipel students-tutors-classes, and also a manual button to end class we will see cron job later of add a `endTime` column i nclassses db which will upodated when this time auto made wil pass.  Right now, classes start but never officially "end" in the system. We need to implement the transition to COMPLETED. 
+ We need to add a shadcn date time picker taking component in the book class model and then the parent selectsush a class for his child are you start setting calendar and time component and use the OTP component in the show enter code filed use the shacn otp component, 
 
-we cannot touch click the scehduled classes , no code is genrated in 
+we ned to set classes schdedule based on recurring basis as per parent choice, thre shuld be tick buttons weekday tick buttons that set a recurring scedeule for a class entry in the database, becasueth class.ts ahs a array of schedule wee need to fit in this but how do we takle teh infinite dates problem here, we cant storeinfitnitelyrecurring schefule or too big chucksof data of repeating schedules so we need to solve this first  cant be set as of now
+ 
+either we stre the repetaing weekdays and update is on teh , but it must handle the edge cases of the dates and the timezones and the recurring schedules, like some for of key {mon,tue, wed},{mon,wed},{mon,tue, wed, thu, fri, sat, sun} and then we can generate the dates and times for the next 30 days or so, this will be a good solution
+
+
+
+chek the walskthoufht and and try again implementing it corectyly the fow  
+
 
 the flow was that parents can view tutropeofile scehdule a class with one of their children or a child, not like you have implement rightnow, parent will search whrer parent will come scross a tutor peofile he lies then he can bok a class with one of his schildren adn and that tutor. got it? 
 

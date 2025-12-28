@@ -1,8 +1,9 @@
 
 import prisma from '../src/lib/prisma.ts';
-import {  UserRole, ClassStatus, ResourceType } from '../generated/prisma/client';
-import { faker } from '@faker-js/faker';
+import { UserRole, ClassStatus, ResourceType } from '../generated/prisma/client';
+import { fakerEN_IN as faker} from '@faker-js/faker';
 import bcrypt from 'bcryptjs';
+import sensiLorem from 'sensible-lorem';
 
 
 
@@ -22,11 +23,11 @@ async function main() {
   // await prisma.student.deleteMany();
   // await prisma.tutorProfile.deleteMany();
   // await prisma.user.deleteMany();
- 
+
   // 1. Create Tutors
-  const numOfHardcodedTutors=20;
-  const numOfHardcodedParent=7;
- 
+  const numOfHardcodedTutors = 10;
+  const numOfHardcodedParent = 5;
+
   console.log(`Creating ${numOfHardcodedTutors} Tutors...`);
   const tutors = [];
   for (let i = 0; i < numOfHardcodedTutors; i++) {
@@ -36,12 +37,12 @@ async function main() {
         fullname: faker.person.fullName(), // Fixed: name -> fullname
         username: faker.internet.username().toLowerCase(),
         email: faker.internet.email().toLowerCase(),
-        password: await bcrypt.hash('password123',10),
+        password: await bcrypt.hash('123', 10),
         role: UserRole.TUTOR,
-        phoneNumber:faker.phone.number(),
+        phoneNumber: faker.phone.number(),
         tutorProfile: {
           create: {
-            bio: faker.lorem.sentences({min:2,max:5}),
+            bio: sensiLorem(5),
             subjects: faker.helpers.arrayElements(SUBJECTS, { min: 3, max: 8 }),
             hourlyRate: faker.number.int({ min: 500, max: 2000, multipleOf: 10 }),
             location: faker.location.state(),
@@ -63,15 +64,15 @@ async function main() {
   const students = [];
 
   for (let i = 0; i < numOfHardcodedParent; i++) {
-      const lastName = faker.person.lastName();
- 
+    const lastName = faker.person.lastName();
+
     const parent = await prisma.user.create({
       data: {
         fullname: faker.person.fullName(), // Fixed: name -> fullname
         username: faker.internet.username().toLowerCase(),
         email: faker.internet.email().toLowerCase(),
-        phoneNumber:faker.phone.number(),
-        password: await bcrypt.hash('password123',10),
+        phoneNumber: faker.phone.number(),
+        password: await bcrypt.hash('123', 10),
         role: UserRole.PARENT,
       }
     });
@@ -85,12 +86,12 @@ async function main() {
         data: {
           name: `${studentName} ${lastName}`,
           parentId: parent.id,
-          password: await bcrypt.hash('password123',10),
-          // password: await bcrypt.hash('password123',10),
+          password: await bcrypt.hash('123', 10),
+          // password: await bcrypt.hash('123',10),
           age: faker.number.int({ min: 6, max: 18 }),
           school: faker.company.name() + ' School',
           interests: faker.helpers.arrayElements(['Sports', 'Music', 'Coding', 'Art', 'Reading'], { min: 1, max: 3 }),
-          aspirations: faker.lorem.sentence(),
+          aspirations: sensiLorem(8),
         }
       });
       students.push(student);
@@ -131,7 +132,7 @@ async function main() {
               classId: cls.id,
               studentId: student.id,
               title: `Homework for ${date.toLocaleDateString()}`,
-              description: faker.lorem.paragraph(),
+              description: sensiLorem(35),
               dueDate: faker.date.soon({ days: 7, refDate: date }),
               isCompleted: faker.datatype.boolean(0.6),
             }
@@ -145,7 +146,7 @@ async function main() {
           data: {
             studentId: student.id,
             title: `Monthly Progress - ${faker.date.month()}`,
-            feedback: faker.lorem.paragraph(),
+            feedback: sensiLorem(35),
             grade: faker.helpers.arrayElement(['A', 'B', 'A+', 'B+']),
           }
         });
@@ -158,7 +159,7 @@ async function main() {
 
         const query = await prisma.query.create({
           data: {
-            content: faker.lorem.sentence(),
+            content: sensiLorem(9),
             senderId: senderRole === UserRole.STUDENT ? student.id : (senderRole === UserRole.PARENT ? student.parentId : tutorUser.id),
             senderRole: senderRole,
             tutorId: tutorUser.tutorProfile.id,
@@ -174,7 +175,7 @@ async function main() {
           await prisma.queryResponse.create({
             data: {
               queryId: query.id,
-              content: faker.lorem.sentence(),
+              content: sensiLorem(9),
               senderId: faker.datatype.boolean() ? tutorUser.id : (context === 'TUTOR_PARENT' ? student.parentId : student.id),
               senderRole: UserRole.TUTOR, // Simplified
             }

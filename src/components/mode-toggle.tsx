@@ -4,7 +4,7 @@ import * as React from "react"
 import { IconMoon, IconSun } from "@tabler/icons-react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/src/components/ui/bkp.button"
+import { Button } from "@/src/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -113,12 +113,14 @@ export default function TutorProfilePage() {
               // Prisma schema usually: Tutor model has id. 
               // So tutor.id should be correct.
               studentId: selectedStudentId,
-              scheduledAt: new Date(bookingDate).toISOString(),
-          });
+              // scheduledAt: new Date(bookingDate).toISOString(),
+              schedules: [new Date(bookingDate).toISOString()],
+          }, {withCredentials:true,headers:{'Content-Type': 'application/json'}});
           toast.success("Class booked successfully!");
           setBookingOpen(false);
-      } catch (e) {
-          toast.error("Failed to book class");
+      } catch (error) {
+          console.error("Failed to book class",error);
+          toast.error("Failed to book class",error);
       }
   };
 

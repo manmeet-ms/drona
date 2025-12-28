@@ -165,11 +165,11 @@ export default function TutorsPage() {
                     <Separator className='mt-4' />
                     <div className="mt-4 flex items-center justify-between">
                       <Link className='text-primary text-sm font-semibold' href={`/tutors/${tutor.id}`} key={tutor.id}>More details <IconArrowRight className='inline-flex size-3 items-center justify-center gap-2 ' /></Link>
-                      <ButtonGroup>
+                      {/* <ButtonGroup>
                         <Button size="sm" variant="outline" ><IconPhone /></Button>
                         <Button size="sm" variant="outline" ><IconMessage2 /></Button>
                         <Button size="sm" variant="outline" ><IconShare /></Button>
-                      </ButtonGroup>
+                      </ButtonGroup> */}
 
 
                     </div>

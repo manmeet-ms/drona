@@ -281,7 +281,7 @@ export default function TutorQueryPage() {
             </SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto py-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {selectedQuery && (
               <>
                 <div className="flex flex-col gap-1 p-3 rounded-lg bg-muted/50">

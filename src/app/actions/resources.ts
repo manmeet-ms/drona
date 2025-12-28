@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/src/lib/prisma';
-import { ResourceType } from '@prisma/client';
+import { ResourceType } from '@/generated/prisma/client';
 import { revalidatePath } from 'next/cache';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -43,7 +43,8 @@ export async function uploadResourceFile(classId: string, tutorId: string, formD
   }
 
   // In a real app, upload `file` to S3/Cloudinary here and get the URL
-  const mockUrl = `https://storage.example.com/${file.name}`; 
+  // For demo, we just store a fake URL but save metadata
+  const mockUrl = `https://storage.placeholder.com/${Math.random().toString(36).substr(2, 9)}/${file.name}`; 
 
   try {
     await prisma.resource.create({

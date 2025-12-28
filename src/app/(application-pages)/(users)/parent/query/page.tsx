@@ -77,6 +77,7 @@ export default function ParentQueryPage() {
 
   const fetchTutors = async () => {
     try {
+      // TODO add refresh state on demand button + polling
       const response = await axios.get("/api/queries/recipients?context=TUTOR_PARENT");
       setTutors(response.data);
     } catch (error) {
@@ -249,7 +250,8 @@ export default function ParentQueryPage() {
             </SheetDescription>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto py-4 space-y-4">
+{/* // TODO: add better contrast from name to conversation should be more accessible al three convo profiles  */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {selectedQuery && (
               <>
                 <div className="flex flex-col gap-1 p-3 rounded-lg bg-muted/50">

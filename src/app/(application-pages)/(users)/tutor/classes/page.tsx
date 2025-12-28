@@ -1,23 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/src/components/ui/card";
-import { IconLoader2, IconBook, IconCalendar } from "@tabler/icons-react";
-import { toast } from "sonner";
 import { Badge } from "@/src/components/ui/badge";
+import { Card, CardContent } from "@/src/components/ui/card";
+import { IconBook, IconCalendar, IconLoader2 } from "@tabler/icons-react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
-import { Input } from "@/src/components/ui/input";
-import { Button } from "@/src/components/ui/button";
 import { verifyClassAttendance } from "@/src/app/actions/class";
+import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogFooter
+  DialogTitle
 } from "@/src/components/ui/dialog";
+import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 
 // ... existing imports

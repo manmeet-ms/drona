@@ -46,12 +46,15 @@ export function Sidebar({ items }: SidebarProps) {
           })}
         </nav>
       </div>
+      <Badge className=" m-2" variant="outline"><div className={cn(session?.status === "authenticated" ? "bg-green-500" : "bg-red-500", "size-2  rounded-full ")} ></div>          {session?.data?.user?.role} | {session?.status}</Badge>
+
       <div className="p-4 border-t">
         <Button
           variant="ghost"
           className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
           onClick={() => signOut({ callbackUrl: '/' })}
         >
+
           <IconLogout className="h-4 w-4" />
           Logout
         </Button>

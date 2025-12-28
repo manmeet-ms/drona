@@ -260,14 +260,14 @@ export default function ParentDashboard() {
                       >
                         Switch View
                       </Button>
-                      <Button
+                      {/* <Button
                         size="sm"
                         className="flex-1"
                         onClick={() => openBooking(student.id)}
                       >
                         <IconCalendarPlus className="w-4 h-4 mr-2" />
                         Book Class
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 ))}
