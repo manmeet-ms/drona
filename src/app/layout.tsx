@@ -16,6 +16,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className=' ' >
         <Providers session={session}>
           {children}
+
         </Providers>
         <script
           dangerouslySetInnerHTML={{

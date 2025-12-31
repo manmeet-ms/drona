@@ -51,7 +51,6 @@ export default function ClassDetailsPage() {
   const [resourceTitle, setResourceTitle] = useState("");
   const [resourceUrl, setResourceUrl] = useState("");
   const [resourceFile, setResourceFile] = useState<File | null>(null);
-  const [resourceFile, setResourceFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [ending, setEnding] = useState(false);
 
@@ -66,7 +65,7 @@ export default function ClassDetailsPage() {
       setClassData(res.data);
     } catch (error) {
       toast.error("Failed to load class details");
-      router.push("/tutor/classes"); // Redirect back on error
+    //   router.push("/tutor/classes"); // Redirect back on error
     } finally {
       setLoading(false);
     }
@@ -85,6 +84,19 @@ export default function ClassDetailsPage() {
           fetchClassDetails();
           setVerificationCode("");
       }
+  };
+
+  const handleEndClass = async () => {
+    setEnding(true);
+    const res = await endClassSession(id);
+    setEnding(false);
+
+    if (res.error) {
+        toast.error(res.error);
+    } else {
+        toast.success("Class marked as completed!");
+        fetchClassDetails();
+    }
   };
 
     const handleResourceUpload = async () => {

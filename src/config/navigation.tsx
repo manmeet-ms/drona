@@ -21,7 +21,7 @@ export const parentNavItems: NavItem[] = [
 export const tutorNavItems: NavItem[] = [
   { title: "Dashboard", href: "/dashboard", icon: IconDashboard },
   { title: "Students", href: "/tutor/students", icon: IconUser },
-  { title: "Classes", href: "/tutor/classes", icon: IconBook },
+  { title: "All Classes", href: "/tutor/classes", icon: IconBook },
   // { title: "Messages", href: "/dashboard/messages", icon: IconMessage },
   { title: "Queries", href: "/tutor/query", icon: IconMessage },
   { title: "Profile", href: "/profile/tutor", icon: IconSettings },

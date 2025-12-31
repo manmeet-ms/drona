@@ -191,7 +191,7 @@ export const Feature51 = ({
         "Browse profiles of verified tutors, filter by subject and grade, and find the perfect match for your child.",
       image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop",
       url: "/tutors",
-      isDefault: tr,
+      isDefault: true,
     },
     {
       id: "feature-2",
@@ -790,7 +790,7 @@ const FeatureSecondary51 = ({
         "Discover the powerful featureSecondarys that make our platform stand out from the rest.",
       image: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
       url: "https://drona-beta",
-      isDefault: tr,
+      isDefault: true,
     },
     {
       id: "featureSecondary-2",

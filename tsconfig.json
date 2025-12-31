@@ -32,5 +32,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
 , "src/app/(application-pages)/(users)/tutor/layout.tsx"  ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "prisma/seed.ts"]
 }

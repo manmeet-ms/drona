@@ -194,6 +194,7 @@ export const ClassScalarFieldEnum = {
   status: 'status',
   attendanceToken: 'attendanceToken',
   verificationDate: 'verificationDate',
+  endTime: 'endTime',
   createdAt: 'createdAt'
 } as const
 

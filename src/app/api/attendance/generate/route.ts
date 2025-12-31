@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/src/lib/auth";
 import prisma from "@/src/lib/prisma";
 import { generateClassCode } from "@/src/lib/verification";
-import { ClassStatus } from "@prisma/client";
+import { ClassStatus } from "@/generated/prisma/client";
 
 export async function POST(req: Request) {
   try {

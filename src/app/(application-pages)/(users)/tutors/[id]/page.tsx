@@ -11,7 +11,16 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import { Button } from "@/src/components/ui/button";
-import { IconLoader2, IconMapPin, IconBook, IconFileText, IconLink } from "@tabler/icons-react";
+import { Checkbox } from "@/src/components/ui/checkbox";
+import { Calendar } from "@/src/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/src/components/ui/popover";
+import { format, addDays, getDay, setHours, setMinutes } from "date-fns";
+import { cn } from "@/src/lib/utils";
+import { IconLoader2, IconMapPin, IconCalendar } from "@tabler/icons-react";
 
 interface Resource {
   id: string;
@@ -64,7 +73,22 @@ export default function TutorProfilePage() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [myStudents, setMyStudents] = useState<any[]>([]);
   const [selectedStudentId, setSelectedStudentId] = useState("");
-  const [bookingDate, setBookingDate] = useState("");
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  
+  // Recurring State
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [selectedWeekdays, setSelectedWeekdays] = useState<number[]>([]);
+  const [time, setTime] = useState("10:00");
+
+  const weekdays = [
+      { label: "Sun", value: 0 },
+      { label: "Mon", value: 1 },
+      { label: "Tue", value: 2 },
+      { label: "Wed", value: 3 },
+      { label: "Thu", value: 4 },
+      { label: "Fri", value: 5 },
+      { label: "Sat", value: 6 },
+  ];
 
   useEffect(() => {
     if (params.id) {
@@ -98,30 +122,54 @@ export default function TutorProfilePage() {
       }
   };
 
+  const generateSchedule = () => {
+    if (!time) return [];
+    const [hours, minutes] = time.split(':').map(Number);
+    let dates: Date[] = [];
+
+    if (!isRecurring) {
+        if (!date) return [];
+        const d = new Date(date);
+        d.setHours(hours, minutes, 0, 0);
+        dates.push(d);
+    } else {
+        // Generate next 4 weeks (30 days)
+        const today = new Date();
+        for (let i = 0; i < 30; i++) {
+            const current = addDays(today, i);
+            if (selectedWeekdays.includes(getDay(current))) {
+                const d = new Date(current);
+                d.setHours(hours, minutes, 0, 0);
+                dates.push(d);
+            }
+        }
+    }
+    return dates;
+  };
+
   const handleBookClass = async () => {
-      if (!selectedStudentId || !bookingDate) {
-          toast.error("Please select a student and date");
-          return;
-      }
+    const schedules = generateSchedule();
+
+    if (!selectedStudentId) {
+        return toast.error("Please select a student");
+    }
+    if (schedules.length === 0) {
+        return toast.error("Please select valid dates/time");
+    }
       
-      try {
-          await axios.post('/api/class/create', {
-              tutorId: tutor?.id, // Assuming tutor object has the tutorId (it fetched profile which usually includes it or is wrapping it)
-              // Wait, the API returns TutorProfile.
-              // backend route /api/tutors/[id] returns... let's check interface.
-              // Interface has "id". Is that Tutor ID or User ID? 
-              // Prisma schema usually: Tutor model has id. 
-              // So tutor.id should be correct.
-              studentId: selectedStudentId,
-              // scheduledAt: new Date(bookingDate).toISOString(),
-              schedules: [new Date(bookingDate).toISOString()],
-          }, {withCredentials:true,headers:{'Content-Type': 'application/json'}});
-          toast.success("Class booked successfully!");
-          setBookingOpen(false);
-      } catch (error) {
-          console.error("Failed to book class",error);
-          toast.error("Failed to book class",error);
-      }
+    try {
+        await axios.post('/api/class/create', {
+            tutorId: tutor?.id, 
+            studentId: selectedStudentId,
+            schedules: schedules.map(d => d.toISOString()),
+        }, {withCredentials:true,headers:{'Content-Type': 'application/json'}});
+        
+        toast.success(`Successfully booked ${schedules.length} class(es)!`);
+        setBookingOpen(false);
+    } catch (error) {
+        console.error("Failed to book class",error);
+        toast.error("Failed to book class");
+    }
   };
 
   if (isLoading) {
@@ -189,12 +237,80 @@ export default function TutorProfilePage() {
                                           </SelectContent>
                                       </Select>
                                   </div>
+
+                                  <div className="flex items-center space-x-2 my-2">
+                                      <Checkbox 
+                                          id="recurring" 
+                                          checked={isRecurring} 
+                                          onCheckedChange={(checked: boolean) => setIsRecurring(checked as boolean)}
+                                      />
+                                      <Label htmlFor="recurring" className="font-medium cursor-pointer">Recurring Schedule? (Next 30 days)</Label>
+                                  </div>
+
+                                  {!isRecurring ? (
+                                      <div className="grid gap-2">
+                                          <Label>Date</Label>
+                                          <Popover>
+                                              <PopoverTrigger asChild>
+                                                  <Button
+                                                      variant={"outline"}
+                                                      className={cn(
+                                                          "w-full justify-start text-left font-normal",
+                                                          !date && "text-muted-foreground"
+                                                      )}
+                                                  >
+                                                      <IconCalendar className="mr-2 h-4 w-4" />
+                                                      {date ? format(date, "PPP") : <span>Pick a date</span>}
+                                                  </Button>
+                                              </PopoverTrigger>
+                                              <PopoverContent className="w-auto p-0">
+                                                  <Calendar
+                                                      mode="single"
+                                                      selected={date}
+                                                      onSelect={setDate}
+                                                      initialFocus
+                                                  />
+                                              </PopoverContent>
+                                          </Popover>
+                                      </div>
+                                  ) : (
+                                      <div className="grid gap-2">
+                                          <Label>Select Days</Label>
+                                          <div className="flex flex-wrap gap-2">
+                                              {weekdays.map((day) => (
+                                                  <div 
+                                                      key={day.value}
+                                                      onClick={() => {
+                                                          setSelectedWeekdays(prev => 
+                                                              prev.includes(day.value) 
+                                                                  ? prev.filter(d => d !== day.value)
+                                                                  : [...prev, day.value]
+                                                          )
+                                                      }}
+                                                      className={cn(
+                                                          "w-10 h-10 rounded-full flex items-center justify-center border cursor-pointer transition-colors text-sm",
+                                                          selectedWeekdays.includes(day.value) 
+                                                              ? "bg-primary text-primary-foreground border-primary"
+                                                              : "hover:bg-accent"
+                                                      )}
+                                                  >
+                                                      {day.label}
+                                                  </div>
+                                              ))}
+                                          </div>
+                                          <p className="text-xs text-muted-foreground mt-1">
+                                              Classes will be created for these days for the next month.
+                                          </p>
+                                      </div>
+                                  )}
+
                                   <div className="grid gap-2">
-                                      <Label>Date & Time</Label>
+                                      <Label>Time</Label>
                                       <Input 
-                                          type="datetime-local" 
-                                          value={bookingDate}
-                                          onChange={(e) => setBookingDate(e.target.value)}
+                                          type="time" 
+                                          value={time} 
+                                          onChange={(e) => setTime(e.target.value)} 
+                                          className="w-full"
                                       />
                                   </div>
                               </div>

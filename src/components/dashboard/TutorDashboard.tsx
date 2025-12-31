@@ -114,7 +114,7 @@ classesRes);
       {/* Notifications and Classes Tabs */}
       <Tabs defaultValue="classes" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="classes">My Classes</TabsTrigger>
+          <TabsTrigger value="classes">Today's Classes</TabsTrigger>
           <TabsTrigger value="history">History</TabsTrigger>
           <TabsTrigger value="notifications">
             Notifications
@@ -137,7 +137,7 @@ classesRes);
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {classes.filter((cls) => cls.status !== "COMPLETED").map((cls) => (
+                  {classes.filter((cls) => new Date(cls.scheduledAt).getDate() === new Date().getDate()).map((cls) => (
                     <div
                       key={cls.id}
                       className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border rounded-lg gap-4 cursor-pointer hover:bg-muted/50 transition-colors"
