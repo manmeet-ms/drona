@@ -1,3 +1,5 @@
+modify relavancy in auth header and auth pages, "single tabs layout????idk "
+
 Automatically trigger after a certain duration (like 2 hours) via a cron job but the oroblemis we cant trakc scron jobs for multipleclasses here inthe apps for multipel students-tutors-classes, and also a manual button to end class we will see cron job later of add a `endTime` column i nclassses db which will upodated when this time auto made wil pass.  Right now, classes start but never officially "end" in the system. We need to implement the transition to COMPLETED. 
  We need to add a shadcn date time picker taking component in the book class model and then the parent selectsush a class for his child are you start setting calendar and time component and use the OTP component in the show enter code filed use the shacn otp component, 
 

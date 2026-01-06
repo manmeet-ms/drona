@@ -71,12 +71,12 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
   , description = "Drona bridges the gap between passionate tutors and parents seeking quality education. We provide a secure, transparent platform dedicated to empowering the next generation through authentic learning connections."
   , buttons = {
     primary: {
-      text: "Find a Tutor",
-      url: "/tutors",
+      text: "Register as Parent",
+      url: "/auth/register/parent",
     },
     secondary: {
       text: "Become a Tutor",
-      url: "/auth/register?role=tutor",
+      url: "/auth/register/tutor",
     },
   }
   , image = {
