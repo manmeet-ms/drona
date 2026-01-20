@@ -101,7 +101,8 @@ export const LandingFooter = ({
             <p className="text-muted-foreground max-w-[70%] text-sm">
               {description}
             </p>
-            <ul className="text-muted-foreground flex items-center space-x-6">
+            {/* Social Media Icons */}
+            {/* <ul className="text-muted-foreground flex items-center space-x-6">
               {socialLinks.map((social, idx) => (
                 <li key={idx} className="hover:text-primary font-medium">
                   <a href={social.href} aria-label={social.label}>
@@ -109,7 +110,7 @@ export const LandingFooter = ({
                   </a>
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </div>
           <div className="grid w-full gap-6 md:grid-cols-3 lg:gap-20">
             {sections.map((section, sectionIdx) => (

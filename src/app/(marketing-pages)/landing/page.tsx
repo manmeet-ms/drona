@@ -98,7 +98,7 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
                 <IconArrowRight className="ml-2 size-4" />
               </Badge>
             )}
-            <h1 className="my-6 text-balance text-4xl font-medium lg:text-6xl">
+            <h1 className="my-6 text-balance text-4xl font-bold text-balance lg:text-6xl">
               {heading}
             </h1>
             <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
@@ -237,8 +237,8 @@ export const Feature51 = ({
                       {tab.icon}
                     </span>
                   )}
-                  <p className="text-lg font-semibold transition-opacity duration-200 md:text-2xl lg:text-xl">
-                    {tab.heading}
+                  <p className="text-lg font-bold text-balance transition-opacity duration-200 md:text-2xl lg:text-xl">
+                    {tab.heading} 
                   </p>
                 </div>
                 <p className="text-muted-foreground font-normal transition-opacity duration-200 md:block">
@@ -276,7 +276,7 @@ export const Features = () => {
         <p className="text-muted-foreground mb-4 text-sm lg:text-base">
           WHY CHOOSE DRONA
         </p>
-        <h2 className="text-3xl font-medium lg:text-4xl">Empowering Education for Everyone</h2>
+        <h2 className="text-3xl font-bold text-balance lg:text-4xl">Empowering Education for Everyone</h2>
         <div className="mt-14 grid gap-6 lg:mt-20 lg:grid-cols-3">
           <div className="bg-accent/30 border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
@@ -343,7 +343,7 @@ export const Features = () => {
       <section className="pt-32 pb-16">
         <div className="container mx-auto">
           <div className="grid gap-8 lg:grid-cols-3">
-            <h2 className="row-span-2 text-3xl font-semibold lg:text-5xl">
+            <h2 className="row-span-2 text-3xl font-bold text-balance lg:text-5xl">
               Our Values and Principles
             </h2>
             <div>
@@ -427,7 +427,7 @@ export const Faq = ({
   return (
     <section className="py-16">
       <div className="container mx-auto max-w-3xl">
-        <h1 className="mb-4 text-3xl font-semibold md:mb-11 md:text-4xl">
+        <h1 className="mb-4 text-3xl font-bold text-balance md:mb-11 md:text-4xl">
           {heading}
         </h1>
         <Accordion type="single" collapsible>
@@ -534,7 +534,7 @@ export const Gallery = ({
       <div className="">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           <div className="flex flex-col gap-4">
-            <h2 className="text-3xl font-medium md:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-bold text-balance md:text-4xl lg:text-5xl">
               {title}
             </h2>
             <p className="text-muted-foreground max-w-lg">{description}</p>
@@ -738,7 +738,7 @@ export const Cta = ({
           <div className="max-w-screen">
             <div className="bg-muted/40 flex flex-col items-start justify-between gap-8 rounded-lg px-6 py-10 md:flex-row lg:px-20 lg:py-16">
               <div className="md:w-1/2">
-                <h4 className="mb-1 text-2xl font-bold md:text-3xl">{title}</h4>
+                <h4 className="mb-1 text-2xl font-bold text-balance md:text-3xl">{title}</h4>
                 <p className="text-muted-foreground">{description}</p>
                 <Button className="mt-6" asChild>
                   <a href={buttonUrl} target="_blank">

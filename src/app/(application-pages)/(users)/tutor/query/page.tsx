@@ -169,7 +169,7 @@ export default function TutorQueryPage() {
               <DialogTitle>Send a Query</DialogTitle>
               <DialogDescription>Start a new conversation.</DialogDescription>
             </DialogHeader>
-            <div className="space-y-4 py-4">
+            <form className="space-y-4 py-4" onSubmit={(e) => { e.preventDefault(); handleCreateQuery(); }}>
               <div className="space-y-2">
                 <Label>Context</Label>
                 <Select
@@ -211,14 +211,15 @@ export default function TutorQueryPage() {
               <div className="space-y-2">
                 <Label>Message</Label>
                 <Textarea
+                  required
                   placeholder="Type your message here..."
                   value={newQueryContent}
                   onChange={(e) => setNewQueryContent(e.target.value)}
                 />
               </div>
 
-              <Button onClick={handleCreateQuery} className="w-full">Send Query</Button>
-            </div>
+              <Button type="submit" className="w-full">Send Query</Button>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
@@ -314,15 +315,16 @@ export default function TutorQueryPage() {
           </div>
 
           <SheetFooter className="pt-4 border-t">
-            <div className="w-full space-y-2">
+            <form className="w-full space-y-2" onSubmit={(e) => { e.preventDefault(); handleReply(); }}>
               <Textarea
+                required
                 placeholder="Type your reply..."
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 className="min-h-[80px]"
               />
-              <Button onClick={handleReply} className="w-full">Reply</Button>
-            </div>
+              <Button type="submit" className="w-full">Reply</Button>
+            </form>
           </SheetFooter>
         </SheetContent>
       </Sheet>
