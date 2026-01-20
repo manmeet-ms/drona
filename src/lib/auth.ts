@@ -104,7 +104,7 @@ export const authOptions: NextAuthOptions = {
                 token.role = user.role;
                 token.username = user.username;     
                 token.isVerified = user.isVerified; 
-                token.createdAt = user.createdAt;
+            token.createdAt = user.createdAt;
                 token.isStudentSession = user.isStudentSession;
                 token.parentId = user.parentId;
             }
