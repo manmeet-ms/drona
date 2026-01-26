@@ -38,6 +38,9 @@ export type TutorProfileMinAggregateOutputType = {
   id: string | null
   userId: string | null
   bio: string | null
+  experience: string | null
+  classesTaught: string | null
+  adhaarId: string | null
   hourlyRate: runtime.Decimal | null
   location: string | null
   isVerified: boolean | null
@@ -47,6 +50,9 @@ export type TutorProfileMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   bio: string | null
+  experience: string | null
+  classesTaught: string | null
+  adhaarId: string | null
   hourlyRate: runtime.Decimal | null
   location: string | null
   isVerified: boolean | null
@@ -57,6 +63,9 @@ export type TutorProfileCountAggregateOutputType = {
   userId: number
   subjects: number
   bio: number
+  experience: number
+  classesTaught: number
+  adhaarId: number
   hourlyRate: number
   location: number
   isVerified: number
@@ -76,6 +85,9 @@ export type TutorProfileMinAggregateInputType = {
   id?: true
   userId?: true
   bio?: true
+  experience?: true
+  classesTaught?: true
+  adhaarId?: true
   hourlyRate?: true
   location?: true
   isVerified?: true
@@ -85,6 +97,9 @@ export type TutorProfileMaxAggregateInputType = {
   id?: true
   userId?: true
   bio?: true
+  experience?: true
+  classesTaught?: true
+  adhaarId?: true
   hourlyRate?: true
   location?: true
   isVerified?: true
@@ -95,6 +110,9 @@ export type TutorProfileCountAggregateInputType = {
   userId?: true
   subjects?: true
   bio?: true
+  experience?: true
+  classesTaught?: true
+  adhaarId?: true
   hourlyRate?: true
   location?: true
   isVerified?: true
@@ -192,6 +210,9 @@ export type TutorProfileGroupByOutputType = {
   userId: string
   subjects: string[]
   bio: string | null
+  experience: string | null
+  classesTaught: string | null
+  adhaarId: string | null
   hourlyRate: runtime.Decimal | null
   location: string | null
   isVerified: boolean
@@ -225,6 +246,9 @@ export type TutorProfileWhereInput = {
   userId?: Prisma.StringFilter<"TutorProfile"> | string
   subjects?: Prisma.StringNullableListFilter<"TutorProfile">
   bio?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
+  experience?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
+  classesTaught?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
+  adhaarId?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
   hourlyRate?: Prisma.DecimalNullableFilter<"TutorProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
   isVerified?: Prisma.BoolFilter<"TutorProfile"> | boolean
@@ -240,6 +264,9 @@ export type TutorProfileOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   subjects?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience?: Prisma.SortOrderInput | Prisma.SortOrder
+  classesTaught?: Prisma.SortOrderInput | Prisma.SortOrder
+  adhaarId?: Prisma.SortOrderInput | Prisma.SortOrder
   hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -258,6 +285,9 @@ export type TutorProfileWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TutorProfileWhereInput | Prisma.TutorProfileWhereInput[]
   subjects?: Prisma.StringNullableListFilter<"TutorProfile">
   bio?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
+  experience?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
+  classesTaught?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
+  adhaarId?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
   hourlyRate?: Prisma.DecimalNullableFilter<"TutorProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.StringNullableFilter<"TutorProfile"> | string | null
   isVerified?: Prisma.BoolFilter<"TutorProfile"> | boolean
@@ -273,6 +303,9 @@ export type TutorProfileOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   subjects?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience?: Prisma.SortOrderInput | Prisma.SortOrder
+  classesTaught?: Prisma.SortOrderInput | Prisma.SortOrder
+  adhaarId?: Prisma.SortOrderInput | Prisma.SortOrder
   hourlyRate?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -291,6 +324,9 @@ export type TutorProfileScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"TutorProfile"> | string
   subjects?: Prisma.StringNullableListFilter<"TutorProfile">
   bio?: Prisma.StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
+  experience?: Prisma.StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
+  classesTaught?: Prisma.StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
+  adhaarId?: Prisma.StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
   hourlyRate?: Prisma.DecimalNullableWithAggregatesFilter<"TutorProfile"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
   isVerified?: Prisma.BoolWithAggregatesFilter<"TutorProfile"> | boolean
@@ -300,6 +336,9 @@ export type TutorProfileCreateInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -315,6 +354,9 @@ export type TutorProfileUncheckedCreateInput = {
   userId: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -328,6 +370,9 @@ export type TutorProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -343,6 +388,9 @@ export type TutorProfileUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -357,6 +405,9 @@ export type TutorProfileCreateManyInput = {
   userId: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -366,6 +417,9 @@ export type TutorProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -376,6 +430,9 @@ export type TutorProfileUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -399,6 +456,9 @@ export type TutorProfileCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   subjects?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
+  classesTaught?: Prisma.SortOrder
+  adhaarId?: Prisma.SortOrder
   hourlyRate?: Prisma.SortOrder
   location?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -412,6 +472,9 @@ export type TutorProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
+  classesTaught?: Prisma.SortOrder
+  adhaarId?: Prisma.SortOrder
   hourlyRate?: Prisma.SortOrder
   location?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -421,6 +484,9 @@ export type TutorProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
+  classesTaught?: Prisma.SortOrder
+  adhaarId?: Prisma.SortOrder
   hourlyRate?: Prisma.SortOrder
   location?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -550,6 +616,9 @@ export type TutorProfileCreateWithoutUserInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -563,6 +632,9 @@ export type TutorProfileUncheckedCreateWithoutUserInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -592,6 +664,9 @@ export type TutorProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -605,6 +680,9 @@ export type TutorProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -618,6 +696,9 @@ export type TutorProfileCreateWithoutResourcesInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -632,6 +713,9 @@ export type TutorProfileUncheckedCreateWithoutResourcesInput = {
   userId: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -660,6 +744,9 @@ export type TutorProfileUpdateWithoutResourcesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -674,6 +761,9 @@ export type TutorProfileUncheckedUpdateWithoutResourcesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -686,6 +776,9 @@ export type TutorProfileCreateWithoutClassesInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -700,6 +793,9 @@ export type TutorProfileUncheckedCreateWithoutClassesInput = {
   userId: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -728,6 +824,9 @@ export type TutorProfileUpdateWithoutClassesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -742,6 +841,9 @@ export type TutorProfileUncheckedUpdateWithoutClassesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -754,6 +856,9 @@ export type TutorProfileCreateWithoutQueriesInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -768,6 +873,9 @@ export type TutorProfileUncheckedCreateWithoutQueriesInput = {
   userId: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -796,6 +904,9 @@ export type TutorProfileUpdateWithoutQueriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -810,6 +921,9 @@ export type TutorProfileUncheckedUpdateWithoutQueriesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -822,6 +936,9 @@ export type TutorProfileCreateWithoutPaymentsInput = {
   id?: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -836,6 +953,9 @@ export type TutorProfileUncheckedCreateWithoutPaymentsInput = {
   userId: string
   subjects?: Prisma.TutorProfileCreatesubjectsInput | string[]
   bio?: string | null
+  experience?: string | null
+  classesTaught?: string | null
+  adhaarId?: string | null
   hourlyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: string | null
   isVerified?: boolean
@@ -864,6 +984,9 @@ export type TutorProfileUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -878,6 +1001,9 @@ export type TutorProfileUncheckedUpdateWithoutPaymentsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   subjects?: Prisma.TutorProfileUpdatesubjectsInput | string[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classesTaught?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhaarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hourlyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -949,6 +1075,9 @@ export type TutorProfileSelect<ExtArgs extends runtime.Types.Extensions.Internal
   userId?: boolean
   subjects?: boolean
   bio?: boolean
+  experience?: boolean
+  classesTaught?: boolean
+  adhaarId?: boolean
   hourlyRate?: boolean
   location?: boolean
   isVerified?: boolean
@@ -965,6 +1094,9 @@ export type TutorProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   userId?: boolean
   subjects?: boolean
   bio?: boolean
+  experience?: boolean
+  classesTaught?: boolean
+  adhaarId?: boolean
   hourlyRate?: boolean
   location?: boolean
   isVerified?: boolean
@@ -976,6 +1108,9 @@ export type TutorProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   userId?: boolean
   subjects?: boolean
   bio?: boolean
+  experience?: boolean
+  classesTaught?: boolean
+  adhaarId?: boolean
   hourlyRate?: boolean
   location?: boolean
   isVerified?: boolean
@@ -987,12 +1122,15 @@ export type TutorProfileSelectScalar = {
   userId?: boolean
   subjects?: boolean
   bio?: boolean
+  experience?: boolean
+  classesTaught?: boolean
+  adhaarId?: boolean
   hourlyRate?: boolean
   location?: boolean
   isVerified?: boolean
 }
 
-export type TutorProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subjects" | "bio" | "hourlyRate" | "location" | "isVerified", ExtArgs["result"]["tutorProfile"]>
+export type TutorProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "subjects" | "bio" | "experience" | "classesTaught" | "adhaarId" | "hourlyRate" | "location" | "isVerified", ExtArgs["result"]["tutorProfile"]>
 export type TutorProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   classes?: boolean | Prisma.TutorProfile$classesArgs<ExtArgs>
@@ -1022,6 +1160,9 @@ export type $TutorProfilePayload<ExtArgs extends runtime.Types.Extensions.Intern
     userId: string
     subjects: string[]
     bio: string | null
+    experience: string | null
+    classesTaught: string | null
+    adhaarId: string | null
     hourlyRate: runtime.Decimal | null
     location: string | null
     isVerified: boolean
@@ -1457,6 +1598,9 @@ export interface TutorProfileFieldRefs {
   readonly userId: Prisma.FieldRef<"TutorProfile", 'String'>
   readonly subjects: Prisma.FieldRef<"TutorProfile", 'String[]'>
   readonly bio: Prisma.FieldRef<"TutorProfile", 'String'>
+  readonly experience: Prisma.FieldRef<"TutorProfile", 'String'>
+  readonly classesTaught: Prisma.FieldRef<"TutorProfile", 'String'>
+  readonly adhaarId: Prisma.FieldRef<"TutorProfile", 'String'>
   readonly hourlyRate: Prisma.FieldRef<"TutorProfile", 'Decimal'>
   readonly location: Prisma.FieldRef<"TutorProfile", 'String'>
   readonly isVerified: Prisma.FieldRef<"TutorProfile", 'Boolean'>
