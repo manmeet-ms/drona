@@ -98,7 +98,7 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
                 <IconArrowRight className="ml-2 size-4" />
               </Badge>
             )}
-            <h1 className="my-6 text-balance text-4xl font-bold text-balance lg:text-6xl">
+            <h1 className="my-6 text-balance text-4xl font-bold lg:text-6xl">
               {heading}
             </h1>
             <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
@@ -121,7 +121,8 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
             </div>
           </div>
           <div className="h-screen  w-screen hidden sm:block object-cover">
-            <Dithering
+<Image src={'/mandala.svg'} width={1000} height={100}></Image>
+            {/* <Dithering
               style={{ height: "100%", width: "100%" }}
               colorBack={true ? "#04071000" : "#f8faff00"}
               colorFront={true ? "#7f8af6" : "#3732a0"}
@@ -133,7 +134,7 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
               scale={0.8}
               rotation={0}
               speed={0.1}
-            />
+            /> */}
   {/* <HoleBackground className="   absolute inset-0 flex items-center justify-center rounded-xl" /> */}
  
           </div>
