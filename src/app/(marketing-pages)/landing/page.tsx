@@ -120,8 +120,8 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
               )}
             </div>
           </div>
-          <div className="h-screen  w-screen hidden sm:block object-cover">
-<Image src={'/mandala.svg'} width={1000} height={100}></Image>
+          <div className="h-screen  w-screen  relative   hidden sm:block object-cover">
+<Image  className="mix-blend-multiply transform scale-200 dark:mix-blend-soft-light  animate-spin animation-duration-[100s]" src={'/mandala.svg'} fill alt="mandala"></Image>
             {/* <Dithering
               style={{ height: "100%", width: "100%" }}
               colorBack={true ? "#04071000" : "#f8faff00"}
