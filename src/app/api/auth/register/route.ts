@@ -18,9 +18,19 @@ export async function POST(req: NextRequest) {
     const bio = formData.get("bio") as string | null;
     const experience = formData.get("experience") as string | null;
     const subjectsRaw = formData.get("subjects") as string | null;
+    let subjects: string[] = [];
+    if (subjectsRaw) {
+        try {
+            subjects = JSON.parse(subjectsRaw);
+        } catch (e) {
+             // Fallback for comma separated (legacy)
+             subjects = subjectsRaw.split(',').map(s => s.trim());
+        }
+    }
     const classesTaught = formData.get("classesTaught") as string | null;
     const adhaarId = formData.get("adhaarId") as string | null;
     const location = formData.get("location") as string | null;
+    const phoneNumber = formData.get("phoneNumber") as string;
 
     // Normalize role
     if (role === "TEACHER") role = "TUTOR";
@@ -30,10 +40,10 @@ export async function POST(req: NextRequest) {
 
     // Validate fields
     const parse = registerSchema.safeParse({ 
-        fullname, email, password, role,
+        fullname, email, password, role, phoneNumber,
         bio: bio || undefined,
         experience: experience || undefined,
-        subjects: subjectsRaw || undefined,
+        subjects: subjects.length > 0 ? subjects : undefined,
         classesTaught: classesTaught || undefined,
         adhaarId: adhaarId || undefined,
         location: location || undefined
@@ -97,12 +107,14 @@ export async function POST(req: NextRequest) {
         email: email || null,
         password: hashedPassword,
         fullname,
+        phoneNumber,
         role: role as UserRole,
         verficationToken: verificationToken,
         verficationTokenExpiry: verificationTokenExpiry,
         isVerified: false,
         verificationDocument: verificationDocumentUrl,
         image: profilePhotoUrl,
+        profileImage: profilePhotoUrl,
         
         // Conditional Tutor Profile creation
         ...(role === "TUTOR" ? {
@@ -113,7 +125,7 @@ export async function POST(req: NextRequest) {
                    classesTaught: classesTaught,
                    adhaarId: adhaarId,
                    location: location,
-                   subjects: subjectsRaw ? subjectsRaw.split(',').map(s => s.trim()) : [],
+                   subjects: subjects,
                 }
             }
         } : {})

@@ -20,10 +20,11 @@ export default function ParentRegisterPage() {
         formState: { errors, isSubmitting }
     } = useForm<RegisterInput>({
         resolver: zodResolver(registerSchema),
-        defaultValues: { fullname: '', email: '', password: '', role: 'PARENT' }
+        defaultValues: { fullname: '', email: '', password: '', role: 'PARENT', phoneNumber: '' }
     });
 
     const [file, setFile] = React.useState<File | null>(null);
+    const [photoFile, setPhotoFile] = React.useState<File | null>(null);
 
     const onSubmit = async (data: RegisterInput) => {
         try {
@@ -31,7 +32,11 @@ export default function ParentRegisterPage() {
             formData.append('fullname', data.fullname);
             formData.append('email', data.email);
             formData.append('password', data.password);
+            formData.append('phoneNumber', data.phoneNumber);
             formData.append('role', 'PARENT');
+            if (photoFile) {
+                formData.append('profilePhoto', photoFile);
+            }
             if (file) {
                 formData.append('verificationDocument', file);
             }
@@ -41,9 +46,10 @@ export default function ParentRegisterPage() {
             });
             console.log("User created successfully:", response.data);
             router.push(`/auth/login/parent`);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Registration failed:", error);
-            console.error("Registration failed:", error?.response?.data?.message || error?.message || "Registration failed due to server error.");
+            const err = error as any;
+            console.error("Registration failed:", err?.response?.data?.message || err?.message || "Registration failed due to server error.");
             // alert(error?.response?.data?.message || error?.message || "Registration failed due to server error.");
         }
     };
@@ -53,7 +59,7 @@ export default function ParentRegisterPage() {
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <CardTitle>Parent Registration</CardTitle>
-                    <CardDescription>Create an account to manage your children's learning</CardDescription>
+                    <CardDescription>Create an account to manage your children&apos;s learning</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -68,6 +74,22 @@ export default function ParentRegisterPage() {
                             <Label htmlFor="email">Email</Label>
                             <Input id="email" type="email" placeholder="m@example.com" {...register('email')} />
                             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="phoneNumber">Phone Number</Label>
+                            <Input id="phoneNumber" type="tel" placeholder="+91 9876543210" {...register('phoneNumber')} />
+                            {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="profilePhoto">Profile Photo (Optional)</Label>
+                            <Input
+                                id="profilePhoto"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
+                            />
                         </div>
 
                         <div className="space-y-2">

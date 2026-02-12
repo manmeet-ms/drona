@@ -13,6 +13,12 @@ import { Textarea } from '@/src/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/src/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/components/ui/select';
 import Link from 'next/link';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/src/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/src/components/ui/popover";
+import { Badge } from "@/src/components/ui/badge";
+import { Check, ChevronsUpDown, X } from "lucide-react";
+import { cn } from "@/src/lib/utils";
+import { SUBJECTS } from "@/src/constants/subjects";
 
 interface City {
     id: string;
@@ -29,13 +35,15 @@ export default function TutorRegisterPage() {
         formState: { errors, isSubmitting }
     } = useForm<RegisterInput>({
         resolver: zodResolver(registerSchema),
-        defaultValues: { fullname: '', email: '', password: '', role: 'TUTOR' }
+        defaultValues: { fullname: '', email: '', password: '', role: 'TUTOR', phoneNumber: '', subjects: [] }
     });
 
     const [docFile, setDocFile] = React.useState<File | null>(null);
     const [photoFile, setPhotoFile] = React.useState<File | null>(null);
     const [cities, setCities] = useState<City[]>([]);
     const [location, setLocation] = useState("");
+    const [open, setOpen] = useState(false);
+    const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
 
     useEffect(() => {
         // Fetch Indian cities
@@ -64,11 +72,12 @@ export default function TutorRegisterPage() {
             formData.append('fullname', data.fullname);
             formData.append('email', data.email);
             formData.append('password', data.password);
+            formData.append('phoneNumber', data.phoneNumber);
             formData.append('role', 'TUTOR');
             
             if (data.bio) formData.append('bio', data.bio);
             if (data.experience) formData.append('experience', data.experience);
-            if (data.subjects) formData.append('subjects', data.subjects);
+            if (data.subjects && data.subjects.length > 0) formData.append('subjects', JSON.stringify(data.subjects));
             if (data.classesTaught) formData.append('classesTaught', data.classesTaught);
             if (data.adhaarId) formData.append('adhaarId', data.adhaarId);
             if (location) formData.append('location', location);
@@ -121,6 +130,12 @@ export default function TutorRegisterPage() {
                             </div>
                         </div>
 
+                         <div className="space-y-2">
+                            <Label htmlFor="phoneNumber">Phone Number</Label>
+                            <Input id="phoneNumber" type="tel" placeholder="+91 9876543210" {...register('phoneNumber')} />
+                            {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>}
+                        </div>
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="password">Password</Label>
@@ -144,9 +159,88 @@ export default function TutorRegisterPage() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                           <div className="space-y-2">
-                                <Label htmlFor="subjects">Subjects (Comma Separated)</Label>
-                                <Input id="subjects" placeholder="Math, Science, English" {...register('subjects')} />
+                           <div className="space-y-2 flex flex-col">
+                                <Label className='mb-2'>Subjects</Label>
+                                <Popover open={open} onOpenChange={setOpen}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={open}
+                                            className="w-full justify-between"
+                                        >
+                                            {selectedSubjects.length > 0
+                                                ? `${selectedSubjects.length} selected`
+                                                : "Select subjects..."}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-[400px] p-0">
+                                        <Command>
+                                            <CommandInput placeholder="Search subject..." />
+                                            <CommandList>
+                                                <CommandEmpty>No subject found.</CommandEmpty>
+                                                <CommandGroup className="max-h-[200px] overflow-auto">
+                                                    {SUBJECTS.map((subject) => (
+                                                        <CommandItem
+                                                            key={subject}
+                                                            value={subject}
+                                                            onSelect={(currentValue) => {
+                                                                // Toggle selection
+                                                                const isSelected = selectedSubjects.includes(currentValue);
+                                                                let newSubjects;
+                                                                if (isSelected) {
+                                                                    newSubjects = selectedSubjects.filter(s => s !== currentValue);
+                                                                } else {
+                                                                    newSubjects = [...selectedSubjects, currentValue];
+                                                                }
+                                                                setSelectedSubjects(newSubjects);
+                                                                setValue('subjects', newSubjects, { shouldValidate: true });
+                                                            }}
+                                                        >
+                                                            <Check
+                                                                className={cn(
+                                                                    "mr-2 h-4 w-4",
+                                                                    selectedSubjects.includes(subject) ? "opacity-100" : "opacity-0"
+                                                                )}
+                                                            />
+                                                            {subject}
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    {selectedSubjects.map((subject) => (
+                                        <Badge key={subject} variant="secondary" className="mr-1">
+                                            {subject}
+                                            <button
+                                                className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        const newSubjects = selectedSubjects.filter((s) => s !== subject);
+                                                        setSelectedSubjects(newSubjects);
+                                                        setValue('subjects', newSubjects, { shouldValidate: true });
+                                                    }
+                                                }}
+                                                onMouseDown={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                }}
+                                                onClick={() => {
+                                                    const newSubjects = selectedSubjects.filter((s) => s !== subject);
+                                                    setSelectedSubjects(newSubjects);
+                                                    setValue('subjects', newSubjects, { shouldValidate: true });
+                                                }}
+                                            >
+                                                <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                                            </button>
+                                        </Badge>
+                                    ))}
+                                </div>
+                                {errors.subjects && <p className="text-red-500 text-sm">{errors.subjects.message}</p>}
                             </div>
                              <div className="space-y-2">
                                 <Label htmlFor="classesTaught">Classes Range</Label>

@@ -136,6 +136,7 @@ export const UserScalarFieldEnum = {
   passwordResetToken: 'passwordResetToken',
   passwordResetTokenExpiry: 'passwordResetTokenExpiry',
   image: 'image',
+  profileImage: 'profileImage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -152,6 +153,7 @@ export const TutorProfileScalarFieldEnum = {
   classesTaught: 'classesTaught',
   adhaarId: 'adhaarId',
   hourlyRate: 'hourlyRate',
+  rating: 'rating',
   location: 'location',
   isVerified: 'isVerified'
 } as const

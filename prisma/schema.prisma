@@ -78,6 +78,7 @@ model User {
   passwordResetToken       String?
   passwordResetTokenExpiry DateTime?
   image                    String?   // Profile photo
+  profileImage             String?   // Explicit profile image as requested
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -102,6 +103,7 @@ model TutorProfile {
   classesTaught String?
   adhaarId  String?
   hourlyRate Decimal?
+  rating    Float? @default(0)
   location  String?
   isVerified Boolean @default(false)
   

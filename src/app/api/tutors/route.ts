@@ -6,6 +6,10 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const subject = searchParams.get("subject");
     const location = searchParams.get("location");
+    const classesTaught = searchParams.get("classesTaught");
+    const minPrice = searchParams.get("minPrice");
+    const maxPrice = searchParams.get("maxPrice");
+    const rating = searchParams.get("rating");
 
     const whereClause: any = {};
 
@@ -22,6 +26,25 @@ export async function GET(req: Request) {
       };
     }
 
+    if (classesTaught) {
+      whereClause.classesTaught = {
+        contains: classesTaught,
+        mode: "insensitive",
+      };
+    }
+
+    if (minPrice || maxPrice) {
+      whereClause.hourlyRate = {};
+      if (minPrice) whereClause.hourlyRate.gte = parseFloat(minPrice);
+      if (maxPrice) whereClause.hourlyRate.lte = parseFloat(maxPrice);
+    }
+
+    if (rating) {
+        whereClause.rating = {
+            gte: parseFloat(rating)
+        };
+    }
+
     const tutors = await prisma.tutorProfile.findMany({
       where: whereClause,
       include: {
@@ -29,15 +52,12 @@ export async function GET(req: Request) {
           select: {
             fullname: true,
             phoneNumber: true,
+            profileImage: true, // Select profileImage
+            image: true,
           },
         },
       },
     });
-    // const tutors = await prisma.user.findMany({
-    //   where: {
-    //     role:"TUTOR"
-    //   },
-    // });
 
     return NextResponse.json(tutors);
   } catch (error) {

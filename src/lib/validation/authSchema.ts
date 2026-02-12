@@ -10,10 +10,11 @@ export const registerSchema = z.object({
     role: z.enum(['PARENT', 'TUTOR'] as const),
     bio: z.string().optional(),
     experience: z.string().optional(),
-    subjects: z.string().optional(),
+    subjects: z.array(z.string()).optional(),
     classesTaught: z.string().optional(),
     adhaarId: z.string().optional(),
     location: z.string().optional(),
+    phoneNumber: z.string().min(10, "Phone number must be at least 10 digits.").max(15, "Phone number must be at most 15 digits."),
 });
 
 // Export the inferred TypeScript type for type safety across the app

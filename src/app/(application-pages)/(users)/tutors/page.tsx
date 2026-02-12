@@ -40,6 +40,11 @@ export default function TutorsPage() {
   const [subject, setSubject] = useState("");
   const [location, setLocation] = useState("");
 
+  const [classesTaught, setClassesTaught] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [rating, setRating] = useState("");
+
   useEffect(() => {
     fetchTutors();
   }, []);
@@ -50,14 +55,13 @@ export default function TutorsPage() {
       const params = new URLSearchParams();
       if (subject) params.append("subject", subject);
       if (location) params.append("location", location);
+      if (classesTaught) params.append("classesTaught", classesTaught);
+      if (minPrice) params.append("minPrice", minPrice);
+      if (maxPrice) params.append("maxPrice", maxPrice);
+      if (rating) params.append("rating", rating);
 
-      // const response = await axios.get(`/api/tutors?${params.toString()}`);
-      const response = await axios.get(`/api/tutors`);
-
-
+      const response = await axios.get(`/api/tutors?${params.toString()}`);
       setTutors(response.data);
-      console.log(response.data);
-
     } catch (error) {
       console.error("Failed to fetch tutors", error);
     } finally {
@@ -71,116 +75,134 @@ export default function TutorsPage() {
   };
 
   return (
-    <>
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-8">Find a Tutor</h1>
-
-        {/* Search Bar */}
-        <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-4 mb-8">
-          <div className="flex-1">
-            <Input
-              placeholder="Subject (e.g. Math)"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </div>
-          <div className="flex-1">
-            <Input
-              placeholder="Location (e.g. Delhi)"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-          </div>
-          <Button type="submit">
-            <IconSearch className="mr-2 h-4 w-4" />
-            Search
-          </Button>
-        </form>
-
-        {/* Results */}
-        {isLoading ? (
-          <div className="flex justify-center p-8">
-            <IconLoader2 className="h-8 w-8 animate-spin" />
-          </div>
-        ) : tutors.length === 0 ? (
-          <p className="text-center text-muted-foreground">No tutors found.</p>
-        ) : (
-          // <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          //   {tutors.map((tutor) => (
-          //     <Link href={`/tutors/${tutor.id}`} key={tutor.id}>
-          //       <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-          //         <CardHeader>
-          //           <CardTitle>{tutor.user.fullname}</CardTitle>
-          //           <CardDescription className="flex items-center gap-1">
-          //             <IconMapPin className="h-3 w-3" />
-          //             {tutor.location || "Online/Not specified"}
-          //           </CardDescription>
-          //         </CardHeader>
-          //         <CardContent>
-          //           <div className="flex flex-wrap gap-2 mb-4">
-          //             {tutor.subjects.map((subj) => (
-          //               <span
-          //                 key={subj}
-          //                 className="px-2 py-1 bg-secondary text-secondary-foreground rounded-md text-xs"
-          //               >
-          //                 {subj}
-          //               </span>
-          //             ))}
-          //           </div>
-          //           <p className="text-sm text-muted-foreground line-clamp-3">
-          //             {tutor.bio || "No bio available."}
-          //           </p>
-          //           <div className="mt-4 font-semibold">
-          //             ₹{tutor.hourlyRate}/hr
-          //           </div>
-          //         </CardContent>
-          //       </Card>
-          //     </Link>
-          //   ))}
-          // </div>
-          <Masonry spacing={1.5} columns={{ xs: 1, sm: 2, md: 3 }}>
-
-            {tutors.map((tutor) => (
-              <Link href={`/tutors/${tutor.id}`} key={tutor.id}>
-                <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                  <CardHeader>
-                    <CardTitle className='flex justify-between items-center' >{tutor.user.fullname}
-                      {/* <IconShare className='size-4' stroke={1.75}/> */}
-                      <span>₹{tutor.hourlyRate}/hr</span>
-                    </CardTitle>
-                    <CardDescription className="flex items-center gap-1">
-                      <IconMapPin className="h-3 w-3" />
-                      {tutor.location || "Online/Not specified"}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {tutor.subjects.map((subj) => (
-                        <Badge variant="secondary" key={subj}>{subj}</Badge>
-                      ))}
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-8">Find a Tutor</h1>
+      
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Sidebar Filters */}
+        <aside className="w-full lg:w-64 space-y-6">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Filters</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {/* Location is also here as per requirement */}
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Location</label>
+                        <Input 
+                            placeholder="City..." 
+                            value={location} 
+                            onChange={(e) => setLocation(e.target.value)} 
+                        />
                     </div>
-                    <p className="text-sm  text-muted-foreground/80 line-clamp-2">
-                      {tutor.bio || "No bio available."}
-                    </p>
-                    <Separator className='mt-4' />
-                    <div className="mt-4 flex items-center justify-between">
-                      <Link className='text-primary text-sm font-semibold' href={`/tutors/${tutor.id}`} key={tutor.id}>More details <IconArrowRight className='inline-flex size-3 items-center justify-center gap-2 ' /></Link>
-                      {/* <ButtonGroup>
-                        <Button size="sm" variant="outline" ><IconPhone /></Button>
-                        <Button size="sm" variant="outline" ><IconMessage2 /></Button>
-                        <Button size="sm" variant="outline" ><IconShare /></Button>
-                      </ButtonGroup> */}
 
-
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Class Range</label>
+                        <Input 
+                            placeholder="e.g. 1-5" 
+                            value={classesTaught} 
+                            onChange={(e) => setClassesTaught(e.target.value)} 
+                        />
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </Masonry>
 
-        )}
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Hourly Rate (₹)</label>
+                        <div className="flex gap-2">
+                            <Input 
+                                placeholder="Min" 
+                                type="number" 
+                                value={minPrice} 
+                                onChange={(e) => setMinPrice(e.target.value)} 
+                            />
+                            <Input 
+                                placeholder="Max" 
+                                type="number" 
+                                value={maxPrice} 
+                                onChange={(e) => setMaxPrice(e.target.value)} 
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Min Rating</label>
+                        <select 
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            value={rating}
+                            onChange={(e) => setRating(e.target.value)}
+                        >
+                            <option value="">Any</option>
+                            <option value="4.5">4.5+</option>
+                            <option value="4">4.0+</option>
+                            <option value="3">3.0+</option>
+                        </select>
+                    </div>
+
+                    <Button className="w-full" onClick={fetchTutors}>
+                        Apply Filters
+                    </Button>
+                </CardContent>
+            </Card>
+        </aside>
+
+        {/* Main Content */}
+        <div className="flex-1">
+            {/* Search Bar */}
+            <form onSubmit={handleSearch} className="flex gap-4 mb-6">
+            <div className="flex-1">
+                <Input
+                placeholder="Search by Subject (e.g. Math)"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                />
+            </div>
+            <Button type="submit">
+                <IconSearch className="mr-2 h-4 w-4" />
+                Search
+            </Button>
+            </form>
+
+            {/* Results */}
+            {isLoading ? (
+            <div className="flex justify-center p-8">
+                <IconLoader2 className="h-8 w-8 animate-spin" />
+            </div>
+            ) : tutors.length === 0 ? (
+            <p className="text-center text-muted-foreground">No tutors found matching your criteria.</p>
+            ) : (
+            <Masonry spacing={1.5} columns={{ xs: 1, sm: 2, md: 3 }}>
+                {tutors.map((tutor) => (
+                <Link href={`/tutors/${tutor.id}`} key={tutor.id}>
+                    <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
+                    <CardHeader>
+                        <CardTitle className='flex justify-between items-center' >{tutor.user.fullname}
+                        <span>₹{tutor.hourlyRate}/hr</span>
+                        </CardTitle>
+                        <CardDescription className="flex items-center gap-1">
+                        <IconMapPin className="h-3 w-3" />
+                        {tutor.location || "Online/Not specified"}
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex flex-wrap gap-1 mb-2">
+                        {tutor.subjects.map((subj) => (
+                            <Badge variant="secondary" key={subj}>{subj}</Badge>
+                        ))}
+                        </div>
+                        <p className="text-sm  text-muted-foreground/80 line-clamp-2">
+                        {tutor.bio || "No bio available."}
+                        </p>
+                        <Separator className='mt-4' />
+                        <div className="mt-4 flex items-center justify-between">
+                        <Link className='text-primary text-sm font-semibold' href={`/tutors/${tutor.id}`} key={tutor.id}>More details <IconArrowRight className='inline-flex size-3 items-center justify-center gap-2 ' /></Link>
+                        </div>
+                    </CardContent>
+                    </Card>
+                </Link>
+                ))}
+            </Masonry>
+            )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }

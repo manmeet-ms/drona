@@ -39,6 +39,7 @@ export type UserMinAggregateOutputType = {
   passwordResetToken: string | null
   passwordResetTokenExpiry: Date | null
   image: string | null
+  profileImage: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +59,7 @@ export type UserMaxAggregateOutputType = {
   passwordResetToken: string | null
   passwordResetTokenExpiry: Date | null
   image: string | null
+  profileImage: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -77,6 +79,7 @@ export type UserCountAggregateOutputType = {
   passwordResetToken: number
   passwordResetTokenExpiry: number
   image: number
+  profileImage: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -98,6 +101,7 @@ export type UserMinAggregateInputType = {
   passwordResetToken?: true
   passwordResetTokenExpiry?: true
   image?: true
+  profileImage?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -117,6 +121,7 @@ export type UserMaxAggregateInputType = {
   passwordResetToken?: true
   passwordResetTokenExpiry?: true
   image?: true
+  profileImage?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,6 +141,7 @@ export type UserCountAggregateInputType = {
   passwordResetToken?: true
   passwordResetTokenExpiry?: true
   image?: true
+  profileImage?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -228,6 +234,7 @@ export type UserGroupByOutputType = {
   passwordResetToken: string | null
   passwordResetTokenExpiry: Date | null
   image: string | null
+  profileImage: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -268,6 +275,7 @@ export type UserWhereInput = {
   passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetTokenExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   image?: Prisma.StringNullableFilter<"User"> | string | null
+  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
@@ -293,6 +301,7 @@ export type UserOrderByWithRelationInput = {
   passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetTokenExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
@@ -321,6 +330,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetTokenExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   image?: Prisma.StringNullableFilter<"User"> | string | null
+  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
@@ -346,6 +356,7 @@ export type UserOrderByWithAggregationInput = {
   passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetTokenExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
+  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -371,6 +382,7 @@ export type UserScalarWhereWithAggregatesInput = {
   passwordResetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordResetTokenExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  profileImage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -390,6 +402,7 @@ export type UserCreateInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -415,6 +428,7 @@ export type UserUncheckedCreateInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -440,6 +454,7 @@ export type UserUpdateInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -465,6 +480,7 @@ export type UserUncheckedUpdateInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -490,6 +506,7 @@ export type UserCreateManyInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -509,6 +526,7 @@ export type UserUpdateManyMutationInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -528,6 +546,7 @@ export type UserUncheckedUpdateManyInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -552,6 +571,7 @@ export type UserCountOrderByAggregateInput = {
   passwordResetToken?: Prisma.SortOrder
   passwordResetTokenExpiry?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -571,6 +591,7 @@ export type UserMaxOrderByAggregateInput = {
   passwordResetToken?: Prisma.SortOrder
   passwordResetTokenExpiry?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -590,6 +611,7 @@ export type UserMinOrderByAggregateInput = {
   passwordResetToken?: Prisma.SortOrder
   passwordResetTokenExpiry?: Prisma.SortOrder
   image?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -708,6 +730,7 @@ export type UserCreateWithoutAccountsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
@@ -732,6 +755,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
@@ -772,6 +796,7 @@ export type UserUpdateWithoutAccountsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
@@ -796,6 +821,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
@@ -820,6 +846,7 @@ export type UserCreateWithoutSessionsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -844,6 +871,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -884,6 +912,7 @@ export type UserUpdateWithoutSessionsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -908,6 +937,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -932,6 +962,7 @@ export type UserCreateWithoutTutorProfileInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -956,6 +987,7 @@ export type UserUncheckedCreateWithoutTutorProfileInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -996,6 +1028,7 @@ export type UserUpdateWithoutTutorProfileInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1020,6 +1053,7 @@ export type UserUncheckedUpdateWithoutTutorProfileInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1044,6 +1078,7 @@ export type UserCreateWithoutStudentsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1068,6 +1103,7 @@ export type UserUncheckedCreateWithoutStudentsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -1108,6 +1144,7 @@ export type UserUpdateWithoutStudentsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1132,6 +1169,7 @@ export type UserUncheckedUpdateWithoutStudentsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1156,6 +1194,7 @@ export type UserCreateWithoutQueriesInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1180,6 +1219,7 @@ export type UserUncheckedCreateWithoutQueriesInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -1220,6 +1260,7 @@ export type UserUpdateWithoutQueriesInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1244,6 +1285,7 @@ export type UserUncheckedUpdateWithoutQueriesInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1268,6 +1310,7 @@ export type UserCreateWithoutPaymentsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
@@ -1292,6 +1335,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   passwordResetToken?: string | null
   passwordResetTokenExpiry?: Date | string | null
   image?: string | null
+  profileImage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
@@ -1332,6 +1376,7 @@ export type UserUpdateWithoutPaymentsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
@@ -1356,6 +1401,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -1447,6 +1493,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   passwordResetToken?: boolean
   passwordResetTokenExpiry?: boolean
   image?: boolean
+  profileImage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -1473,6 +1520,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordResetToken?: boolean
   passwordResetTokenExpiry?: boolean
   image?: boolean
+  profileImage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1492,6 +1540,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   passwordResetToken?: boolean
   passwordResetTokenExpiry?: boolean
   image?: boolean
+  profileImage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1511,11 +1560,12 @@ export type UserSelectScalar = {
   passwordResetToken?: boolean
   passwordResetTokenExpiry?: boolean
   image?: boolean
+  profileImage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "password" | "fullname" | "role" | "phoneNumber" | "isVerified" | "verificationDocument" | "verficationToken" | "verficationTokenExpiry" | "passwordResetToken" | "passwordResetTokenExpiry" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "password" | "fullname" | "role" | "phoneNumber" | "isVerified" | "verificationDocument" | "verficationToken" | "verficationTokenExpiry" | "passwordResetToken" | "passwordResetTokenExpiry" | "image" | "profileImage" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1553,6 +1603,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     passwordResetToken: string | null
     passwordResetTokenExpiry: Date | null
     image: string | null
+    profileImage: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1998,6 +2049,7 @@ export interface UserFieldRefs {
   readonly passwordResetToken: Prisma.FieldRef<"User", 'String'>
   readonly passwordResetTokenExpiry: Prisma.FieldRef<"User", 'DateTime'>
   readonly image: Prisma.FieldRef<"User", 'String'>
+  readonly profileImage: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

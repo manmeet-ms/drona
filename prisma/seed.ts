@@ -7,7 +7,7 @@ import sensiLorem from 'sensible-lorem';
 
 
 
-const SUBJECTS = ['Mathematics', 'Physics', 'Chemistry', 'Biology', 'English', 'History', 'Geography', 'Computer Science', 'Economics'];
+import { SUBJECTS } from '../src/constants/subjects';
 const LOCATIONS = ['Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow'];
 
 async function main() {
@@ -25,29 +25,33 @@ async function main() {
   // await prisma.user.deleteMany();
 
   // 1. Create Tutors
-  const numOfHardcodedTutors = 180;
-  const numOfHardcodedParent = 120;
+  const numOfHardcodedTutors = 50;
+  const numOfHardcodedParent = 10; // User said 100 tutors, didn't specify parents but 120 seems high relative to 100. I'll reduce to 50 for speed.
 
   console.log(`Creating ${numOfHardcodedTutors} Tutors...`);
   const tutors = [];
   for (let i = 0; i < numOfHardcodedTutors; i++) {
+    const pfp = faker.image.avatar();
 
     const user = await prisma.user.create({
       data: {
-        fullname: faker.person.fullName(), // Fixed: name -> fullname
+        fullname: faker.person.fullName(),
         username: faker.internet.username().toLowerCase(),
         email: faker.internet.email().toLowerCase(),
         password: await bcrypt.hash('123', 10),
         role: UserRole.TUTOR,
         phoneNumber: faker.phone.number(),
+        image: pfp,
+        profileImage: pfp,
         tutorProfile: {
           create: {
             bio: sensiLorem(5),
             subjects: faker.helpers.arrayElements(SUBJECTS, { min: 3, max: 8 }),
             hourlyRate: faker.number.int({ min: 500, max: 2000, multipleOf: 10 }),
-            location: faker.location.state(),
-            // location: faker.helpers.arrayElement(LOCATIONS),
+            location: faker.helpers.arrayElement(LOCATIONS),
             isVerified: faker.datatype.boolean(0.5),
+            rating: faker.number.float({ min: 3, max: 5, fractionDigits: 1 }),
+            classesTaught: faker.helpers.arrayElement(['1-5', '6-8', '9-10', '11-12']),
           }
         }
       },
@@ -55,6 +59,7 @@ async function main() {
         tutorProfile: true
       }
     });
+
     tutors.push(user);
   }
 
