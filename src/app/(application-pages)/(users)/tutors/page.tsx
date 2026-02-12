@@ -1,46 +1,50 @@
 "use client";
-import { Button } from "@/src/components/ui/button";
-import {
-  ButtonGroup
-} from "@/src/components/ui/button-group";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Separator } from "@/src/components/ui/separator";
-import Masonry from '@mui/lab/Masonry';
-import { IconArrowRight, IconLoader2, IconMapPin, IconMessage2, IconPhone, IconSearch, IconShare } from "@tabler/icons-react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { Input } from "@/src/components/ui/input";
+import { Button } from "@/src/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { IconSearch, IconMapPin, IconLoader2, IconArrowRight, IconFilter } from "@tabler/icons-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
 import { Badge } from "@/src/components/ui/badge";
+import { Separator } from "@/src/components/ui/separator";
+import { Masonry } from "@mui/lab";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/src/components/ui/sheet";
+import { Checkbox } from "@/src/components/ui/checkbox";
+import { Label } from "@/src/components/ui/label";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/src/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/src/components/ui/popover";
+import { LOCATIONS } from "@/src/constants/locations";
+import { SUBJECTS } from "@/src/constants/subjects";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/src/lib/utils";
+
 interface Tutor {
   id: string;
-  bio: string | null;
+  hourlyRate: number;
   subjects: string[];
-  hourlyRate: number | null;
-  location: string | null;
+  location: string;
+  bio: string;
   user: {
     fullname: string;
-    phoneNumber: string | null;
+    phoneNumber: string;
+    image: string | null;
+    profileImage: string | null;
   };
 }
 
-import { usePageTitle } from "@/src/hooks/usePageTitle";
+const CLASS_RANGES = ['1-5', '6-8', '9-10', '11-12'];
 
-export default function TutorsPage() {
-  usePageTitle("Find Tutors");
+export default function FindTutorPage() {
   const [tutors, setTutors] = useState<Tutor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [subject, setSubject] = useState("");
-  const [location, setLocation] = useState("");
 
-  const [classesTaught, setClassesTaught] = useState("");
+  const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
+  const [subjectOpen, setSubjectOpen] = useState(false);
+  const [location, setLocation] = useState("");
+  const [locationOpen, setLocationOpen] = useState(false);
+
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
@@ -53,9 +57,9 @@ export default function TutorsPage() {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
-      if (subject) params.append("subject", subject);
+      if (selectedSubjects.length > 0) params.append("subject", selectedSubjects.join(","));
       if (location) params.append("location", location);
-      if (classesTaught) params.append("classesTaught", classesTaught);
+      if (selectedClasses.length > 0) params.append("classesTaught", selectedClasses.join(","));
       if (minPrice) params.append("minPrice", minPrice);
       if (maxPrice) params.append("maxPrice", maxPrice);
       if (rating) params.append("rating", rating);
@@ -69,140 +73,312 @@ export default function TutorsPage() {
     }
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchTutors();
+
+
+  const toggleClassSelection = (cls: string) => {
+    setSelectedClasses(prev => 
+      prev.includes(cls) ? prev.filter(c => c !== cls) : [...prev, cls]
+    );
+  };
+
+  const clearFilters = () => {
+    setLocation("");
+    setSelectedClasses([]);
+    setSelectedSubjects([]);
+    setMinPrice("");
+    setMaxPrice("");
+    setRating("");
+  };
+
+  const toggleSubject = (subj: string) => {
+    setSelectedSubjects(prev =>
+      prev.includes(subj) ? prev.filter(s => s !== subj) : [...prev, subj]
+    );
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8">Find a Tutor</h1>
-      
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar Filters */}
-        <aside className="w-full lg:w-64 space-y-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Filters</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    {/* Location is also here as per requirement */}
+    <div className="container mx-auto p-6 max-w-7xl">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+        <div>
+           <h1 className="text-3xl font-bold">Find a Tutor</h1>
+           <p className="text-muted-foreground mt-1">Discover the best tutors for your needs</p>
+        </div>
+        
+        <Sheet>
+            <SheetTrigger asChild>
+                <Button variant="outline" className="gap-2">
+                    <IconFilter className="w-4 h-4" />
+                    Filters
+                    {(location || selectedClasses.length > 0 || minPrice || maxPrice || rating) && (
+                        <Badge variant="secondary" className="ml-1 px-1 h-5 min-w-5 flex items-center justify-center">
+                            !
+                        </Badge>
+                    )}
+                </Button>
+            </SheetTrigger>
+            <SheetContent className="w-[350px] p-4 sm:w-[540px] overflow-y-auto">
+                <SheetHeader>
+                    <SheetTitle>Filter Tutors</SheetTitle>
+                    <SheetDescription>
+                        Narrow down your search results.
+                    </SheetDescription>
+                </SheetHeader>
+                <div className="py-6 space-y-6">
+                    {/* Subject Filter */}
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Location</label>
-                        <Input 
-                            placeholder="City..." 
-                            value={location} 
-                            onChange={(e) => setLocation(e.target.value)} 
-                        />
+                        <Label>Subjects</Label>
+                        <Popover open={subjectOpen} onOpenChange={setSubjectOpen}>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    aria-expanded={subjectOpen}
+                                    className="w-full justify-between"
+                                >
+                                    {selectedSubjects.length > 0
+                                        ? `${selectedSubjects.length} selected`
+                                        : "Select subjects..."}
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[300px] p-0">
+                                <Command>
+                                    <CommandInput placeholder="Search subject..." />
+                                    <CommandList>
+                                        <CommandEmpty>No subject found.</CommandEmpty>
+                                        <CommandGroup className="max-h-[200px] overflow-y-auto">
+                                            {SUBJECTS.map((subj) => (
+                                                <CommandItem
+                                                    key={subj}
+                                                    value={subj}
+                                                    onSelect={() => toggleSubject(subj)}
+                                                >
+                                                    <div
+                                                        className={cn(
+                                                            "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                                                            selectedSubjects.includes(subj)
+                                                                ? "bg-primary text-primary-foreground"
+                                                                : "opacity-50 [&_svg]:invisible"
+                                                        )}
+                                                    >
+                                                        <Check className={cn("h-4 w-4")} />
+                                                    </div>
+                                                    {subj}
+                                                </CommandItem>
+                                            ))}
+                                        </CommandGroup>
+                                    </CommandList>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+                        {selectedSubjects.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-2">
+                                {selectedSubjects.map((subj) => (
+                                    <Badge key={subj} variant="secondary" className="text-xs cursor-pointer" onClick={() => toggleSubject(subj)}>
+                                        {subj}
+                                        <span className="ml-1">×</span>
+                                    </Badge>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
+                    <Separator />
+
+                    {/* Location Filter */}
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Class Range</label>
-                        <Input 
-                            placeholder="e.g. 1-5" 
-                            value={classesTaught} 
-                            onChange={(e) => setClassesTaught(e.target.value)} 
-                        />
+                        <Label>Location</Label>
+                        <Popover open={locationOpen} onOpenChange={setLocationOpen}>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    role="combobox"
+                                    aria-expanded={locationOpen}
+                                    className="w-full justify-between"
+                                >
+                                    {location
+                                        ? LOCATIONS.find((loc) => loc === location) || location
+                                        : "Select location..."}
+                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[300px] p-0">
+                                <Command>
+                                    <CommandInput placeholder="Search location..." />
+                                    <CommandList>
+                                        <CommandEmpty>No location found.</CommandEmpty>
+                                        <CommandGroup>
+                                            {LOCATIONS.map((loc) => (
+                                                <CommandItem
+                                                    key={loc}
+                                                    value={loc}
+                                                    onSelect={(currentValue) => {
+                                                        setLocation(currentValue === location ? "" : currentValue);
+                                                        setLocationOpen(false);
+                                                    }}
+                                                >
+                                                    <Check
+                                                        className={cn(
+                                                            "mr-2 h-4 w-4",
+                                                            location === loc ? "opacity-100" : "opacity-0"
+                                                        )}
+                                                    />
+                                                    {loc}
+                                                </CommandItem>
+                                            ))}
+                                        </CommandGroup>
+                                    </CommandList>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Hourly Rate (₹)</label>
-                        <div className="flex gap-2">
-                            <Input 
-                                placeholder="Min" 
-                                type="number" 
-                                value={minPrice} 
-                                onChange={(e) => setMinPrice(e.target.value)} 
-                            />
-                            <Input 
-                                placeholder="Max" 
-                                type="number" 
-                                value={maxPrice} 
-                                onChange={(e) => setMaxPrice(e.target.value)} 
-                            />
+                    <Separator />
+
+                    {/* Class Range Filter */}
+                    <div className="space-y-3">
+                        <Label>Class Range</Label>
+                        <div className="grid grid-cols-2 gap-4">
+                            {CLASS_RANGES.map((cls) => (
+                                <div key={cls} className="flex items-center space-x-2">
+                                    <Checkbox 
+                                        id={`class-${cls}`} 
+                                        checked={selectedClasses.includes(cls)}
+                                        onCheckedChange={() => toggleClassSelection(cls)}
+                                    />
+                                    <Label htmlFor={`class-${cls}`} className="leading-none cursor-pointer">
+                                        {cls}
+                                    </Label>
+                                </div>
+                            ))}
                         </div>
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Min Rating</label>
-                        <select 
+                    <Separator />
+
+                    {/* Price Filter */}
+                    <div className="space-y-3">
+                        <Label>Hourly Rate (₹)</Label>
+                        <div className="flex items-center gap-4">
+                            <div className="grid gap-1.5 flex-1">
+                                <Label htmlFor="minPrice" className="text-xs text-muted-foreground">Min</Label>
+                                <Input 
+                                    id="minPrice"
+                                    type="number" 
+                                    placeholder="0" 
+                                    value={minPrice} 
+                                    onChange={(e) => setMinPrice(e.target.value)} 
+                                />
+                            </div>
+                            <div className="grid gap-1.5 flex-1">
+                                <Label htmlFor="maxPrice" className="text-xs text-muted-foreground">Max</Label>
+                                <Input 
+                                    id="maxPrice"
+                                    type="number" 
+                                    placeholder="2000+" 
+                                    value={maxPrice} 
+                                    onChange={(e) => setMaxPrice(e.target.value)} 
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <Separator />
+
+                    {/* Rating Filter */}
+                    <div className="space-y-3">
+                         <Label>Minimum Rating</Label>
+                         <select 
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                             value={rating}
                             onChange={(e) => setRating(e.target.value)}
                         >
                             <option value="">Any</option>
-                            <option value="4.5">4.5+</option>
-                            <option value="4">4.0+</option>
-                            <option value="3">3.0+</option>
+                            <option value="4.5">4.5+ Stars</option>
+                            <option value="4">4.0+ Stars</option>
+                            <option value="3">3.0+ Stars</option>
                         </select>
                     </div>
 
-                    <Button className="w-full" onClick={fetchTutors}>
-                        Apply Filters
-                    </Button>
-                </CardContent>
-            </Card>
-        </aside>
-
-        {/* Main Content */}
-        <div className="flex-1">
-            {/* Search Bar */}
-            <form onSubmit={handleSearch} className="flex gap-4 mb-6">
-            <div className="flex-1">
-                <Input
-                placeholder="Search by Subject (e.g. Math)"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                />
-            </div>
-            <Button type="submit">
-                <IconSearch className="mr-2 h-4 w-4" />
-                Search
-            </Button>
-            </form>
-
-            {/* Results */}
-            {isLoading ? (
-            <div className="flex justify-center p-8">
-                <IconLoader2 className="h-8 w-8 animate-spin" />
-            </div>
-            ) : tutors.length === 0 ? (
-            <p className="text-center text-muted-foreground">No tutors found matching your criteria.</p>
-            ) : (
-            <Masonry spacing={1.5} columns={{ xs: 1, sm: 2, md: 3 }}>
-                {tutors.map((tutor) => (
-                <Link href={`/tutors/${tutor.id}`} key={tutor.id}>
-                    <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                    <CardHeader>
-                        <CardTitle className='flex justify-between items-center' >{tutor.user.fullname}
-                        <span>₹{tutor.hourlyRate}/hr</span>
-                        </CardTitle>
-                        <CardDescription className="flex items-center gap-1">
-                        <IconMapPin className="h-3 w-3" />
-                        {tutor.location || "Online/Not specified"}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex flex-wrap gap-1 mb-2">
-                        {tutor.subjects.map((subj) => (
-                            <Badge variant="secondary" key={subj}>{subj}</Badge>
-                        ))}
-                        </div>
-                        <p className="text-sm  text-muted-foreground/80 line-clamp-2">
-                        {tutor.bio || "No bio available."}
-                        </p>
-                        <Separator className='mt-4' />
-                        <div className="mt-4 flex items-center justify-between">
-                        <Link className='text-primary text-sm font-semibold' href={`/tutors/${tutor.id}`} key={tutor.id}>More details <IconArrowRight className='inline-flex size-3 items-center justify-center gap-2 ' /></Link>
-                        </div>
-                    </CardContent>
-                    </Card>
-                </Link>
-                ))}
-            </Masonry>
-            )}
-        </div>
+                    <div className="pt-4 flex gap-2">
+                        <Button className="flex-1" onClick={() => { fetchTutors(); }}>Apply Filters</Button>
+                        <Button variant="outline" onClick={clearFilters}>Reset</Button>
+                    </div>
+                </div>
+            </SheetContent>
+        </Sheet>
       </div>
+
+      {/* Main Search Bar */}
+
+
+      {/* Results */}
+      {isLoading ? (
+        <div className="flex justify-center p-12">
+           <IconLoader2 className="h-10 w-10 animate-spin text-primary" />
+        </div>
+      ) : tutors.length === 0 ? (
+        <div className="text-center py-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
+                <IconSearch className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-semibold">No tutors found</h3>
+            <p className="text-muted-foreground mt-2 max-w-sm mx-auto">
+                We couldn&apos;t find any tutors matching your current filters. Try adjusting your search criteria.
+            </p>
+            <Button variant="link" onClick={clearFilters} className="mt-4">
+                Clear all filters
+            </Button>
+        </div>
+      ) : (
+        <Masonry spacing={2} columns={{ xs: 1, sm: 2, lg: 3 }}>
+            {tutors.map((tutor) => (
+            <Link href={`/tutors/${tutor.id}`} key={tutor.id} className="block group">
+                <Card className="h-full hover:shadow-lg transition-all duration-200 border-muted/60 hover:border-primary/20">
+                <CardHeader className="pb-3">
+                    <div className="flex justify-between items-start gap-4">
+                        <div className="flex flex-col">
+                            <CardTitle className="text-lg font-bold group-hover:text-primary transition-colors">
+                                {tutor.user.fullname}
+                            </CardTitle>
+                            <CardDescription className="flex items-center gap-1 mt-1 text-xs">
+                                <IconMapPin className="h-3 w-3" />
+                                {tutor.location || "Online"}
+                            </CardDescription>
+                        </div>
+                        <Badge variant="outline" className="text-sm font-semibold whitespace-nowrap">
+                            ₹{tutor.hourlyRate}/hr
+                        </Badge>
+                    </div>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex flex-wrap gap-1.5 mb-3 min-h-[50px] content-start">
+                    {tutor.subjects.slice(0, 4).map((subj) => (
+                        <Badge variant="secondary" key={subj} className="text-xs bg-secondary/50 hover:bg-secondary">
+                            {subj}
+                        </Badge>
+                    ))}
+                    {tutor.subjects.length > 4 && (
+                        <Badge variant="secondary" className="text-xs">+{tutor.subjects.length - 4}</Badge>
+                    )}
+                    </div>
+                    
+                    <p className="text-sm text-muted-foreground line-clamp-2 h-10 mb-4">
+                        {tutor.bio || "No bio available."}
+                    </p>
+                    
+                    <Separator className="mb-4" />
+                    
+                    <div className="flex items-center justify-between text-sm font-medium text-primary">
+                        <span>View Profile</span>
+                        <IconArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                    </div>
+                </CardContent>
+                </Card>
+            </Link>
+            ))}
+        </Masonry>
+      )}
     </div>
   );
 }

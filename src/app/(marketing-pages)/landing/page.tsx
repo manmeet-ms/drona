@@ -22,11 +22,11 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/src/components/ui/carousel";
-import { Dithering } from "@paper-design/shaders-react";
+
 import { IconArrowRight, IconBolt, IconBook, IconCalendarCheck, IconMessageCircle, IconShieldCheck, IconUsers } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
-import { HoleBackground } from "@/src/components/animate-ui/components/backgrounds/hole";
+
 
 interface CtaProps {
   title?: string;
@@ -98,7 +98,7 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
                 <IconArrowRight className="ml-2 size-4" />
               </Badge>
             )}
-            <h1 className="my-6 text-balance text-4xl font-bold lg:text-6xl">
+            <h1 className="my-6 text-balance text-4xl font-semibold lg:text-6xl font-gloock">
               {heading}
             </h1>
             <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
@@ -121,7 +121,7 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
             </div>
           </div>
           <div className="h-screen  w-screen  relative   hidden sm:block object-cover">
-<Image  className="mix-blend-multiply transform scale-200 dark:mix-blend-soft-light  animate-spin animation-duration-[100s]" src={'/mandala.svg'} fill alt="mandala"></Image>
+<Image  className=" opacity-50 mix-blend-multiply transform scale-200 dark:mix-blend-soft-light  animate-spin animation-duration-[100s]" src={'/mandala.svg'} fill alt="mandala"></Image>
             {/* <Dithering
               style={{ height: "100%", width: "100%" }}
               colorBack={true ? "#04071000" : "#f8faff00"}
@@ -238,7 +238,7 @@ export const Feature51 = ({
                       {tab.icon}
                     </span>
                   )}
-                  <p className="text-lg font-bold text-balance transition-opacity duration-200 md:text-2xl lg:text-xl">
+                  <p className="text-lg font-semibold text-balance transition-opacity duration-200 md:text-2xl lg:text-xl">
                     {tab.heading} 
                   </p>
                 </div>
@@ -277,9 +277,9 @@ export const Features = () => {
         <p className="text-muted-foreground mb-4 text-sm lg:text-base">
           WHY CHOOSE DRONA
         </p>
-        <h2 className="text-3xl font-bold text-balance lg:text-4xl">Empowering Education for Everyone</h2>
+        <h2 className="text-3xl font-semibold text-balance lg:text-4xl font-gloock">Empowering Education for Everyone</h2>
         <div className="mt-14 grid gap-6 lg:mt-20 lg:grid-cols-3">
-          <div className="bg-accent/30 border border-border/40 rounded-lg p-5">
+          <div className="bg-accent/30 backdrop-blur-lg border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
               <IconUsers className="size-6 text-primary " />
 
@@ -289,7 +289,7 @@ export const Features = () => {
               We ensure authenticity with standardized profiles for every tutor. Connect with knowledgeable youth and experienced professionals passionate about teaching.
             </p>
           </div>
-          <div className="bg-accent/30 border border-border/40 rounded-lg p-5">
+          <div className="bg-accent/30 backdrop-blur-lg border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
               <IconBook className="size-6 text-primary " />
 
@@ -299,7 +299,7 @@ export const Features = () => {
               Stay updated with daily homework logs and detailed performance reports. Our platform ensures you never miss a beat in your child&apos;s academic journey.
             </p>
           </div>
-          <div className="bg-accent/30 border border-border/40 rounded-lg p-5">
+          <div className="bg-accent/30 backdrop-blur-lg border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
               <IconShieldCheck className="size-6 text-primary " />
 
@@ -309,7 +309,7 @@ export const Features = () => {
               From secure logins to encrypted messaging and safe payment interfaces, we prioritize your security and privacy at every step.
             </p>
           </div>
-          <div className="bg-accent/30 border border-border/40 rounded-lg p-5">
+          <div className="bg-accent/30 backdrop-blur-lg border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
               <IconMessageCircle className="size-6 text-primary " />
 
@@ -319,7 +319,7 @@ export const Features = () => {
               Seamless teacher-parent messaging allows for real-time updates on classwork, scheduling, and feedback, fostering a collaborative learning environment.
             </p>
           </div>
-          <div className="bg-accent/30 border border-border/40 rounded-lg p-5">
+          <div className="bg-accent/30 backdrop-blur-lg border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
               <IconCalendarCheck className="size-6 text-primary " />
 
@@ -329,7 +329,7 @@ export const Features = () => {
               Manage classes efficiently with our calendar integration. Receive instant notifications for class updates or cancellations.
             </p>
           </div>
-          <div className="bg-accent/30 border border-border/40 rounded-lg p-5">
+          <div className="bg-accent/30 backdrop-blur-lg border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
               <IconBolt className="size-6 text-primary " />
 
@@ -344,7 +344,7 @@ export const Features = () => {
       <section className="pt-32 pb-16">
         <div className="container mx-auto">
           <div className="grid gap-8 lg:grid-cols-3">
-            <h2 className="row-span-2 text-3xl font-bold text-balance lg:text-5xl">
+            <h2 className="row-span-2 text-3xl font-semibold text-balance lg:text-5xl font-gloock">
               Our Values and Principles
             </h2>
             <div>
@@ -428,7 +428,7 @@ export const Faq = ({
   return (
     <section className="py-16">
       <div className="container mx-auto max-w-3xl">
-        <h1 className="mb-4 text-3xl font-bold text-balance md:mb-11 md:text-4xl">
+        <h1 className="mb-4 text-3xl font-semibold text-balance md:mb-11 md:text-4xl font-gloock">
           {heading}
         </h1>
         <Accordion type="single" collapsible>
@@ -535,7 +535,7 @@ export const Gallery = ({
       <div className="">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           <div className="flex flex-col gap-4">
-            <h2 className="text-3xl font-bold text-balance md:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-semibold text-balance md:text-4xl lg:text-5xl font-gloock">
               {title}
             </h2>
             <p className="text-muted-foreground max-w-lg">{description}</p>
@@ -739,7 +739,7 @@ export const Cta = ({
           <div className="max-w-screen">
             <div className="bg-muted/40 flex flex-col items-start justify-between gap-8 rounded-lg px-6 py-10 md:flex-row lg:px-20 lg:py-16">
               <div className="md:w-1/2">
-                <h4 className="mb-1 text-2xl font-bold text-balance md:text-3xl">{title}</h4>
+                <h4 className="mb-1 text-2xl font-semibold text-balance md:text-3xl font-gloock">{title}</h4>
                 <p className="text-muted-foreground">{description}</p>
                 <Button className="mt-6" asChild>
                   <a href={buttonUrl} target="_blank">
@@ -874,7 +874,7 @@ export { FeatureSecondary51 };
 
 export default function Landing() {
   return (
-    <div>
+    <div  >
       {/* hero  */}
       {/* short intro */}
       {/* feature  */}

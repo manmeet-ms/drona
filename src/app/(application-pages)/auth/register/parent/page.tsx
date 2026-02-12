@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, RegisterInput } from '@/src/lib/validation/authSchema';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/src/components/ui/bkp.button';
+import { Button } from '@/src/components/ui/button';
 import { Input } from '@/src/components/ui/input';
 import { Label } from '@/src/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/src/components/ui/card';

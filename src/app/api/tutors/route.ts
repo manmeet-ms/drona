@@ -11,12 +11,15 @@ export async function GET(req: Request) {
     const maxPrice = searchParams.get("maxPrice");
     const rating = searchParams.get("rating");
 
-    const whereClause: any = {};
+    const whereClause: Record<string, any> = {};
 
     if (subject) {
-      whereClause.subjects = {
-        has: subject,
-      };
+      const subjectsArray = subject.split(',').map(s => s.trim()).filter(Boolean);
+      if (subjectsArray.length > 0) {
+        whereClause.subjects = {
+          hasSome: subjectsArray,
+        };
+      }
     }
 
     if (location) {
@@ -27,10 +30,17 @@ export async function GET(req: Request) {
     }
 
     if (classesTaught) {
-      whereClause.classesTaught = {
-        contains: classesTaught,
-        mode: "insensitive",
-      };
+      const classes = classesTaught.split(',');
+      if (classes.length > 1) {
+        whereClause.OR = classes.map(c => ({
+          classesTaught: { contains: c.trim(), mode: 'insensitive' }
+        }));
+      } else {
+        whereClause.classesTaught = {
+          contains: classesTaught,
+          mode: "insensitive",
+        };
+      }
     }
 
     if (minPrice || maxPrice) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/src/components/ui/bkp.button';
+import { Button } from '@/src/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/src/components/ui/card';
 import Link from 'next/link';
 import { IconUser, IconSchool } from '@tabler/icons-react';

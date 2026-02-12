@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/src/components/ui/bkp.button';
+import { Button } from '@/src/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/src/components/ui/card';
 import Link from 'next/link';
 import { IconUser, IconSchool, IconBook } from '@tabler/icons-react';
@@ -12,7 +12,7 @@ export default function LoginPage() {
 
   return (
     <main>
-   
+
       <div className="flex items-center justify-center min-h-screen p-4">
 
         <Card className="w-full max-w-md">

@@ -14,6 +14,11 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        sans: ["var(--font-geist-sans)", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "var(--font-geist-mono)", "monospace"],
+        gloock: ["var(--font-gloock)", "serif"],
+      },
     },
   },
   plugins: [],

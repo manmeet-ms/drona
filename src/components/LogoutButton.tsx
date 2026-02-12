@@ -1,6 +1,6 @@
 "use client"
 import { signOut } from "next-auth/react";
-import { Button } from "./ui/bkp.button";
+import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 const LogoutButton = () => {
     const router = useRouter();

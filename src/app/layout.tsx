@@ -3,17 +3,18 @@ import { Providers } from './provider';
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/src/lib/auth";
-import { Geist, Geist_Mono, JetBrains_Mono, Public_Sans, Roboto } from "next/font/google";
+import { Geist, Geist_Mono, JetBrains_Mono, Gloock } from "next/font/google";
 
 import { constructMetadata } from '@/src/lib/metadata';
 
 export const metadata = constructMetadata();
 
-
-
-
-const roboto = Roboto({ subsets: ['latin'], variable: '--font-sans' });
-const publicSans = Public_Sans({ subsets: ['latin'], variable: '--font-sans' });
+const gloock = Gloock({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-gloock",
+  display: "swap",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +31,13 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
 
   return (
-    <html  className={roboto.variable} data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${jetBrainsMono.variable} antialiased`} >
+    <html data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${jetBrainsMono.variable} ${gloock.variable} antialiased`} >
         <Providers session={session}>
           {children}
 
