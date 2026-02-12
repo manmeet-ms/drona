@@ -236,17 +236,21 @@ export default function ClassDetailsPage() {
                                 <DialogTitle>Upload Resource</DialogTitle>
                                 <DialogDescription>Share a file or link.</DialogDescription>
                             </DialogHeader>
+                            
+
+
                             <Tabs defaultValue="file" value={resourceType} onValueChange={setResourceType}>
-                                <TabsList className="grid w-full grid-cols-2">
+                                <TabsList  >
                                     <TabsTrigger value="file">File Upload</TabsTrigger>
                                     <TabsTrigger value="link">Link</TabsTrigger>
                                 </TabsList>
-                                <div className="space-y-4 py-4">
+
+                               
+                                    <TabsContent value="file">
                                     <div className="space-y-2">
                                         <Label>Title</Label>
                                         <Input placeholder="Resource Title" value={resourceTitle} onChange={e => setResourceTitle(e.target.value)} />
                                     </div>
-                                    <TabsContent value="file">
                                          <div className="space-y-2">
                                             <Label>File</Label>
                                             <Input type="file" onChange={e => setResourceFile(e.target.files?.[0] || null)} />
@@ -258,7 +262,6 @@ export default function ClassDetailsPage() {
                                             <Input placeholder="https://..." value={resourceUrl} onChange={e => setResourceUrl(e.target.value)} />
                                         </div>
                                     </TabsContent>
-                                </div>
                             </Tabs>
                             <DialogFooter>
                                 <Button onClick={handleResourceUpload} disabled={uploading}>

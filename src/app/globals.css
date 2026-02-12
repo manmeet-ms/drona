@@ -56,7 +56,7 @@ html{
   --chart-3: var(--primary-400);
   --chart-4: var(--primary-100);
   --chart-5: var(--primary-300);
-  --radius: 0.5rem;
+  --radius: 0.625rem;
   --sidebar: var(--color-white);
   --sidebar-foreground: var(--base-800);
   --sidebar-primary: var(--primary-600);
@@ -102,6 +102,10 @@ html{
 }
 
 @theme inline {
+  --font-serif: var(--font-serif), serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-gloock: var(--font-gloock), serif;
   --color-base-50: var(--base-50);
   --color-base-100: var(--base-100);
   --color-base-200: var(--base-200);
@@ -508,10 +512,13 @@ html{
   --radius-xl: calc(var(--radius) + 4px);
 } */
 
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif), serif;
+    /* letter-spacing: 1px */
   }
   body {
     @apply bg-background text-foreground;

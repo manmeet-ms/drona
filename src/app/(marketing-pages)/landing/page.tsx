@@ -98,7 +98,7 @@ export const Hero = ({ badge = "✨ Trusted by Parents & Tutors"
                 <IconArrowRight className="ml-2 size-4" />
               </Badge>
             )}
-            <h1 className="my-6 text-balance text-4xl font-semibold lg:text-6xl font-gloock">
+            <h1 className="my-6 text-balance text-4xl  lg:text-6xl font-gloock">
               {heading}
             </h1>
             <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
@@ -238,7 +238,7 @@ export const Feature51 = ({
                       {tab.icon}
                     </span>
                   )}
-                  <p className="text-lg font-semibold text-balance transition-opacity duration-200 md:text-2xl lg:text-xl">
+                  <p className="text-lg  text-balance transition-opacity duration-200 md:text-2xl lg:text-xl">
                     {tab.heading} 
                   </p>
                 </div>
@@ -277,7 +277,7 @@ export const Features = () => {
         <p className="text-muted-foreground mb-4 text-sm lg:text-base">
           WHY CHOOSE DRONA
         </p>
-        <h2 className="text-3xl font-semibold text-balance lg:text-4xl font-gloock">Empowering Education for Everyone</h2>
+        <h2 className="text-3xl  text-balance lg:text-4xl font-gloock">Empowering Education for Everyone</h2>
         <div className="mt-14 grid gap-6 lg:mt-20 lg:grid-cols-3">
           <div className="bg-accent/30 backdrop-blur-lg border border-border/40 rounded-lg p-5">
             <span className="bg-background mb-8 flex size-12 items-center justify-center rounded-full">
@@ -344,7 +344,7 @@ export const Features = () => {
       <section className="pt-32 pb-16">
         <div className="container mx-auto">
           <div className="grid gap-8 lg:grid-cols-3">
-            <h2 className="row-span-2 text-3xl font-semibold text-balance lg:text-5xl font-gloock">
+            <h2 className="row-span-2 text-3xl  text-balance lg:text-5xl font-gloock">
               Our Values and Principles
             </h2>
             <div>
@@ -428,13 +428,13 @@ export const Faq = ({
   return (
     <section className="py-16">
       <div className="container mx-auto max-w-3xl">
-        <h1 className="mb-4 text-3xl font-semibold text-balance md:mb-11 md:text-4xl font-gloock">
+        <h1 className="mb-4 text-3xl  text-balance md:mb-11 md:text-4xl font-gloock">
           {heading}
         </h1>
         <Accordion type="single" collapsible>
           {items.map((item, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="font-semibold hover:no-underline">
+              <AccordionTrigger className="font-sans hover:no-underline">
                 {item.question}
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
@@ -535,7 +535,7 @@ export const Gallery = ({
       <div className="">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           <div className="flex flex-col gap-4">
-            <h2 className="text-3xl font-semibold text-balance md:text-4xl lg:text-5xl font-gloock">
+            <h2 className="text-3xl  text-balance md:text-4xl lg:text-5xl font-gloock">
               {title}
             </h2>
             <p className="text-muted-foreground max-w-lg">{description}</p>
@@ -594,13 +594,13 @@ export const Gallery = ({
                     />
                     <div className="absolute inset-0 h-full bg-[linear-gradient(transparent_20%,var(--secondary)_100%)] mix-blend-multiply" />
                     <div className="text-white absolute inset-x-0 bottom-0 flex flex-col items-start p-6 md:p-8">
-                      <div className="mb-2 pt-4 text-xl font-semibold md:mb-3 md:pt-4 lg:pt-4">
+                      <div className="mb-2 pt-4 text-xl  md:mb-3 md:pt-4 lg:pt-4">
                         {item.title}
                       </div>
                       <div className="mb-8 text-muted-foreground line-clamp-2 md:mb-12 lg:mb-9">
                         {item.description}
                       </div>
-                      <div className="flex items-center text-primary font-semibold  text-sm">
+                      <div className="flex items-center text-primary   text-sm">
                         Find Tutors{" "}
                         <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                       </div>
@@ -739,7 +739,7 @@ export const Cta = ({
           <div className="max-w-screen">
             <div className="bg-muted/40 flex flex-col items-start justify-between gap-8 rounded-lg px-6 py-10 md:flex-row lg:px-20 lg:py-16">
               <div className="md:w-1/2">
-                <h4 className="mb-1 text-2xl font-semibold text-balance md:text-3xl font-gloock">{title}</h4>
+                <h4 className="mb-1 text-2xl  text-balance md:text-3xl font-gloock">{title}</h4>
                 <p className="text-muted-foreground">{description}</p>
                 <Button className="mt-6" asChild>
                   <a href={buttonUrl} target="_blank">
@@ -838,7 +838,7 @@ const FeatureSecondary51 = ({
                         {tab.icon}
                       </span>
                     )}
-                    <p className="text-lg font-semibold transition-opacity duration-200 md:text-2xl lg:text-xl">
+                    <p className="text-lg  transition-opacity duration-200 md:text-2xl lg:text-xl">
                       {tab.heading}
                     </p>
                   </div>

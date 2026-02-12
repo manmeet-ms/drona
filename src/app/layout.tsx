@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${jetBrainsMono.variable} ${gloock.variable} antialiased`} >
+      <body className={`${geistSans.variable} ${jetBrainsMono.variable} ${gloock.variable} font-sans antialiased`} >
         <Providers session={session}>
           {children}
 
